@@ -1,1 +1,6 @@
-id,name
+id,name,mcc
+1,Staples,5111
+2,Ihop,5812
+3,Radioshack,5732
+4,Hilton,3504
+5,Exxon,5172
