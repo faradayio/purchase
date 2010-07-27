@@ -1,15 +1,11 @@
 Feature: Purchase Emissions Calculations
   The purchase model should generate correct emission calculations
 
-  Scenario Outline: Standard Calculations for TODO
-    Given a flight has "origin_airport.iata_code" of "<source>"
-    And it has "destination_airport.iata_code" of "<dest>"
-    And it has "airline.iata_code" of "<airline>"
-    And it has "date" of "<date>"
-    And it used "aircraft.icao_code" "<aircraft>"
+  Scenario Outline: Standard Calculations for a MCC
+    Given a purchase has "merchant_category_code" of "<mcc>"
     When emissions are calculated
-    Then the emission value should be within 10 kgs of <emission>
+    Then the emission value should be within 1 kgs of <emission>
     Examples:
-      | source | dest | airline | date       | aircraft | emission |
-      | DTW    | SFO  | UA      | 2010-06-25 | A320     | 1153     |
-      | IAD    | CDG  | AF      | 2010-06-25 | A320     | 2070     |
+      | mcc  | emission |
+      | 1771 | 1153     |
+      | 3007 | 2070     |
