@@ -1,0 +1,1132 @@
+pscode,description,broadline,parent
+10000,Industry total,1,0
+10100,"New and used automobiles, motorcycles, and trailers",1,10000
+10111,New automobiles,0,10100
+10112,Used automobiles,0,10100
+10113,Motorcycles,0,10100
+10114,"Motor scooters, mopeds, golf carts, snowmobiles, and utility trailers",0,10100
+10120,"Buses, campers, and motor homes",1,10000
+10121,Buses,0,10120
+10122,"Motor homes, car trailers, campers, and van conversions",0,10120
+10130,"Light trucks and truck bodies, 14,000 lb. or less, including vans and cargo vans",1,10000
+10131,New light trucks,0,10130
+10132,Used light trucks,0,10130
+10133,New and used vans and cargo vans,0,10130
+10134,New light truck bodies,0,10130
+10140,"Medium trucks, truck bodies, and tractors, 14,001 lb. to 33,000 lb.",1,10000
+10141,New medium trucks and tractors,0,10140
+10142,Used medium trucks and tractors,0,10140
+10143,New medium truck bodies,0,10140
+10150,"Heavy trucks, truck bodies, trailers, and road tractors, more than 33,000 lb.",1,10000
+10151,New heavy trucks,0,10150
+10152,New heavy truck tractors,0,10150
+10153,New truck trailers,0,10150
+10154,New heavy truck bodies,0,10150
+10155,"Used heavy trucks, tractors, and trailers",0,10150
+10200,"New and rebuilt automotive parts and supplies, and trailer parts and supplies",1,10000
+10211,Batteries,0,10200
+10212,Complete engines,0,10200
+10213,"Electrical engine parts, including ignition parts",0,10200
+10214,"Brake parts, including fluid and all disk and drum parts",0,10200
+10215,Exhaust system parts,0,10200
+10216,Automotive glass,0,10200
+10217,"Hoses, belts, gaskets, and wiper blades",0,10200
+10218,"Filters, including oil, air, gas, and transmission",0,10200
+10219,"Engine parts, excluding electrical parts",0,10200
+10221,Body parts and repair materials,0,10200
+10222,"Suspension parts, including shocks, struts, and balljoints",0,10200
+10223,Other automotive parts and supplies,0,10200
+10224,"Automotive accessories, excluding car stereos and CD players",0,10200
+10240,"Used automotive parts, accessories, and equipment",1,10000
+10250,Petroleum products marketing equipment,1,10000
+10300,Tires and tubes,1,10000
+10311,New automobile tires and tubes,0,10300
+10312,Re-treaded and used automobile tires and repair materials,0,10300
+10313,"New truck and bus tires, including industrial, off-road, and farm tractor tires",0,10300
+10314,"Re-treaded and used truck and bus tires and repair materials, including industrial, off-road, and farm tractor tires",0,10300
+10400,Household and lawn furniture,1,10000
+10411,Upholstered furniture,0,10400
+10412,Mattresses and beds,0,10400
+10413,Lawn and outdoor furniture,0,10400
+10414,Other furniture,0,10400
+10415,Sleep sofas,0,10400
+10420,Office and business furniture,1,10000
+10421,New wooden and metal office furniture,0,10420
+10422,New store and restaurant furniture,0,10420
+10423,"New public furniture, including theater seats, church pews, park benches, and school desks",0,10420
+10424,Used office and business furniture,0,10420
+10500,"Household china, glassware, crockery, and plastic housewares, excluding paper dishes, cups, napkins, and plastic utensils",1,10000
+10520,"Linens, domestics, curtains, and draperies",1,10000
+10521,"Bedspreads, blankets, and bedding",0,10520
+10522,Curtains and draperies,0,10520
+10523,Shades and blinds,0,10520
+10524,Towels and washcloths,0,10520
+10525,Other linens and domestics,0,10520
+10530,Flooring and floor coverings,1,10000
+10531,Rugs and carpeting,0,10530
+10532,Hardwood flooring,0,10530
+10533,"Other hard-surface floor coverings and accessories, including tile and sheet goods",0,10530
+10540,"Miscellaneous home furnishings, including household containers, flatware, pans, baskets, and kitchen utensils",1,10000
+10541,Metal flatware and kitchen utensils,0,10540
+10542,"Mirrors, lamps, and picture frames",0,10540
+10543,Other home furnishings,0,10540
+10600,"Rough, dressed, and finished dimensional lumber",1,10000
+10611,Untreated lumber,0,10600
+10612,Treated lumber,0,10600
+10613,Boards,0,10600
+10620,Plywood and millwork,1,10000
+10621,"Softwood plywood, softwood veneer, and Oriented Strand Board (OSB)",0,10620
+10622,"Other panel products, including hardwood plywood, hardwood veneer, and particleboard",0,10620
+10623,"Gypsum, waterboard, and other specialty boards",0,10620
+10624,"Wood millwork, including moldings, doors, windows, and cabinets",0,10620
+10625,Metal millwork,0,10620
+10626,"Trusses, wood siding, and wood shingles",0,10620
+10700,"Concrete, cement, sand, gravel, stone, brick, block, and tile",1,10000
+10711,Ready-mixed or transit-mixed concrete,0,10700
+10712,Cement and lime,0,10700
+10713,"Sand, gravel, and crushed stone",0,10700
+10714,"Brick, block, tile, and clay or cement sewer pipe",0,10700
+10720,"Nonwood roofing, nonwood siding, and insulation materials",1,10000
+10721,Nonwood roofing,0,10720
+10722,Nonwood siding,0,10720
+10723,Insulation materials,0,10720
+10730,Flat glass and other construction glass,1,10000
+10740,Other construction products and materials,1,10000
+10741,"Rain-carrying equipment, including gutters and down spouts",0,10740
+10742,Prefabricated buildings and non-wood structural assemblies,0,10740
+10743,Manufactured mobile homes,0,10740
+10744,"Other construction materials, including house wraps, vapor barriers, and construction papers",0,10740
+10800,Photographic equipment and supplies,1,10000
+10811,Still picture photographic equipment,0,10800
+10812,Motion picture photographic equipment,0,10800
+10813,Photographic film,0,10800
+10814,Developing supplies,0,10800
+10815,Other photographic equipment and supplies,0,10800
+10900,"Office equipment, excluding computers",1,10000
+10911,Typewriters,0,10900
+10912,Calculators,0,10900
+10913,Copiers and copier parts and equipment,0,10900
+10914,"Dictating, transcribing, and recording machines",0,10900
+10915,"Mailing, letter handling, and addressing machines",0,10900
+10920,New computer equipment,1,10000
+10921,Computers,0,10920
+10922,Computer storage devices,0,10920
+10923,Computer printers,0,10920
+10924,Other computer peripheral equipment,0,10920
+10930,Used computer equipment,1,10000
+10950,"Packaged computer software, including game software and cartridges",1,10000
+10960,Restaurant and hotel equipment and supplies,1,10000
+10970,Store machines and equipment,1,10000
+10971,Vending machines,0,10970
+10972,Other store machines and equipment,0,10970
+10973,Electric signs,0,10970
+10974,"Scales, except laboratory scales",0,10970
+10975,Store fixtures and displays,0,10970
+11000,"Surgical, medical, and hospital supplies",1,10000
+11011,Surgical and medical instruments and equipment,0,11000
+11012,Orthopedic and prosthetic appliances and supplies,0,11000
+11013,"Other surgical, medical, and hospital supplies",0,11000
+11020,"Dental equipment, instruments, and supplies",1,10000
+11021,"Dental equipment, including chairs, x-ray machines, and cabinets",0,11020
+11022,Dental instruments and supplies,0,11020
+11030,Optical and ophthalmic goods and supplies,1,10000
+11031,Ophthalmic goods,0,11030
+11032,Prescription grinding,0,11030
+11033,Optometric equipment and supplies,0,11030
+11034,"Eyeglasses, sunglasses, contact lenses, and other optical goods",0,11030
+11040,Religious and school supplies,1,10000
+11041,Religious supplies,0,11040
+11042,School supplies,0,11040
+11050,Miscellaneous professional equipment and supplies,1,10000
+11051,Architects' equipment and supplies,0,11050
+11052,Drafting instruments and supplies,0,11050
+11053,Engineers' equipment and supplies,0,11050
+11054,Laboratory equipment and supplies,0,11050
+11055,Scientific instruments,0,11050
+11056,Veterinarians' equipment and supplies,0,11050
+11057,Other professional equipment and supplies,0,11050
+11100,Semi-finished iron and steel products,1,10000
+11111,Sheet bars and tin plate bars,0,11100
+11112,Wire rods,0,11100
+11113,Rough castings and foundry products,0,11100
+11114,Forgings,0,11100
+11116,Other semi-finished iron and steel products,0,11100
+11120,Flat iron and steel products,1,10000
+11121,Plates,0,11120
+11122,Hot-rolled and cold-rolled strips,0,11120
+11123,Cold-rolled sheets,0,11120
+11124,Hot-rolled sheets,0,11120
+11126,Galvanized and coated sheets,0,11120
+11127,Tin plate and terneplate,0,11120
+11128,Fabricated and structural plate products,0,11120
+11129,Other flat iron and steel products,0,11120
+11140,Iron and steel wire and wire products,1,10000
+11141,"Wire, including plain, coated, barbed, and twisted",0,11140
+11142,Nails,0,11140
+11143,"Wire rope, strand, strapping, reinforcement mesh, and bale ties",0,11140
+11150,Iron and steel pipes and tubing,1,10000
+11152,Tubing,0,11150
+11153,Standard steel pipes,0,11150
+11154,Other steel pipes,0,11150
+11160,Other iron and steel products,1,10000
+11162,"Hot-rolled bars and bar-size shapes, excluding reinforcement bars",0,11160
+11163,Cold-finished bars and bar-size shapes,0,11160
+11164,Concrete reinforcement bars,0,11160
+11165,"Structural shapes, excluding bar-size shapes",0,11160
+11167,Other finished products,0,11160
+11170,Alloy steel,1,10000
+11171,Hot-rolled or cold-finished bars,0,11170
+11173,"Pipes, tubing, and plates",0,11170
+11175,Other alloy steel,0,11170
+11180,Stainless steel,1,10000
+11181,Plates,0,11180
+11182,Strips,0,11180
+11183,Sheets,0,11180
+11184,Bars and bar-size shapes,0,11180
+11185,"Other stainless steel, including tubing",0,11180
+11200,Copper and brass,1,10000
+11211,Structural copper wire mill products,0,11200
+11212,"Flat products, including sheets, strips, and plates",0,11200
+11213,Tubular products,0,11200
+11214,"Rods, nonelectrical wire, and extruded shapes",0,11200
+11220,"Aluminum shapes and forms, including pipes and tubing",1,10000
+11221,Plates - .250 inch and over,0,11220
+11222,Sheets and coils - .006 to .249 inch,0,11220
+11223,"Rolled or extruded rods, bars, and wires, including rounds, hexes, squares, and rectangles",0,11220
+11224,"Pipes and tubing, including hollow bar, square, and rectangular tubing",0,11220
+11225,Foil - up to .005 inches,0,11220
+11230,"Other nonferrous metals, including magnesium, nickel, tin, lead, and zinc, excluding gemstones",1,10000
+11300,Coal and coke,1,10000
+11311,Coal,0,11300
+11312,Coke,0,11300
+11320,"Minerals and ores, excluding coal, gemstones, and crude oil",1,10000
+11400,Electrical apparatus and equipment,1,10000
+11411,Power and distribution transformers,0,11400
+11412,Switchgear and switchboard apparatus,0,11400
+11413,"Motors and generators, including motor-generator sets",0,11400
+11414,"Conduit, raceway, and fittings",0,11400
+11415,Electric light bulbs,0,11400
+11416,"Interior wiring, excluding conduit",0,11400
+11417,"Exterior wiring and cable, excluding conduit",0,11400
+11418,Lighting fixtures,0,11400
+11419,Industrial controls,0,11400
+11421,"Other electrical apparatus and equipment, including fuses and lightning rods",0,11400
+11500,"Electric household appliances, including gas clothes dryers",1,10000
+11511,Televisions,0,11500
+11512,"Radios, stereos, tape players, and CD players",0,11500
+11513,"VCRs, video cameras, digital video disc (DVD) players, and electronic DVD-based game consoles",0,11500
+11514,Electric household ranges and ovens,0,11500
+11515,Household refrigerators and freezers,0,11500
+11516,"Electric household washing machines and dryers, including gas clothes dryers",0,11500
+11517,Household vacuum cleaners and sewing machines,0,11500
+11518,"Other electric household appliances, including dishwashers, toasters and fans",0,11500
+11600,"Electronic parts and equipment, excluding communications equipment",1,10000
+11612,Integrated circuits,0,11600
+11613,Capacitors and resistors,0,11600
+11615,Semiconductors,0,11600
+11616,Electronic connectors and other passive electronic parts,0,11600
+11618,Other electronic parts and equipment,0,11600
+11650,Communications equipment and supplies,1,10000
+11651,Telephones,0,11650
+11652,Other communications equipment,0,11650
+11700,Hardware,1,10000
+11711,"Hand tools, including power driven tools",0,11700
+11712,"Bolts, nuts, rivets, and other fasteners, excluding nails",0,11700
+11713,Cutlery,0,11700
+11800,"Plumbing and hydronic heating equipment and supplies, including gas appliances, water heaters, and other water system components",1,10000
+11811,"Plastic pipe fittings and valves, excluding pipes and tubing",0,11800
+11812,"Metal pipe fittings and valves, excluding pipes and tubing",0,11800
+11813,Plumbing fixtures,0,11800
+11814,"Hydronic and gas furnaces, stoves, water heaters, excluding electric",0,11800
+11815,"Boilers, radiators, and convectors",0,11800
+11816,"Well pumps and motors, water storage tanks, water conditioning and treatment devices",0,11800
+11818,Other plumbing and heating equipment and supplies,0,11800
+11900,Forced air heating and air-conditioning equipment and supplies,1,10000
+11911,Forced air furnaces,0,11900
+11912,Central air-conditioners,0,11900
+11914,Heat pumps,0,11900
+11916,Air cleaning and filtration systems,0,11900
+11917,Compressors for air-conditioners,0,11900
+11918,Condensing units for air-conditioners,0,11900
+11919,"Registers, grills, duct insulation, and pre-formed ductwork, excluding unformed sheet metal",0,11900
+12000,"Refrigeration equipment and supplies, including commercial refrigerators",1,10000
+12011,Commercial refrigerators,0,12000
+12012,Unit coolers for commercial refrigerators,0,12000
+12013,Condensing units for commercial refrigerators,0,12000
+12014,Refrigerants,0,12000
+12015,Other commercial refrigeration equipment and supplies,0,12000
+12100,"Construction and mining machinery and equipment, including parts and attachments",1,10000
+12111,New off-highway wheel and track-laying tractors,0,12100
+12112,"New power cranes, draglines, and shovels",0,12100
+12113,"New mixers, pavers, and related equipment",0,12100
+12114,New tractor shovel loaders,0,12100
+12115,"New graders, rollers, and off-highway trucks",0,12100
+12116,New mining machinery,0,12100
+12117,"Other new construction, mining, logging, and road maintenance machinery, equipment, and parts",0,12100
+12118,Used construction and mining machinery and equipment,0,12100
+12200,"Farm machinery, equipment, and parts",1,10000
+12211,New farm tractors,0,12200
+12212,New harvesting machinery,0,12200
+12213,"New land preparation, planting, and cultivating machinery",0,12200
+12214,New dairy farm and barn equipment,0,12200
+12215,New irrigation equipment,0,12200
+12216,Other new farm machinery and equipment,0,12200
+12218,Used farm machinery and equipment,0,12200
+12220,"Lawn and garden machinery, equipment, and parts",1,10000
+12221,New power lawn mowers,0,12220
+12222,"Other new lawn and garden machinery, equipment, and parts",0,12220
+12223,"Used lawn and garden machinery, equipment, and parts",0,12220
+12230,"Food-processing machinery, equipment, and parts",1,10000
+12231,"New commercial food-processing machinery, including baking machinery, slicers, and choppers",0,12230
+12232,"New packing, packaging, and bottling equipment",0,12230
+12233,Used commercial food-processing machinery and equipment,0,12230
+12234,"Used packing, packaging, and bottling equipment",0,12230
+12300,"Hydraulic and pneumatic pumps, motors, and parts",1,10000
+12311,Pumps,0,12300
+12312,Motors,0,12300
+12313,Pump and motor parts,0,12300
+12320,"General-purpose industrial machinery, equipment, and parts",1,10000
+12321,"New pumps, compressors, and equipment",0,12320
+12323,"New diesel engines, excluding automotive engines",0,12320
+12326,"New controlling, recording, and indicating instruments and accessories",0,12320
+12327,Other new general-purpose industrial machinery and equipment,0,12320
+12328,Used general-purpose industrial machinery and equipment,0,12320
+12330,"Metalworking machinery, equipment, and parts",1,10000
+12340,"Materials handling machinery, equipment, and parts",1,10000
+12341,New conveying equipment,0,12340
+12342,New hoists and cranes,0,12340
+12343,New forklifts,0,12340
+12344,New industrial trucks and tractors,0,12340
+12345,"Used materials handling machinery, equipment, and parts",0,12340
+12350,"Oil well, oil refinery, and pipeline machinery, equipment, and supplies",1,10000
+12351,"New oil refining and pipeline machinery, equipment, and supplies",0,12350
+12352,"New oil field machinery, equipment, and supplies, including drilling bits",0,12350
+12353,"Used oil well, oil refinery, and pipeline machinery, equipment, and supplies",0,12350
+12360,"Other industrial machinery, equipment, and parts",1,10000
+12361,New metal smelting and refining machinery and equipment,0,12360
+12362,"New power plant machinery, excluding electrical",0,12360
+12363,"New printing trades machinery, equipment, and supplies",0,12360
+12364,New textile and sewing machinery and equipment,0,12360
+12365,New woodworking machinery,0,12360
+12366,"Other new industrial machinery and equipment, including industrial water treatment equipment",0,12360
+12367,Used industrial machinery and equipment,0,12360
+12370,Mechanical power transmission supplies,1,10000
+12371,Bearings and bushings,0,12370
+12372,Other mechanical power transmission supplies,0,12370
+12380,"Industrial valves and fittings, excluding hydraulic valves and fittings",1,10000
+12390,Hydraulic and pneumatic valves,1,10000
+12391,Hydraulic valves,0,12390
+12392,Pneumatic valves,0,12390
+12400,Hydraulic and pneumatic cylinders and rotary actuators,1,10000
+12411,Hydraulic cylinders and rotary actuators,0,12400
+12412,Pneumatic cylinders and rotary actuators,0,12400
+12420,Hydraulic and pneumatic connectors and assemblies,1,10000
+12421,Hydraulic and pneumatic connectors,0,12420
+12422,Hydraulic and pneumatic assemblies,0,12420
+12430,Other hydraulic and pneumatic accessories and parts,1,10000
+12440,"Welding supplies, excluding gases",1,10000
+12450,Industrial containers and supplies,1,10000
+12451,New and reconditioned drums and barrels,0,12450
+12452,Bottles and bottlers' supplies,0,12450
+12454,Other industrial containers and supplies,0,12450
+12460,"Abrasives, strapping, tape, inks, and mechanical rubber goods",1,10000
+12461,Printing and duplicating inks,0,12460
+12462,Abrasives and abrasive materials,0,12460
+12463,"Nylon, polyester, and synthetic rubber",0,12460
+12464,Mechanical rubber goods,0,12460
+12465,Strapping and tape,0,12460
+12466,Other industrial supplies,0,12460
+12500,Beauty and barber equipment and supplies,1,10000
+12511,"Beauty and barber equipment, including furniture and dryers",0,12500
+12512,"Beauty and barber supplies, including combs, curlers, and shampoos",0,12500
+12520,Janitorial equipment and supplies,1,10000
+12521,Power janitorial equipment,0,12520
+12522,Nonpower janitorial equipment,0,12520
+12523,Janitorial supplies,0,12520
+12530,Laundry and dry-cleaning equipment and supplies,1,10000
+12540,Service establishment equipment and supplies,1,10000
+12541,Burial caskets and other funeral equipment and supplies,0,12540
+12542,"Other service establishment equipment and supplies, including municipal water treatment equipment",0,12540
+12543,Upholsterers' equipment,0,12540
+12544,Shoe repair equipment,0,12540
+12600,Aircraft and aeronautical equipment and supplies,1,10000
+12611,New aircraft,0,12600
+12612,New aircraft engines and engine parts,0,12600
+12613,Other new aircraft equipment and supplies,0,12600
+12614,Used aircraft and aeronautical equipment and supplies,0,12600
+12620,"Marine machinery, equipment, and supplies",1,10000
+12621,"New ships and boats, excluding pleasure boats",0,12620
+12622,New marine propulsion machinery and equipment,0,12620
+12623,New marine supplies,0,12620
+12624,"Used marine machinery, equipment, and supplies",0,12620
+12630,Other transportation equipment and supplies,1,10000
+12631,"New transportation equipment, excluding automotive",0,12630
+12632,"Used transportation equipment, excluding automotive",0,12630
+12700,Sporting and recreational goods and supplies,1,10000
+12711,"Firearms, ammunition, reloading equipment, archery supplies, shooting aids, and accessories",0,12700
+12712,Bicycles and bicycle tires and tubes,0,12700
+12713,"Billiards, pool, and bowling equipment, and accessories",0,12700
+12714,Camping and fishing equipment and accessories,0,12700
+12715,Athletic equipment and accessories,0,12700
+12716,Skiing and snowboarding equipment,0,12700
+12717,"Marine pleasure craft, equipment, and accessories",0,12700
+12718,"Other sporting and recreational goods, including go-carts, bingo supplies, and playground equipment",0,12700
+12800,Toys and hobby goods and supplies,1,10000
+12811,"Video game players, including dedicated game terminals and handheld electronic games",0,12800
+12812,"Other toys and games, including children's vehicles",0,12800
+12813,Crafts and craft supplies,0,12800
+12814,Other hobby goods and accessories,0,12800
+12815,Fireworks and firecrackers,0,12800
+12900,Ferrous metal scrap,1,10000
+12911,Prepared ferrous metal scrap processed by this establishment,0,12900
+12912,Prepared ferrous metal scrap not processed by this establishment,0,12900
+12913,"Unprepared ferrous metal scrap, including bi-metal cans",0,12900
+12920,Nonferrous metal scrap,1,10000
+12921,Aluminum scrap,0,12920
+12922,Copper and copper alloy scrap,0,12920
+12923,Lead scrap,0,12920
+12924,"Other nonferrous metallic scrap, including nickel, zinc, and precious metals",0,12920
+12930,Recyclable paper and paperboard,1,10000
+12940,"Recyclable materials, excluding metals and paper",1,10000
+12941,"Recyclable textiles, including rags and textile scraps",0,12940
+12943,Recyclable plastics,0,12940
+12944,Recyclable glass,0,12940
+12945,"Other recyclable materials, including rubber and bones",0,12940
+12946,Slags,0,12940
+13000,"Jewelry, diamonds, gemstones, and watches",1,10000
+13011,Diamonds and diamond jewelry where lapidary work was not performed at this location,0,13000
+13012,Gemstone and pearl jewelry where lapidary work was not performed at this location,0,13000
+13013,"Diamonds, diamond jewelry, gemstones, and pearl jewelry where lapidary work was performed at this location",0,13000
+13014,"Watches, clocks, and watch parts",0,13000
+13015,Karat gold jewelry,0,13000
+13016,"Other jewelry, silverware, and plated ware, including costume jewelry",0,13000
+13030,"Precious metals--gold, silver, and platinum, including precious metal coins",1,10000
+13100,Musical instruments and supplies,1,10000
+13120,"Nonlumber forest products, including cordwood, hewn posts, poles, and railroad ties",1,10000
+13130,"Prerecorded compact discs (CDs), audio tapes, and phonograph records",1,10000
+13140,"Prerecorded video tapes, and digital video discs (DVDs)",1,10000
+13150,Miscellaneous durable goods,1,10000
+13151,Coin-operated games,0,13150
+13152,Luggage,0,13150
+13153,Works of art,0,13150
+13154,Other miscellaneous durable goods,0,13150
+13155,"Signs, excluding electric signs",0,13150
+13160,Fire extinguishers and fire safety equipment,1,10000
+13170,Safety equipment,1,10000
+13200,Printing and writing paper,1,10000
+13211,Newsprint,0,13200
+13212,Fine roll paper,0,13200
+13213,"Other printing and writing paper, including paper used in brochures, catalogs, and direct mail",0,13200
+13300,"Office paper, office supplies, greeting cards, and labels",1,10000
+13311,Business forms,0,13300
+13312,"Office and consumer paper, including stationery",0,13300
+13313,"Inked ribbons, pens, and pencils",0,13300
+13314,Toner and toner cartridges,0,13300
+13315,Greeting cards,0,13300
+13316,"Other office supplies, including envelopes, ruled forms, and labels",0,13300
+13400,Paper and plastic products,1,10000
+13411,Cardboard boxes,0,13400
+13412,"Paper dishes, cups, and napkins",0,13400
+13413,"Industrial paper and plastic, including wrapping, bags, and cartons",0,13400
+13414,"Disposable plastic boxes, containers, cups, dishes, and supplies",0,13400
+13415,Other paper and plastic products,0,13400
+13500,"Pharmaceuticals, pharmaceutical supplies, cosmetics, and toiletries",1,10000
+13511,Prescription drugs,0,13500
+13512,Nonprescription drugs,0,13500
+13513,Cosmetics and beauty supplies,0,13500
+13514,Perfumes,0,13500
+13515,Vitamins and nutritional supplements,0,13500
+13516,"Other toiletries and druggists' sundries, including health aids and first aid supplies",0,13500
+13517,Veterinarians' medicines,0,13500
+13600,Knit and woven piece goods,1,10000
+13611,Goods purchased gray and finished on contract,0,13600
+13612,"Cotton, including blends",0,13600
+13613,"Synthetics, excluding synthetic knits",0,13600
+13614,Other knit fabrics,0,13600
+13615,Woolen and worsted piece goods,0,13600
+13616,Other piece goods,0,13600
+13700,"Notions, including buttons, ribbons, lace, sewing accessories, zippers, and bindings",1,10000
+13800,Men's and boys' clothing,1,10000
+13811,"Men's and boys' suits, coats, and formal wear",0,13800
+13812,"Men's and boys' dress and casual shirts, slacks, and jeans, including unisex T-shirts",0,13800
+13813,Men's and boys' underwear and sleepwear,0,13800
+13814,Men's and boys' work clothing and uniforms,0,13800
+13815,"Other men's and boys' clothing, including caps, hats, gloves, neckwear, and umbrellas",0,13800
+13900,"Women's, misses', and girls' clothing",1,10000
+13912,"Women's, misses', and girls' dresses and blouses",0,13900
+13913,"Women's, misses', and girls' suits and coats",0,13900
+13914,"Women's, misses', and girls' outerwear",0,13900
+13915,"Women's, misses', and girls' underwear and sleepwear",0,13900
+13916,"Other women's, misses', and girls' clothing, including caps, hats, gloves, sweaters, and umbrellas",0,13900
+13920,"Infants' and children's clothing, to size 6X",1,10000
+14000,Footwear,1,10000
+14011,All athletic footwear,0,14000
+14012,Infants' footwear,0,14000
+14013,"Women's, misses', and girls' footwear, excluding athletic footwear",0,14000
+14014,"Men's and boys' footwear, excluding athletic footwear",0,14000
+14015,Shoe accessories,0,14000
+14100,Packaged frozen food,1,10000
+14111,Frozen meals,0,14100
+14112,Frozen fish and seafood products,0,14100
+14113,Frozen vegetables,0,14100
+14114,Frozen fruits and fruit juices,0,14100
+14115,Frozen meat products,0,14100
+14116,Frozen baked goods,0,14100
+14117,"Other frozen foods, excluding frozen dairy products",0,14100
+14118,Frozen poultry products,0,14100
+14200,"Dairy products, excluding dried, canned, condensed, and evaporated dairy products",1,10000
+14211,Butter,0,14200
+14212,Cheese,0,14200
+14213,"Milk and cream, excluding raw milk and cream",0,14200
+14214,Ice cream and other frozen dairy products,0,14200
+14215,Raw milk and cream,0,14200
+14216,Other dairy products,0,14200
+14217,Yogurt,0,14200
+14300,"Poultry and poultry products, excluding canned and frozen poultry products",1,10000
+14311,Dressed poultry slaughtered on location,0,14300
+14312,Eggs,0,14300
+14313,Live poultry,0,14300
+14314,"Other poultry, excluding frozen packaged and canned poultry products",0,14300
+14400,Confectioneries,1,10000
+14411,Candy,0,14400
+14412,Chewing gum,0,14400
+14413,Nuts,0,14400
+14414,Chips and popcorn,0,14400
+14415,Other confectioneries,0,14400
+14500,"Fish and seafood, excluding canned and frozen fish and seafood",1,10000
+14600,Fresh meat and meat products,1,10000
+14611,Beef not slaughtered on location,0,14600
+14612,Veal not slaughtered on location,0,14600
+14613,Lamb and mutton not slaughtered on location,0,14600
+14614,Pork not slaughtered on location,0,14600
+14615,Sausage and prepared meats made on location,0,14600
+14616,Sausage and prepared meats not made on location,0,14600
+14617,Meat from animals slaughtered on location,0,14600
+14618,"Other meat products, including deli meat",0,14600
+14700,Fresh fruits and vegetables,1,10000
+14711,Fresh fruits,0,14700
+14712,"Prepackaged fresh-cut vegetables, including carrots and salads",0,14700
+14713,Other fresh vegetables,0,14700
+14800,"Coffee, tea, and powdered drink mixes",1,10000
+14811,Coffee,0,14800
+14812,Tea,0,14800
+14814,Powdered drink mixes,0,14800
+14820,"Bread, baked goods, and baking ingredients",1,10000
+14821,Bread and rolls,0,14820
+14822,Cookies and cakes,0,14820
+14823,Cooking oils and margarine,0,14820
+14824,Flour,0,14820
+14825,Refined sugar,0,14820
+14826,Spices,0,14820
+14827,Baking mixes and dough,0,14820
+14829,"Other baked goods, including crackers",0,14820
+14830,Nonperishable (canned) food,1,10000
+14831,"Nonperishable (canned) fruits, vegetables, and juices",0,14830
+14832,Baby food,0,14830
+14833,Nonperishable (canned) meat,0,14830
+14834,Nonperishable (canned) fish and seafood,0,14830
+14835,Nonperishable (canned) milk,0,14830
+14837,Pickles and olives,0,14830
+14838,"Preserves, jellies, jams, peanut butter, and honey",0,14830
+14839,"Sauces, salad dressing, dips, and vinegar",0,14830
+14841,Condiments,0,14830
+14842,Soup,0,14830
+14848,"Other canned food, including canned poultry products",0,14830
+14850,Soft drinks and bottled water,1,10000
+14851,Packaged soft drinks,0,14850
+14852,Pre-mix and post-mix bulk soft drinks,0,14850
+14853,Bottled water,0,14850
+14854,Non-alcoholic beer and mixers,0,14850
+14855,Sport and energy drinks,0,14850
+14870,"Food and beverage basic materials, including flavoring extracts, fruit peel, sausage casings, hop extract, malt, and yeast",1,10000
+14880,Grocery specialties,1,10000
+14881,Breakfast cereals and bars,0,14880
+14882,Pasta,0,14880
+14883,Rice,0,14880
+14884,"Packaged meals, excluding frozen",0,14880
+14885,Pet food,0,14880
+14888,"Other grocery specialties, including dried and soy milk",0,14880
+14900,"Grains, beans, and seeds",1,10000
+14911,"Corn, excluding corn grown for silage",0,14900
+14912,Oats and barley,0,14900
+14913,Wheat,0,14900
+14914,"Sorghum, excluding sorghum grown for silage",0,14900
+14915,Soybeans,0,14900
+14916,"Seeds and other grains, beans, and rice",0,14900
+15000,"Cattle, hogs, sheep, and goats",1,10000
+15011,Cattle,0,15000
+15012,Hogs,0,15000
+15013,Sheep,0,15000
+15014,Goats,0,15000
+15100,"Hides, skins, and pelts",1,10000
+15120,Leaf tobacco,1,10000
+15121,Leaf tobacco stemmed and re-dried at this location,0,15120
+15122,All other leaf tobacco,0,15120
+15130,"Wool, wool tops, and mohair",1,10000
+15140,Inedible farm products,1,10000
+15141,Raw sugar,0,15140
+15142,"Horses, mules, and donkeys",0,15140
+15143,Other inedible farm products,0,15140
+15200,Raw cotton,1,10000
+15300,Plastics materials and basic shapes,1,10000
+15311,"Plastic pipes, rods, tubes, and shapes",0,15300
+15312,High pressure laminates,0,15300
+15313,Plastics raw materials,0,15300
+15314,Other plastics materials and basic shapes,0,15300
+15320,Industrial gases,1,10000
+15330,"Chemicals and allied products, excluding agricultural chemicals, plastics, industrial and natural gases, liquefied petroleum (LP), and petroleum",1,10000
+15331,"Compressed and liquefied gases, excluding liquefied petroleum (LP)",0,15330
+15332,Alkalies and chlorine,0,15330
+15334,Organic fibers,0,15330
+15335,Detergents and soaps,0,15330
+15336,"Sanitation chemicals, polishes, and waxes",0,15330
+15338,"Wood chemicals, naval stores, and gum",0,15330
+15339,"Biofuels, including ethanol, methanol, biodiesel and gasohol not included with petroleum products",0,15330
+15341,Nonagricultural insecticides,0,15330
+15342,"Adhesives, sealants, and glues",0,15330
+15343,Explosives,0,15330
+15344,Other chemicals and allied products,0,15330
+15400,"Refined petroleum products, excluding liquefied petroleum (LP)",1,10000
+15411,Aviation gasoline,0,15400
+15412,Motor gasoline,0,15400
+15413,Special naphtha,0,15400
+15414,"Jet fuel, naphtha or kerosene",0,15400
+15415,"No. 2 distillate fuel oil, including no. 2 diesel and no. 2 heating oil",0,15400
+15416,"All other distillate fuel oil, including no. 1 and no. 4 diesel and heating oil",0,15400
+15417,"Residual fuel oil, including no. 5 and no. 6 heavy diesel",0,15400
+15418,Lubricating oil and greases,0,15400
+15420,Liquefied petroleum (LP),1,10000
+15500,Crude oil,1,10000
+15520,"Other petroleum products, including asphalt, road oil, and wax",1,10000
+15600,Beer and ale,1,10000
+15700,Wine and distilled alcoholic beverages,1,10000
+15711,Wine,0,15700
+15712,"Distilled liquor, including premixed alcoholic drinks",0,15700
+15800,Farm supplies,1,10000
+15811,Hay and straw,0,15800
+15812,"Poultry and livestock feeds, including silage, not mixed on location",0,15800
+15813,"Prepared poultry and livestock feeds, including silage, mixed on location",0,15800
+15814,"Herbicides, soil sterilizers, and soil conditioners",0,15800
+15815,"Insecticides, fungicides, and pesticides",0,15800
+15816,Other agricultural chemicals and fertilizers,0,15800
+15817,Seeds and bulbs for planting,0,15800
+15818,"Other farm supplies, including harness and saddlery equipment",0,15800
+15900,Tobacco and tobacco products,1,10000
+15911,Cigars,0,15900
+15912,Cigarettes,0,15900
+15913,"Other tobacco products, excluding leaf tobacco",0,15900
+16000,"Paint, paint supplies, wallpaper, and wallpaper supplies",1,10000
+16011,"Architectural coatings, enamels, primers, stains, solvents, and lacquers",0,16000
+16012,Industrial/Original Equipment Manufacturer (OEM) coatings,0,16000
+16013,"Special-purpose coatings, including automotive, refinish, marine, and traffic coatings",0,16000
+16014,Paint supplies,0,16000
+16015,Wallpaper and wallpaper supplies,0,16000
+16100,"Books, periodicals, newspapers, and other printed materials",1,10000
+16101,Books,0,16100
+16102,"Periodicals, newspapers, and other printed materials",0,16100
+16110,Flowers and florists' supplies,1,10000
+16120,"Art goods, including novelties and souvenirs",1,10000
+16121,Art goods and supplies,0,16120
+16122,Novelties and souvenirs,0,16120
+16130,"Textile bags, bagging, and burlap",1,10000
+16150,"Wigs, yarns, and leather products",1,10000
+19700,"Service receipts and labor charges, including installed parts",1,10000
+19701,Labor charges for repair work,0,19700
+19702,Parts installed in repair work,0,19700
+19703,Other service receipts and labor charges,0,19700
+19720,Receipts for service contracts,1,10000
+19730,"Advertising specialties, including paper novelties",1,10000
+19740,Receipts for installing equipment,1,10000
+19750,Reconditioning of drums or barrels,1,10000
+19810,Miscellaneous commodities,1,10000
+19830,Flight training and charter service,1,10000
+19840,Pipeline transportation receipts,1,10000
+19910,Receipts from Commodity Credit Corporation,1,10000
+19920,"Receipts for harvesting, cleaning, shelling, and other farm product preparation services",1,10000
+19930,Sales of integrated systems,1,10000
+19940,Rental and operating lease receipts,1,10000
+19941,Computer rental and leasing receipts,0,19940
+19942,Photocopying machine rental,0,19940
+19943,Other office machine rental receipts,0,19940
+19944,Other rental receipts,0,19940
+19950,Construction receipts,1,10000
+19960,Custom computer software,1,10000
+19970,Receipts for printing or photocopying performed at this establishment,1,10000
+19980,"Receipts for machine shop job work, including receipts for custom built, rebuilt, or repaired parts",1,10000
+20000,Industry total,1,0
+20020,Overnight recreational camps,1,20000
+20030,Telephone services,1,20000
+20040,Gambling services,1,20000
+20041,Table wagering games,0,20040
+20042,"Gambling machine products, including slot machines and video lottery terminals",0,20040
+20043,"Sale of tickets to lotteries and other games of chance to gamblers, for a fee or commission",0,20040
+20044,Hosting of coin-operated gambling machines,0,20040
+20045,"Pari-mutuel sports gambling, away from the event premises",0,20040
+20048,Other gambling services,0,20040
+20049,Other gambling services,0,20040
+20060,Membership dues and fees,1,20000
+20070,Room or unit accommodation for travelers and others,1,20000
+20071,"Room or unit accommodation for travelers, with maid service",0,20070
+20072,"Room or unit accommodation for travelers, without maid service",0,20070
+20073,"Shared room accommodation for unrelated parties, including hostel and dormitory rooms for temporary accommodation",0,20070
+20080,Recreational vehicle (RV) and tent sites for travelers and others,1,20000
+20090,Rental of residential space for principal residence,1,20000
+20100,"Groceries and other food items for human consumption off the premises, including bottled, canned, or packaged soft drinks; candy; gum; packaged snacks; etc. (vitamins are included within line 20160 and pet food is included within line 20800)",1,20000
+20101,"Meat, fish, and poultry, including prepackaged meats requiring refrigeration (deli meats are included within line 2107 and meats sold in a frozen state are included within line 20103)",0,20100
+20102,"Produce, including fresh and prepackaged fruits and vegetables (frozen vegetables are included within line 20103, floral items are included within line 20600, and soup and salad bar sales are included within line 21100)",0,20100
+20103,"Frozen foods, including packaged foods sold in a frozen state such as vegetables, fruits, juices, prepared foods, etc. (frozen dairy products such as ice cream are included with line 20104)",0,20100
+20104,"Dairy products and related foods, including milk, cheese, butter, yogurt, ice cream, eggs, etc. (hand-dipped ice cream and yogurt are included within line 21100)",0,20100
+20105,Bakery products baked on premises (bakery products served for immediate consumption by eat-in patrons are included within line 21111),0,20100
+20106,"Bakery products not baked on the premises, excluding frozen",0,20100
+20107,"Delicatessen items, including deli meats and other service delicatessen items (prepared sandwiches, dishes, and entrees are included within line 21100)",0,20100
+20108,"Bottled, canned, or packaged soft drinks",0,20100
+20109,Candy,0,20100
+20111,"All other foods, including dry groceries, canned and bottled foods, and other food items NOT covered within lines 20101 through 20109",0,20100
+20112,"All other foods, including dry groceries, canned, frozen, and bottled foods; packaged snacks; produce;  etc.",0,20100
+20113,"All other foods, including dry groceries, canned and bottled foods, candy, packaged snacks, bakery products, etc. (fruit and gourmet food baskets are included within line 20877)",0,20100
+20114,"All other foods, including dry groceries, canned and bottled foods, packaged snacks, etc. (fruit and gourmet food baskets are included within line 20877)",0,20100
+20130,Alcoholic beverages prepared and served or dispensed for immediate consumption,1,20000
+20131,Drinks with/of distilled spirits prepared and served or dispensed for immediate consumption,0,20130
+20132,Wine and wine drinks prepared and served or dispensed for immediate consumption,0,20130
+20133,"Beer, ale, and malt beverages prepared and served or dispensed for immediate consumption",0,20130
+20140,"Packaged liquor, wine, and beer",1,20000
+20141,"Distilled spirits, including liquor, brandy, and liqueurs",0,20140
+20142,Wine,0,20140
+20143,Beer and ale,0,20140
+20150,"Cigars, cigarettes, tobacco, and smokers' accessories, excluding sales from vending machines operated by others",1,20000
+20160,"Drugs, health aids, beauty aids, including cosmetics",1,20000
+20161,Prescriptions,0,20160
+20162,Nonprescription medicines,0,20160
+20163,"Vitamins, minerals, and other dietary supplements",0,20160
+20164,"Health aids, including first-aid products; foot products; prescription accessories; eye/contact lens care products; convalescent aids; orthopedic equipment, except shoes; medical, surgical, or dental supplies; and artificial limbs (first-aid and footcare non-prescription medicines are included within line 20162 and orthopedic shoes are included within 20260)",0,20160
+20165,"Cosmetics, including face cream, make-up, perfumes and colognes, etc.",0,20160
+20166,"Other hygiene needs, including deodorants; hair and shaving products; oral, feminine, and baby hygiene needs; hand products; etc.",0,20160
+20167,Hearing aids and supplies,0,20160
+20180,"Soaps, detergents, and household cleaners",1,20000
+20190,"Paper and related products, including paper towels, toilet tissue, wraps, bags, foils, etc. (stationery products are included within line 20851 and computer printer paper is included within line 20852)",1,20000
+20200,"Men's wear, including accessories (boys' wear is included within line 20240, custom-made garments are included within line 20215, and footwear is included within line 20260)",1,20000
+20201,"Men's overcoats, topcoats, raincoats, outer jackets",0,20200
+20202,Men's suits and formal wear,0,20200
+20203,Men's sport coats and blazers,0,20200
+20204,Men's tailored and dress slacks,0,20200
+20205,"Men's casual slacks and jeans, walking shorts, etc.",0,20200
+20206,Men's career and work uniforms,0,20200
+20207,Men's dress shirts,0,20200
+20208,"Men's sport shirts, including t-shirts, knit and woven shirts, etc.",0,20200
+20209,Men's sweaters,0,20200
+20211,"Men's hosiery, pajamas, robes, underwear",0,20200
+20212,"Men's sports apparel, including tennis, golf, jogging, swimming, skiing, camping, fishing, hiking, and other rugged outer and exercise apparel",0,20200
+20214,"Men's accessories, including hats, gloves, neckwear, handkerchiefs, belts, rain accessories, etc.",0,20200
+20215,Custom-made garments,0,20200
+20216,"Men's sweat tops, pants, and warm-ups",0,20200
+20217,Other men's wear,0,20200
+20220,"Women's, juniors', and misses' wear, including accessories (girls', infants, and toddlers' wear are included within 20240, custom-made garments are included within line 20235, and footwear is included with line 20260)",1,20000
+20221,"Furs, fur garments",0,20220
+20222,"Dresses, including all types",0,20220
+20223,"Dressy and tailored coats, outer jackets, rainwear",0,20220
+20224,"Suits, pantsuits, sport jackets, blazers",0,20220
+20225,"Slacks/pants, jeans, walking shorts, skirts",0,20220
+20226,"Tops, including t-shirts, knit and woven shirts, blouses, sweaters",0,20220
+20227,"Women's sports apparel, including tennis, golf, jogging, swimming, skiing, camping, fishing, hiking, and other rugged outer and exercise apparel",0,20220
+20229,"Hosiery, including pantyhose, socks, tights",0,20220
+20231,"Bras, girdles, corsets",0,20220
+20232,"Lingerie, sleepwear, loungewear",0,20220
+20233,"Hats, wigs, hairpieces",0,20220
+20234,"Accessories, including handbags, wallets, neckwear, gloves, belts, rain accessories, etc. (costume jewelry are included within line 20400)",0,20220
+20235,Custom-made garments,0,20220
+20236,"Women's sweat tops, pants, and warm-ups",0,20220
+20237,"Other apparel, including uniforms, smocks, and other apparel items not listed above",0,20220
+20238,"Other women's, juniors', and misses' wear",0,20220
+20240,"Children's wear, including boys' (sizes 2 to 7 and 8 to 20), girls' (sizes 4 to 6x and 7 to 14), and infants' and toddlers' clothing and accessories (footwear is included in 20260)",1,20000
+20241,Boys' (sizes 2 to 7 and 8 to 20) clothing and accessories,0,20240
+20242,Girls' (sizes 4 to 6x and 7 to 14) clothing and accessories,0,20240
+20243,Infants' and toddlers' clothing and accessories,0,20240
+20260,"Footwear, including accessories (women's hosiery is included within line 20220, and men's hosiery is included within line 20200)",1,20000
+20261,"Men's footwear, including dress and casual footwear",0,20260
+20262,"Women's footwear, including dress and casual footwear",0,20260
+20263,"Children's footwear, including boys', girls', infants', and toddlers' dress and casual footwear",0,20260
+20265,"Men's athletic footwear, including sneakers and outdoor hiking/sports boots",0,20260
+20266,"Women's athletic footwear, including sneakers and outdoor hiking/sports boots",0,20260
+20267,"Children's athletic footwear, including boys', girls', infants', and toddlers' sneakers and outdoor hiking/sports boots",0,20260
+20268,"Footwear accessories, including polishes, laces, trees, storage bags, etc.",0,20260
+20269,"All other footwear, including accessories (men's athletic socks are included within line 20217 and women's athletic socks are included within line 20238)",0,20260
+20270,"Sewing, knitting materials and supplies, needlework goods, including fabrics, patterns, sewing supplies, notions, yarns, laces, trimmings, needlework kits, etc.",1,20000
+20271,Fabrics,0,20270
+20272,Patterns,0,20270
+20273,"Sewing supplies, notions, yarns, laces, trimmings, needlework kits, etc.",0,20270
+20280,"Curtains, draperies, blinds, slipcovers, bed and table coverings",1,20000
+20281,Curtains and draperies,0,20280
+20282,"Vertical and horizontal blinds, woven wood blinds, and shades",0,20280
+20283,"Furniture coverings, including ready-made and custom-made (parts and materials used in furniture repair or upholstery work are included within line 29908)",0,20280
+20284,"Domestics, including towels, sheets, blankets, table linens and coverings, etc.",0,20280
+20285,Furniture coverings and domestics,0,20280
+20300,"Major household appliances, including vacuum cleaners, sewing machines, refrigerators, freezers, dehumidifiers, room air-conditioners, dishwashers, ranges, microwave ovens, clothes washers and dryers, trash compactors, outdoor gas grills, etc. (parts installed in repair are included within line 29900 and outdoor charcoal grills are included within line 20380)",1,20000
+20301,"Kitchen appliances, parts, accessories, including refrigerators, freezers, dishwashers, microwave ovens, etc.",0,20300
+20302,"Laundry appliances, parts, accessories, including clothes washers and dryers",0,20300
+20303,"Other major household appliances, parts, accessories, including room air-conditioners, dehumidifiers, vacuum cleaners, sewing machines, etc.",0,20300
+20310,"Small electric appliances, including mixers; blenders; can openers; toasters; coffee makers; frypans; and personal care appliances, such as hair dryers, curling irons, shavers, etc. (vacuum cleaners are included within line 20303)",1,20000
+20320,"Televisions, video players and recorders, video cameras, video tapes, DVDs, etc., including electronic game/DVD combination devices, parts, and accessories (video games, electronic games, and electronic game devices are included within line 20460, video tape/DVD and player rentals, other rentals, and parts installed in repair are included within line 29900, computer game software are included within line 20376)",1,20000
+20321,"Televisions, including HD receivers, satellite television equipment, and related parts and accessories",0,20320
+20322,"Video players, recorders, and cameras; electronic game/DVD combination devices; and related parts and accessories (receipts from video tape/DVD and player rentals are included within line 29912)",0,20320
+20323,"DVDs and video tapes, prerecorded and/or recordable (receipts from video tape/DVD rentals are included within line 29912)",0,20320
+20324,"Video players, recorders, cameras, tapes, DVDs, and electronic game/DVD combination devices (electronic games and electronic devices are included within line 20462, receipts from video tape and DVD rentals are included within line 29900, receipts from video tape/DVD and player rentals are included within line 29900, and computer game software are included within line 20376)",0,20320
+20325,Video content downloads,0,20320
+20330,"Audio equipment, musical instruments, radios, stereos, compact discs, records, tapes, audio books, sheet music, accessories (parts installed in repair and rental of musical instruments and other rentals are included within line 29900)",1,20000
+20331,"Audio equipment, components, parts, accessories, including radios, stereos, tape recorders and players, compact disc players, mp3 players (audio only), and other sound reinforcement and recording equipment",0,20330
+20332,Pianos and organs,0,20330
+20334,"Other musical instruments and accessories, including string instruments, horns, drums, synthesizers, music stands, musical instrument digital interface (MIDI) equipment, etc.",0,20330
+20335,"Compact discs. records, tapes, and audio books",0,20330
+20336,Sheet music and related items,0,20330
+20337,"Musical instruments, sheet music, and related items",0,20330
+20338,Audio content downloads,0,20330
+20340,"Furniture, sleep equipment (repair receipts, rental receipts, and parts and materials used in furniture repair or upholstery work are included within line 29900)",1,20000
+20341,Upholstered furniture (dual-purpose pieces are included within line 20342),0,20340
+20342,"Sleep sofas, daybeds, futons, and other dual-purpose pieces",0,20340
+20343,"Sleep equipment, including mattresses, springs, cots, waterbeds, etc. (sleep sofas are included within line 20342)",0,20340
+20344,"Other living room, dining room, bedroom furniture, including headboards",0,20340
+20345,"All other furniture, including outdoor, office, computer-related, kitchen",0,20340
+20346,"Office furniture, including computer-related furniture",0,20340
+20347,Outdoor/patio furniture,0,20340
+20348,"All other furniture, including kitchen, dinette, etc.",0,20340
+20360,"Flooring and floor coverings (receipts for carpet installation, carpet repair, and carpet cleaning are included within line 29900)",1,20000
+20361,Soft-surface (textile) floor coverings and accessories,0,20360
+20363,Hardwood flooring,0,20360
+20364,"Other hard-surface floor coverings and accessories, including tile and sheet goods",0,20360
+20370,"Computer hardware, software, and supplies, including computer game software (computer related furniture is included within 20340; office equipment such as calculators, adding machines, copiers, fax machines, etc., are included within line 20854; office supplies are included within line 20853; electronic games and electronic game devices are included within line 20460; and electronic game/DVD combination devices are included within line 20320)",1,20000
+20375,Computer and peripheral equipment,0,20370
+20376,"Prepackaged (off-the-shelf) computer software, including computer software downloads (electronic games and electric game devices are included within line 20462 and electronic games/DVD combination devices are included within line 20320)",0,20370
+20380,"Kitchenware and home furnishings, including cookware, cooking accessories, dinnerware, glassware, giftware, decorative accessories, clocks, mirrors, closet and bathroom accessories, etc. (ceiling fans, lighting and light fixtures are included within line 20600 and outdoor gas grills are included within line 20300)",1,20000
+20381,"Cookware and cooking accessories, including strainers, sifters, grinders, cutlery, canning supplies, etc.",0,20380
+20382,"Dinnerware, china, glassware, tableware, giftware, including all flatware and holloware",0,20380
+20383,"Decorative accessories, including lamps, lampshades, mirrors, pictures, picture frames, clocks, magazine racks, spice racks, desk sets, etc. (ceiling fans and light fixtures are included within line 20600 and custom framing services are included within line 29904)",0,20380
+20384,"All other kitchenware and home furnishings, including closet and bathroom accessories, etc.",0,20380
+20385,"All other kitchenware and home furnishings, including cookware, cooking accessories, dinnerware, glassware, giftware, closet and bathroom accessories, etc.",0,20380
+20386,Giftware and glassware including vases (candy and confections are included within line 20100),0,20380
+20387,"All other kitchenware and home furnishings, including cookware, cooking accessories, dinnerware, decorative accessories, candles, etc.",0,20380
+20388,China/glassware,0,20380
+20389,"Flatware and holloware, including sterling silver, plated and stainless steel",0,20380
+20391,Clocks,0,20380
+20392,"All other kitchenware and home furnishings, including cookware, cooking accessories, giftware, decorative accessories, mirrors, closet and bathroom accessories, etc.",0,20380
+20400,"Jewelry, including watches, watch attachments, novelty jewelry, etc. (flatware and holloware are included within line 20380 and receipts from watch, clock, and jewelry repair and engraving are included within line 29900)",1,20000
+20401,"Diamond jewelry - all jewelry items (rings, necklaces, etc.) in which diamonds constitute 50 percent or more of the value of the finished piece of jewelry (watches are included within line 20406 and loose diamonds are included within line 20404)",0,20400
+20402,"Pearl jewelry - all jewelry items (rings, necklaces, etc.) in which pearls constitute 50 percent or more of the value of the finished piece of jewelry",0,20400
+20403,"Other gemstone jewelry - all jewelry items (rings, necklaces, etc.) in which gemstones (other than diamonds or pearls) constitute 50 percent or more of the value of the finished piece of jewelry (loose gemstones are included within line 20404)",0,20400
+20404,"Loose gemstones, including diamonds and colored gemstones",0,20400
+20405,"Karat gold jewelry - all karat gold jewelry items (rings, necklaces, etc.) in which there are no diamonds, colored stones, or pearls set, or if diamonds, colored stones, or pearls constitute less than 50 percent of the value of the finished piece of jewelry",0,20400
+20406,Watches,0,20400
+20407,"Diamond, gemstone, and pearl jewelry (all watches are included within line 20411)",0,20400
+20408,Estate/antique jewelry,0,20400
+20411,"All other jewelry, including watches; watchbands; gold-filled, sterling, platinum, and novelty jewelry",0,20400
+20412,Costume and novelty jewelry,0,20400
+20413,"All other jewelry, including karat gold jewelry; pearl, diamond, and other gemstone jewelry; watches; etc.",0,20400
+20414,"Platinum jewelry - all platinum jewelry items (rings, necklaces, etc.) in which there are no diamonds, colored stones, or pearls set, or if diamonds, colored stones, or pearls constitute less than 50 percent of the value of the finished piece of jewelry",0,20400
+20415,"All other jewelry, including watchbands and gold-filled, sterling, costume, and novelty jewelry",0,20400
+20420,Books (audio tape books are included within line 20330 and comic books are included within line 20856),1,20000
+20421,"Trade, including fiction, non-fiction, adult, juvenile, new and back list reading, nonrack size paperbacks",0,20420
+20422,"Mass market paperback, rack size (nonrack size paperbacks are included within line 20421)",0,20420
+20423,"Religious, including bibles, hymnals, testaments, religious oriented works, etc.",0,20420
+20424,"General reference, including dictionaries, atlases, maps, etc.",0,20420
+20425,"Textbooks, including workbooks on elementary, high school, and college levels",0,20420
+20426,"Professional, including technical, scientific, business, law, etc.",0,20420
+20427,"Other books, including University press, etc.",0,20420
+20440,Photographic equipment and supplies (photofinishing is included within line 29900),1,20000
+20460,"Toys, hobby goods, and games, including stuffed animals, video and electronic games,  electronic game devices, and wheel goods, except bicycles (bicycles are included within line 20500, computer game software are included within line 20370, electronic game/DVD combination devices are included within line 20320, and pre-filled balloons are within line 20877)",1,20000
+20461,"Toys, including wheel goods",0,20460
+20462,"Games, including video and electronic games",0,20460
+20463,Hobby goods,0,20460
+20490,"Optical goods, including eyeglasses, contact lenses, sunglasses, etc. (eye/contact lens care products are included within line 20160, fees from eye examinations are included within line 29939, and binoculars are included within line 29810)",1,20000
+20491,Prescription eyeglasses,0,20490
+20492,Contact lenses,0,20490
+20493,Nonprescription eyeglasses and sunglasses,0,20490
+20494,All other optical goods and accessories,0,20490
+20500,"Sporting goods, including saddlery, boats, personal watercraft, snowmobiles, all-terrain vehicles (ATVs), golf cars, and other motorized sport vehicles, bicycles, parts and accessories, etc. (receipts from boat storage and docking are included within line 29914)",1,20000
+20501,"Team sporting goods equipment sold to teams, institutions, schools, etc.",0,20500
+20502,"Team sporting goods equipment sold to individuals, including equipment for baseball, softball, soccer, football, basketball, etc.",0,20500
+20503,Tennis equipment,0,20500
+20504,Golf equipment,0,20500
+20505,Snow-skiing and snowboarding equipment,0,20500
+20506,Exercise/fitness equipment,0,20500
+20507,"Firearms, hunting equipment, and supplies",0,20500
+20508,"Fishing tackle, including bait",0,20500
+20509,Camping and backpacking equipment and supplies,0,20500
+20511,Trophies and plaques,0,20500
+20512,"Bicycles, parts and accessories (parts installed in repair are included within line 29900)",0,20500
+20513,"Boats, canoes, kayaks, boat motors, parts and accessories",0,20500
+20514,"New boats, motors, and parts and accessories (parts installed in repair are included within line 29907)",0,20500
+20515,"Used boats, motors, and parts and accessories (parts installed in repair are included within line 29907)",0,20500
+20516,Scuba and skin diving equipment,0,20500
+20517,"Water skiing, surfing, and sail boarding equipment (personal watercraft are included within line 20525)",0,20500
+20518,Billiards equipment and supplies,0,20500
+20519,"Boats, motors, parts and accessories",0,20500
+20521,"All other sporting goods, including boats, bicycles, snowmobiles, go-carts, exercise/fitness equipment, pool/billiards equipment etc.",0,20500
+20522,"All other sporting goods, including bicycles, snowmobiles, go-carts, parts and accessories, etc.",0,20500
+20523,"All other sporting goods, including snowmobiles, go-carts, exercise/fitness equipment, etc.",0,20500
+20524,In-line roller skates and accessories,0,20500
+20525,"All other sporting goods, including archery and hockey equipment, badminton sets, bowling equipment, ice skates, skateboards, saddlery, etc.",0,20500
+20526,"All other sporting goods, including snowmobiles, go-carts, etc.",0,20500
+20527,"Motorized sport vehicles, including all-terrain vehicles (ATVs), snowmobiles, golf cars, go-carts, personal watercraft, parts and accessories, etc.",0,20500
+20528,"All other sporting goods, including bicycles, parts and accessories, etc.",0,20500
+20580,"Recreational vehicles, including camping trailers, travel trailers, truck campers, motor homes, parts and accessories (manufactured (mobile) homes are included within line 20680, liquefied petroleum (propane) gas are included within line 20780, and motorcycles are included within line 20701)",1,20000
+20581,"New camping trailers, including collapsible",0,20580
+20582,"New travel trailers, including 5th wheel",0,20580
+20583,New truck campers for mounting on pick-up trucks (trucks are included within line 20714),0,20580
+20584,New motor homes,0,20580
+20585,Used recreational vehicles,0,20580
+20586,"All other recreational vehicles, parts, and accessories (repair receipts are included within line 29904, parts installed in repair are included within line 29907, and rental receipts are included within line 29922)",0,20580
+20587,"All other recreational vehicles, including used motor homes and new and used camping trailers, travel trailers, truck campers, parts and accessories",0,20580
+20600,"Hardware, tools, and plumbing and electrical supplies",1,20000
+20601,Hardware,0,20600
+20602,"Tools and equipment, including hand tools, portable electric power tools, power air tools, stationary/bench top power tools, accessories (blades, bits, etc.), ladders, and scaffolding (outdoor power equipment are included within line 20636 or 20637)",0,20600
+20603,Plumbing fixtures and supplies,0,20600
+20605,Wiring and wire products,0,20600
+20606,Welding supplies,0,20600
+20607,"Electrical supplies, including lighting fixtures, light bulbs, ceiling fans, boxes, devices, etc. (lamps are included within line 20380)",0,20600
+20620,"Lawn, garden, and farm equipment and supplies; cut flowers; plants and shrubs; fertilizers; animal feed, other than for pets; etc. (materials used in landscaping or lawn services are included within line 29903, receipts from lawn maintenance service are included within line 29904, and non-floral giftware are included within line 20386)",1,20000
+20621,Cut flowers,0,20620
+20622,Cut flowers -- unarranged,0,20620
+20623,Cut flowers -- arranged,0,20620
+20624,Indoor potted plants -- blooming,0,20620
+20625,Indoor potted plants -- nonblooming,0,20620
+20626,Indoor potted plants and floral items,0,20620
+20627,"Outdoor nursery stock, including trees, shrubs, bedding plants, bulbs, sod, seeds, etc.",0,20620
+20628,"Fertilizer, lime, chemicals, and other soil treatments",0,20620
+20631,Lawn and garden tools,0,20620
+20633,"All other lawn, garden, and farm equipment and supplies, including lawn and garden tools and equipment, fertilizers, lime, mulch, chemicals, etc.",0,20620
+20636,"Lawn and garden machinery, equipment, and parts",0,20620
+20637,"Farm machinery, equipment, and parts",0,20620
+20638,"All other farm supplies, including grain and animal feed (saddlery are included within line 20500, and pet food are included within line 20800)",0,20620
+20639,"All other lawn and garden supplies, including fencing, irrigation equipment, and sprinklers",0,20620
+20640,"Dimensional lumber and other building/structural materials and supplies, including heating stoves and prefabricated fireplaces; spas, hot tubs, and saunas; stock kitchen and bathroom cabinets to be installed (stand-alone air-conditioner and other major appliances are included within line 20300; portable electronic heaters and other small appliances are included within line 20310; wallpaper is included within line 20690; paint and sundries are included within line 20670; custom kitchen and bathroom cabinets are included within line 20661; stock freestanding cabinets are included within line 20344; and the sale of material installed by the establishment in construction, renovation, or repair are included within line 29901 or 29902)",1,20000
+20641,"Dimensional lumber, nontreated",0,20640
+20642,Treated lumber,0,20640
+20643,"Boards, all grades (gypsum, specialty boards, and treatment are included within line 20644)",0,20640
+20644,"Gypsum, specialty boards, and treatments, including plaster, tape, and joint compounds",0,20640
+20645,"Engineered wood products, including glue-lam, laminated veneer lumber (LVL), wood I-joists, etc.",0,20640
+20646,"Structural panels, including softwood plywood and oriented strand board (OSB)",0,20640
+20647,"Other panel products, including hardwood plywood, waferboard, and particle board/sanded/specialty plywood",0,20640
+20648,"Building components, including floor trusses, roof trusses, framed wall panels, etc. (flooring and floor coverings are included within line 20360)",0,20640
+20649,"Connectors, including joist hangers, tie-downs, etc.",0,20640
+20651,Steel studs,0,20640
+20652,"Doors and moulding, including interior/exterior pre-hung or slab doors, garage doors, mouldings, and jambs",0,20640
+20653,"Windows, skylights, and patio doors, including wood or wood clad, vinyl, aluminum, or other",0,20640
+20654,Glass (glassware is included within line 20380),0,20640
+20655,"Masonry supplies, including cement, lime, plaster, brick, etc.",0,20640
+20656,Insulation (all types) and weatherization products,0,20640
+20657,"Siding, exterior trim, and soffit",0,20640
+20658,"Roofing (all types), including roofing supplies",0,20640
+20659,Ceilings and ceiling systems,0,20640
+20661,"Kitchen and bath cabinets and countertops, including bathroom vanities and vanity tops, medicine cabinets, etc.",0,20640
+20662,"Heating and HVAC units, fuel storage tanks, and related parts and equipment; ductwork; heating stoves, including wood, kerosene, and oil; and prefabricated fireplaces (stand-alone air-conditioners are included within line 20300 and parts installed in repair are included within line 29900)",0,20640
+20664,All other building/structural materials and supplies,0,20640
+20665,Refrigeration equipment and supplies,0,20640
+20666,All other building/structural materials and supplies,0,20640
+20670,Paint and sundries,1,20000
+20673,Interior paint,0,20670
+20674,Exterior paint,0,20670
+20675,"Stain, varnish, shellac, and other coatings",0,20670
+20676,"Painting equipment, including tools, brushes, scrapers, etc.",0,20670
+20677,"Painting supplies, including compounds and other consumable materials",0,20670
+20680,"Manufactured (mobile) homes, excluding modular homes",1,20000
+20681,"New single-section manufactured (mobile) homes, less than 14 feet wide",0,20680
+20682,"New single-section manufactured (mobile) homes, 14 feet wide",0,20680
+20683,"New single-section manufactured (mobile) homes, greater than 14 feet wide",0,20680
+20684,"New multisection manufactured (mobile) homes, two sections",0,20680
+20685,"New multisection manufactured (mobile) homes, three or more sections",0,20680
+20686,Other new manufactured (mobile) homes and parts and accessories,0,20680
+20687,Used single-section manufactured (mobile) homes,0,20680
+20688,Used multisection manufactured (mobile) homes,0,20680
+20690,Wallpaper and other flexible wallcoverings,1,20000
+20700,"Automobiles, cars, vans, trucks, motorcycles, motor scooters, motor bikes and other powered transportation vehicles, including all outright sales plus the fair sales value of all motor vehicles marketed under leases negotiated in 2002, transportation and dealer preparation charges, and dealer installed options (recreational vehicles are included within line 20580, receipts from the rental of automobiles or trucks are included within line 29919, value of service contracts are included within line 29943, and labor charges are included within line 29900)",1,20000
+20701,"New passenger cars -- retail, including station wagons",0,20700
+20702,"New passenger cars -- fleet, including station wagons",0,20700
+20703,"New vans and trucks -- retail, including minivans, cargo vans, sport utility vehicles (SUVs), and light passenger trucks",0,20700
+20704,"New vans and trucks -- fleet, including minivans, cargo vans, sport utility vehicles (SUVs), and light passenger trucks",0,20700
+20705,"Used passenger cars -- retail, including sales of passenger cars previously rented or leased",0,20700
+20706,"Used passenger cars -- wholesale (for resale), including sales of passenger cars previously rented or leased",0,20700
+20707,"Used vans, minivans, trucks, and buses -- retail, including sales of vans, minivans, trucks, and buses previously rented or leased",0,20700
+20708,"Used vans, minivans, trucks, and buses -- wholesale, including sales of vans, minivans, trucks, and buses previously rented or leased",0,20700
+20709,"Motorcycles, motor scooters, motor bikes, including parts and accessories (parts installed in repair are included within line 29900)",0,20700
+20711,All other powered transportation vehicles,0,20700
+20712,"New motorcycles, motor scooters, motor bikes, including parts and accessories (parts installed in repair are included within line 29907)",0,20700
+20713,"Used motorcycles, motor scooters, motor bikes, including parts and accessories (parts installed in repair are included within line 29907)",0,20700
+20714,"All other powered transportation vehicles, including automobiles, vans, minivans, trucks, etc.",0,20700
+20715,"New passenger cars -- leased, including station wagons",0,20700
+20716,"New vans and trucks -- leased, including minivans, cargo vans, sport utility vehicles (SUVs), and light passenger trucks",0,20700
+20717,New and used medium- and heavy-duty trucks and buses,0,20700
+20720,Automotive fuels,1,20000
+20721,Unleaded regular gasoline,0,20720
+20722,Unleaded mid-grade gasoline,0,20720
+20723,Unleaded premium gasoline,0,20720
+20725,Diesel fuel,0,20720
+20726,Other automotive fuels,0,20720
+20730,"Automotive lubricants, including oil, greases, etc.",1,20000
+20740,"Automotive tires, tubes, batteries, parts, accessories (parts installed in repair are included within line 29900)",1,20000
+20741,Automotive tires and tubes,0,20740
+20742,"Automotive parts (over-the-counter), accessories, and sundry supplies, including polishes, paint, decorative items, etc.",0,20740
+20743,"Automotive tires, tubes, batteries, accessories",0,20740
+20744,Automotive parts,0,20740
+20745,New automobile and light passenger truck tires and tubes,0,20740
+20746,"New medium- and heavy-duty truck and bus tires, including industrial, off-the-road, and farm tractor tires",0,20740
+20747,Retreaded or used automobile and light passenger truck tires,0,20740
+20748,"Retreaded or used medium- and heavy-duty truck and bus tires, including industrial, off-the-road, and farm tractor tires",0,20740
+20749,Automotive batteries,0,20740
+20753,"Automotive parts, used, including wheels",0,20740
+20755,"Automotive parts, new and rebuilt, including wheels",0,20740
+20756,"Automotive accessories, including safety and comfort related items (audio/sound accessories are included within line 20330)",0,20740
+20757,"Automotive supplies, including appearance and maintenance chemicals; automotive paint; antifreeze; functional fluids; etc. (lubricants are included within line 20730)",0,20740
+20780,"Household fuels, including oil, LP gas, wood, coal",1,20000
+20781,"LP gas, including bulk and bottled",0,20780
+20782,Kerosene,0,20780
+20783,No. 2 distillate fuel oil,0,20780
+20784,"Other distillate fuel oil, including nos. 1 and 4",0,20780
+20785,"Residual fuel oil, including nos. 5 and 6",0,20780
+20786,Coal,0,20780
+20787,Wood,0,20780
+20788,Other household fuels,0,20780
+20790,Crude oil,1,20000
+20800,"Pets, pet foods, and pet supplies",1,20000
+20801,Pets (fish are included within line 20804),0,20800
+20802,"Pet foods, including wild bird feed (fish food are included within line 20804)",0,20800
+20803,"Pet supplies, including wild bird supplies (fish food are included within line 20804)",0,20800
+20804,Aquarium products and fish,0,20800
+20850,All other merchandise,1,20000
+20851,"Stationery products, including stationery, tablets, pads, calendars, and related products",0,20850
+20852,"Office paper, including computer printer, copier, fax, and typewriter cut sheet paper",0,20850
+20853,Office and school supplies,0,20850
+20854,"Office equipment, including fax machines, dictaphones, copying machines, calculating machines, etc. (office supplies are included within line 20853)",0,20850
+20855,Greeting cards,0,20850
+20856,Magazines and newspapers,0,20850
+20857,"New aircraft, engines, and parts and accessories",0,20850
+20858,"Used aircraft, engines, and parts and accessories",0,20850
+20859,Luggage and leather goods (men's and women's small leather apparel accessories are included within line 20214 or 20234),0,20850
+20861,"Antiques, items over 100 years old",0,20850
+20862,"Collectibles, including items which are old, but less than 100 years old, and limited in supply",0,20850
+20863,"Art goods, including original pictures and sculptures (artists' supplies are included within line 20869 and reproductions are included within line 20380)",0,20850
+20864,"Utility trailers, including horse/livestock trailers",0,20850
+20865,"Telephones, including cellular phones",0,20850
+20866,Ice,0,20850
+20867,"Coins, medals, and other numismatic items",0,20850
+20868,"Stamps, autographs, and other philatelic materials and supplies",0,20850
+20869,Artists' materials and supplies,0,20850
+20871,"Religious goods, except books (books are included within line 20420)",0,20850
+20873,Monuments and grave markers,0,20850
+20874,Fireworks,0,20850
+20876,"Pools, pool chemicals, and pool supplies and accessories",0,20850
+20877,Souvenirs and novelty items,0,20850
+20878,"Seasonal decorations, including decorative plates, napkins, and cups (cut live and balled live Christmas trees are included within line 20627)",0,20850
+20879,"Artificial/silk flowers, plants, and trees",0,20850
+20881,Craft supplies,0,20850
+20882,Typewriters,0,20850
+20883,All other merchandise,0,20850
+21100,"Meals, unpackaged snacks, sandwiches, unpackaged ice cream and yogurt, bakery items, other food items, and non-alcoholic beverages prepared and served or dispensed for immediate consumption (alcoholic beverages are included within line 20130)",1,20000
+21101,"Meals, snacks, and other food items served at a table, bar, or other place attended by a server",0,21100
+21102,"Non-alcoholic beverages served at a table, bar, or other place attended by a server",0,21100
+21103,"Meals, snacks, and other food items prepared and dispensed without table service for consumption on the premises",0,21100
+21104,Non-alcoholic beverages prepared and dispensed without table service for consumption on the premises,0,21100
+21105,"Meals, snacks, and other food items dispensed via drive through service",0,21100
+21106,Non-alcoholic beverages dispensed via drive-through service,0,21100
+21107,"Meals, snacks, and other food items prepared and dispensed for immediate consumption off the premises, other than via drive-through service, including take-out, curbside pick-up, and delivery",0,21100
+21108,"Non-alcoholic beverages prepared and dispensed for immediate consumption off the premises, other than via drive-through service, including take-out, curbside pick-up, and delivery",0,21100
+21109,Soup and salad bars,0,21100
+21111,"All other meals and snacks, including hot coffee, fountain drinks, and prepared sandwiches, dishes, and entrees",0,21100
+21112,"Meals, snacks, and other food items dispensed via mobile vending service",0,21100
+21113,Non-alcoholic beverages dispensed via mobile vending service (office coffee service supplies are included within line 20100),0,21100
+21210,"Meals, snacks, other food items, and beverages prepared for immediate consumption under long-term contract (30 days or more)",1,20000
+21211,"Meals, snacks, other food items, and beverages prepared for immediate consumption under long-term contract for transportation businesses",0,21210
+21212,"Meals, snacks, other food items, and beverages prepared for immediate consumption under long-term contract other than for transportation businesses (office coffee service supplies are included within line 20100)",0,21210
+21220,"Meals, snacks, other food items, and beverages prepared for catered events (related equipment rental receipts are included within line 29699)",1,20000
+21221,"Meals, snacks, other food items, and beverages served at catered events held on the caterer's premises",0,21220
+21222,"Meals, snacks, other food items, and beverages served at catered events held on the customer's premises",0,21220
+21223,"Meals, snacks, other food items, and beverages dropped off at the customer's event (delivery charges are included within line 29622)",0,21220
+21224,"Meals, snacks, other food items, and beverages prepared for customer pick-up, including party platters",0,21220
+29600,Other services,1,20000
+29611,Admissions to live performing arts performances,0,29600
+29612,"Admissions to dance halls and clubs, including cover charges",0,29600
+29613,Internet access services,0,29600
+29614,"In-room entertainment services, including pay-per-view television, DVD/video tape/video game rental services, ect.",0,29600
+29615,"Hosting of vending machines, video games, and other non-gambling coin-operated machines",0,29600
+29616,Laundry services,0,29600
+29618,Employment services,0,29600
+29619,Coat check services,0,29600
+29621,"Parking services, including valet services",0,29600
+29622,Delivery services for food and beverages,0,29600
+29631,Rental of retail space,0,29600
+29632,Rental of space for food service,0,29600
+29633,"Rental of space for meetings, conventions, and similar short-term business uses",0,29600
+29634,"Rental of space for weddings, banquets, parties, and similar short-term social uses",0,29600
+29635,"Equipment rental services, including audio-visual equipment, sports and recreation equipment, etc.",0,29600
+29636,"Rental of non-residential space, including short-term rental of space for meetings, conventions, weddings, parties, and similar events",0,29600
+29641,Golf course and country club services,0,29600
+29642,Skiing facility services,0,29600
+29689,Other services,0,29600
+29699,Other services,0,29600
+29810,"All other merchandise, excluding lottery ticket sales/commissions (receipts for services are included within line 29900, receipts from the rental of automobiles or trucks are included within line 29919, and the fair sales value of leased motor vehicles are included within line 20700)",1,20000
+29900,"All nonmerchandise receipts, including all receipts from customers for parts installed in repair and charges for delivery, repair, maintenance, storage, installation, alteration, on-site construction, rental or lease of tools and equipment, video tape rental, and other services provided to customers excluding sales and other taxes (receipts from the rental of automobiles or trucks are included within line 29919, and the fair sales value of leased motor vehicles are included within line 20700)",1,20000
+29901,"Construction receipts, including material and labor charges for adding rooms, installing windows, building fences, rebuilding furnaces, reroofing, etc., for work done by employees of this establishment (receipts for work done by hired subcontractors are included within line 29946)",0,29900
+29902,"Repair and maintenance receipts, including material and labor charges for property upkeep such as landscaping, lawn service, painting, furnace cleaning, furnace repair, roof repair, etc., performed by employees of this establishment (receipts for work done by hired subcontractors are included within line 29946)",0,29900
+29903,Materials used in landscaping or lawn service,0,29900
+29904,"Labor charges for work performed by this establishment, including alteration charges; charges for automobile and other repair, maintenance, installation, construction, alteration, etc.; receipts from landscaping, etc; and receipts from heater repair installation, etc.  (carpet cleaning receipts for work contracted out to other establishments are included within line 29968)",0,29900
+29905,Labor charges for work contracted out to other establishments (carpet cleaning receipts for work contracted out to other establishments are included within line 29968),0,29900
+29906,Other labor charges,0,29900
+29907,Parts installed in repair,0,29900
+29908,Parts and materials used in furniture repair or upholstery work,0,29900
+29909,Delivery charges,0,29900
+29911,Delivery and installation charges,0,29900
+29912,"Rental of video tapes, DVDs, video/DVD players, video/DVD recorders, electronic games, and electronic game devices",0,29900
+29913,"Receipts from coin-operated amusement machines, excluding receipts from coin-operated machines operated by others",0,29900
+29914,"Receipts from pleasure boat storage and docking services, including receipts for launch fees and slip rentals",0,29900
+29915,Receipts from instructions and lessons,0,29900
+29916,Labor charges to customers for work performed by this establishment,0,29900
+29917,Receipts from photofinishing performed by this establishment,0,29900
+29918,Receipts from photofinishing contracted out to other establishments,0,29900
+29919,Rental of automobiles or trucks,0,29900
+29921,"Rental or lease of boats, aircrafts, etc.",0,29900
+29922,Rental or lease of recreational vehicles,0,29900
+29923,"Rental or lease of automobiles, trucks, or utility trailers",0,29900
+29924,"Rental or lease of appliances, stereos, televisions, photographic equipment, etc.",0,29900
+29925,Rental or lease of musical instruments,0,29900
+29926,Rental of medical/convalescent equipment,0,29900
+29927,Rental or lease of equipment,0,29900
+29929,"Receipts from photocopying, faxing, and check cashing services",0,29900
+29931,Labor charges to insurance companies for work performed by this establishment,0,29900
+29932,Rental of space and/or mobile homes (residential) (rental of space for recreational vehicles and trailers are included within line 29975),0,29900
+29933,"Rental of clothing, formal wear, etc.",0,29900
+29934,Car wash receipts,0,29900
+29935,Carpet repair receipts and other labor charges for repair work performed by this establishment,0,29900
+29936,Carpet cleaning receipts for work performed by this establishment,0,29900
+29938,Printing or engraving to order,0,29900
+29939,Fees from eye examinations,0,29900
+29941,Charges for insurance,0,29900
+29942,"Pet care services, including pet boarding, grooming, and other pet care services (veterinary services are included within line 29965)",0,29900
+29943,Value of service contracts,0,29900
+29944,Commissions received for the sale of credit life insurance and the arrangement of financing,0,29900
+29945,Wire services and commissions,0,29900
+29946,"All other nonmerchandise receipts, including charges for delivery, storage, rental or lease of tools and equipment, etc.",0,29900
+29947,Labor charges for warranty and extended contract work by this establishment,0,29900
+29948,"All other nonmerchandise receipts, including receipts from customers for delivery, parts installed in repair, rental or lease of tools and equipment, etc.",0,29900
+29949,"Parts, paint, and materials installed in repair and charged directly to customers",0,29900
+29951,"All other nonmerchandise receipts, including receipts from customers for storage, rental or lease of tools and equipment, etc.",0,29900
+29952,"All other nonmerchandise receipts, including receipts from customers for storage, rental or lease of tools and equipment, appraisals etc.",0,29900
+29953,All other nonmerchandise receipts,0,29900
+29954,"All other nonmerchandise receipts, including phone cards, gas cards, and money orders",0,29900
+29955,"All other nonmerchandise receipts, including receipts from rentals, storage, extended warranties, fabric and leather protection applications, etc.",0,29900
+29956,"All other nonmerchandise receipts, including charges for delivery, maintenance, storage, etc.",0,29900
+29957,"All other nonmerchandise receipts, including charges for delivery, storage, etc.",0,29900
+29958,"Parts, paint, and materials installed in repair and charged to insurance companies",0,29900
+29959,"All other nonmerchandise receipts, including charges for delivery, repair, etc.",0,29900
+29961,All other nonmerchandise receipts,0,29900
+29963,"All other nonmerchandise receipts, including receipts from customers for parts installed in repair and charges for repair, delivery, alteration, etc.",0,29900
+29965,All other nonmerchandise receipts,0,29900
+29966,Labor charges for internal and sublet repair,0,29900
+29967,All other nonmerchandise receipts,0,29900
+29968,"All other nonmerchandise receipts, including charges for storage, rental or lease of tools and equipment, photofinishing, formal wear rental, carpet cleaning, etc.",0,29900
+29969,"All other nonmerchandise receipts, including phone cards, gas cards, and money orders, receipts from customers for delivery, rental or lease of equipment, ect.",0,29900
+29971,"Parts, paint, and materials installed in repair and charged to insurance companies",0,29900
+29972,"All other nonmerchandise receipts, including receipts from customers for storage, rental, etc.",0,29900
+29973,"Parts, paint, and materials sold internally and installed in repair",0,29900
+29974,All other nonmerchandise receipts,0,29900
+29975,"All other nonmerchandise receipts, including receipts for parts installed in repair, charges for delivery, repair, maintenance, storage, installation, construction, and service contracts, etc.",0,29900
+29976,"All other nonmerchandise receipts, including charges for delivery, storage, etc.",0,29900
+29977,"All other nonmerchandise receipts, including delivery chagres, rental receipts, ect.",0,29900
+29978,"All other nonmerchandise receipts, including receipts from customers for parts installed in repair, service contracts, and charges for delivery, storage, etc.",0,29900
+29979,"All other nonmerchandise receipts, including receipts from customers for rental or lease of equipment, photofinishing, etc.",0,29900

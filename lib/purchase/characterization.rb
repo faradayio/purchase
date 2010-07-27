@@ -6,18 +6,19 @@ module BrighterPlanet
       def self.included(base)
         base.send :include, Characterizable
         base.characterize do
-          has.characteristic :merchant
-          has.characteristic :merchant_category
-          has.characteristic :industry
-          has.characteristic :product_line
-          has.characteristic :io_sector
-          has.characteristic :purchase_amount # full purchase amount
-          has.characteristic :tax             # tax portion of purchase
-          has.characteristic :cost            # cost before tax
-          has.characteristic :line_item
-          has.characteristic :customer_code
-          has.characteristic :zip_code
-          has.characteristic :date
+          has :merchant do |merchant|
+            merchant.reveals :merchant_category
+          end
+          has :industry
+          has :product_line
+          has :io_sector
+          has :purchase_amount # full purchase amount
+          has :tax             # tax portion of purchase
+          has :cost            # cost before tax
+          has :line_item
+          has :customer_code
+          has :zip_code
+          has :date
         end
       end
     end
