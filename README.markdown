@@ -25,6 +25,12 @@ Purchase uses bundler to manage dependencies. To prepare your environment, perfo
     gem install bundler     (note: prior to bundler 1.0 release, add --pre)
     bundle install
 
+### A Note to RVM Users (and Non-Users)
+
+[RVM](http://rvm.beginrescueend.com/) is a great tool for testing and development as it can create independent gem environments.
+
+Included in the repository is a .rvmrc that will automatically create a ruby 1.8.7 gemset for you named purchase. If you already have a gemset with the same name, simply replace the \`pwd\` within the .rvmrc to whatever name you want.
+
 ## Testing
 
 Our goal is to have sufficient testing coverage for our emissions models. We have chosen to write our tests using [cucumber](http://cukes.info) as the table-formatted testing fits well with our calculations tests and the plain-english stories lower the barrier to entry for programmers of all skill levels.
