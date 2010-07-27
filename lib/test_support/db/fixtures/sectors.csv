@@ -1,0 +1,15 @@
+io_code,description,emission_factor,emission_factor_units
+322230,Stationery product manufacturing,1.4,kilograms_per_2002_dollar
+324110,Petroleum refineries,2,kilograms_per_2002_dollar
+324121,Asphalt paving mixture and block manufacturing,1.3,kilograms_per_2002_dollar
+324122,Asphalt shingle and coating materials manufacturing,0.9,kilograms_per_2002_dollar
+324191,Petroleum lubricating oil and grease manufacturing,0.2,kilograms_per_2002_dollar
+324199,All other petroleum and coal products manufacturing,1.2,kilograms_per_2002_dollar
+334111,Electronic computer manufacturing,1.3,kilograms_per_2002_dollar
+33411A,Computer terminals and other computer peripheral equipment manufacturing,0.5,kilograms_per_2002_dollar
+334210,Telephone apparatus manufacturing,1.6,kilograms_per_2002_dollar
+334300,Audio and video equipment manufacturing,1.2,kilograms_per_2002_dollar
+4A0000,Retail trade,1.5,kilograms_per_2002_dollar
+511200,Software publishers,1,kilograms_per_2002_dollar
+7211A0,"Hotels and motels, including casino hotels",1,kilograms_per_2002_dollar
+722000,Food services and drinking places,0.8,kilograms_per_2002_dollar
