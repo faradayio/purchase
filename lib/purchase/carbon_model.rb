@@ -9,9 +9,9 @@ module BrighterPlanet
         base.extend FastTimestamp
         base.decide :emission, :with => :characteristics do
           committee :emission do
-            quorum 'from emissions factor and adjusted cost', :needs => [:emission_factor, :adjusted_cost] do
+            quorum 'from emissions factor and adjusted cost', :needs => [:emission_factor, :adjusted_cost] do |characteristics|
               #       lbs CO2e / 2002 US $              2002 US $
-              characteristics[:emission_factor] * characteristic[:adjusted_cost]
+              characteristics[:emission_factor] * characteristics[:adjusted_cost]
             end
             
             quorum 'default' do
@@ -20,8 +20,8 @@ module BrighterPlanet
           end
           
           committee :emission_factor do
-            quorum 'from sectors', :needs => [:sector] do |characteristics|
-              characteristics[:sector]
+            quorum 'from sectors', :needs => [:sectors] do |characteristics|
+              sum(characteristics[:sectors].each.emission_factor)
             end
             
             quorum 'default' do
@@ -30,17 +30,38 @@ module BrighterPlanet
             end
           end
           
-          committee :sector do
-            quorum 'from industries', :needs => [:industries] do |characteristics|
-              characteristics[:industries].sectors
+          committee :sectors do
+            quorum 'from industries and product lines', :needs => [:industries, :product_lines] do |characteristics|
+              collect(
+                characteristics[:industries].each do |industry|
+                  if (industry != "420000" && industry != "4A0000")
+                    industry.sectors
+                  end
+                end
+                
+                characteristics[:product_lines].each do |product_line|
+                  product_line.sectors
+                end
+              )
             end
             
-            quorum 'from product line', :needs => [:product_line] do |characteristics|
-              characteristics[:product_line].sectors
+            quorum 'from industries', :needs => [:industries] do |characteristics|
+              collect(characteristics[:industries].each.sectors)
+            end
+            
+            quorum 'from product lines', :needs => [:product_lines] do |characteristics|
+              collect(characteristics[:product_lines].each.sectors)
+              end
             end
             
             quorum 'default' do
-              raise "We need a merchant, merchant category, industries, or product_line"
+              raise "We need a merchant, merchant category, industry, or product_line"
+            end
+          end
+          
+          committee :product_lines do
+            quorum 'from industries', :needs => [:industries] do |characteristics|
+              collect(characteristics[:industries].each.product_lines)
             end
           end
           
