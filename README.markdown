@@ -47,7 +47,7 @@ To run a specific scenario: `cucumber features/name_of_feature.feature:line_numb
 
 ### Sniff
 
-The sniff gem is used to provide a testing environment that includes dependent data models and a database.
+The sniff gem is used to provide a testing environment that loads dependent data models (defined in the earth gem), a database, and testing fixtures.
 
 See: [http://github.com/brighterplanet/sniff](http://github.com/brighterplanet/sniff)
 
