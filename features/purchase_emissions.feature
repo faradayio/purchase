@@ -8,6 +8,9 @@ Feature: Purchase Emissions Calculations
     When emissions are calculated
     Then the emission value should be within 1 kgs of <emission>
     Examples:
-      | mcc  | amount | date       | emission |
-      | 1771 | 831.23 | 2010-08-01 | 1153     |
-      | 3007 |  11.00 | 2005-07-14 | 2070     |
+      | mcc  | amount   | date       | emission |
+      | 3504 | 100.00   | 2010-08-01 | 1000     |
+      # | 5111 | 100.00   | 2010-08-01 | 1000     |
+      # | 5172 | 100.00   | 2010-08-01 | 1000     |
+      # | 5732 | 100.00   | 2010-08-01 | 1000     |
+      # | 5812 | 100.00   | 2010-08-01 | 1000     |

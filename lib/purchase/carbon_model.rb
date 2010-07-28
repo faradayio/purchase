@@ -20,46 +20,55 @@ module BrighterPlanet
           end
           
           committee :emission_factor do |provides|
-            # FIXME TODO this actually has to access the io model and return a whole array of data
             provides.quorum :from_sector, :needs => [:sector] do |characteristics|
               characteristics[:sector]
+            end
             
-              provides.quorum :default do
-                # fallback emission_factor
-              end
+            provides.quorum :default do
+              # FIXME TODO figure out a real fallback emission factor
+              100
             end
           end
-            
+          
           committee :sector do |provides|
             provides.quorum :from_industry, :needs => [:industry] do |characteristics|
-              if characteristics[:industry].sector != #FIXME TODO the io sectors for wholesale and retail trade
-                characteristics[:industry].sector
-              else
-                characteristics[:industry].product_line.industry # FIXME TODO look up the industries that make the product lines that are made by the original industry
-              end
+              characteristics[:industry].sector
+            end
+            
+            provides.quorum :from_product_line, :needs => [:product_line] do |characteristics|
+              characteristics[:product_line].sector
+            end
+            
+            provides.quorum :default do
+              raise "We need a merchant, merchant category, industry, or product_line"
             end
           end
-            
+          
           committee :industry do |provides|
             provides.quorum :from_merchant_category, :needs => [:merchant_category] do |characteristics|
               characteristics[:merchant_category].industry
             end
           end
-            
+          
           committee :merchant_category do |provides|
             provides.quorum :from_merchant, :needs => [:merchant] do |characteristics|
               characteristics[:merchant].merchant_category
             end
           end
-            
+          
           committee :adjusted_cost do |provides|
-            # for now assuming is always US $ - later may need to figure out currency
             provides.quorum :from_cost_and_date, :needs => [:cost, :date] do |characteristics|
-              # convert to 2002 US $ based on date and cost
+              # FIXME TODO convert cost to 2002 dollars based on date
+              characteristics[:cost]
             end
             
             provides.quorum :from_purchase_amount_and_date, :needs => [:purchase_amount, :date] do |characteristics|
-              # adjust for tax and then convert to 2002 US $ based on date and cost
+              # FIXME TODO take out tax, then convert to 2002 US $ based on date and cost
+              characteristics[:purchase_amount] * 0.9
+            end
+
+            provides.quorum :default do
+              raise "We need either a cost or purchase amount"
             end
           end
         end
