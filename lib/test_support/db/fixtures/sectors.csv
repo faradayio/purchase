@@ -9,6 +9,7 @@ io_code,description,emission_factor,emission_factor_units
 33411A,Computer terminals and other computer peripheral equipment manufacturing,0.5,kilograms_per_2002_dollar
 334210,Telephone apparatus manufacturing,1.6,kilograms_per_2002_dollar
 334300,Audio and video equipment manufacturing,1.2,kilograms_per_2002_dollar
+339940,Office supplies (except paper) manufacturing,1.1,kilograms_per_2002_dollar
 4A0000,Retail trade,1.5,kilograms_per_2002_dollar
 511200,Software publishers,1,kilograms_per_2002_dollar
 7211A0,"Hotels and motels, including casino hotels",1,kilograms_per_2002_dollar
