@@ -11,7 +11,7 @@ module BrighterPlanet
           end
           has :industry
           has :product_line
-          has :io_sector
+          has :sector
           has :purchase_amount # full purchase amount
           has :tax             # tax portion of purchase
           has :cost            # cost before tax
