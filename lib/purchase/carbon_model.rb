@@ -8,8 +8,8 @@ module BrighterPlanet
         base.extend ::Leap::Subject
         base.extend FastTimestamp
         base.decide :emission, :with => :characteristics do
-          committee :emission do |provides|
-            quorum 'from_emission_factor_and_adjusted_cost', :needs => [:emission_factor, :adjusted_cost] do |characteristics|
+          committee :emission do
+            quorum 'from emissions factor and adjusted cost', :needs => [:emission_factor, :adjusted_cost] do
               #       lbs CO2e / 2002 US $              2002 US $
               characteristics[:emission_factor] * characteristic[:adjusted_cost]
             end
@@ -19,8 +19,8 @@ module BrighterPlanet
             end
           end
           
-          committee :emission_factor do |provides|
-            quorum 'from_sector', :needs => [:sector] do |characteristics|
+          committee :emission_factor do
+            quorum 'from sectors', :needs => [:sector] do |characteristics|
               characteristics[:sector]
             end
             
@@ -30,39 +30,39 @@ module BrighterPlanet
             end
           end
           
-          committee :sector do |provides|
-            quorum 'from_industry', :needs => [:industry] do |characteristics|
-              characteristics[:industry].sector
+          committee :sector do
+            quorum 'from industries', :needs => [:industries] do |characteristics|
+              characteristics[:industries].sectors
             end
             
-            quorum 'from_product_line', :needs => [:product_line] do |characteristics|
-              characteristics[:product_line].sector
+            quorum 'from product line', :needs => [:product_line] do |characteristics|
+              characteristics[:product_line].sectors
             end
             
             quorum 'default' do
-              raise "We need a merchant, merchant category, industry, or product_line"
+              raise "We need a merchant, merchant category, industries, or product_line"
             end
           end
           
-          committee :industry do |provides|
-            quorum 'from_merchant_category', :needs => [:merchant_category] do |characteristics|
-              characteristics[:merchant_category].industry
+          committee :industries do
+            quorum 'from merchant category', :needs => [:merchant_category] do |characteristics|
+              characteristics[:merchant_category].industries
             end
           end
           
-          committee :merchant_category do |provides|
-            quorum 'from_merchant', :needs => [:merchant] do |characteristics|
+          committee :merchant_category do
+            quorum 'from merchant', :needs => [:merchant] do |characteristics|
               characteristics[:merchant].merchant_category
             end
           end
           
-          committee :adjusted_cost do |provides|
-            quorum 'from_cost_and_date', :needs => [:cost, :date] do |characteristics|
+          committee :adjusted_cost do
+            quorum 'from cost and date', :needs => [:cost, :date] do |characteristics|
               # FIXME TODO convert cost to 2002 dollars based on date
               characteristics[:cost]
             end
             
-            quorum 'from_purchase_amount_and_date', :needs => [:purchase_amount, :date] do |characteristics|
+            quorum 'from purchase amount and date', :needs => [:purchase_amount, :date] do |characteristics|
               # FIXME TODO take out tax, then convert to 2002 US $ based on date and cost
               characteristics[:purchase_amount] * 0.9
             end
