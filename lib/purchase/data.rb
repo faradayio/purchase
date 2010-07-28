@@ -6,14 +6,17 @@ module BrighterPlanet
       def self.included(base)
         base.data_miner do
           schema do
-            integer 'merchant_id'
+            string  'merchant_id'
             string  'mcc'
-            string  'naics_code' # FIXME TODO not sure how to deal with the fact that a single purchase may have multiple industries, product lines, and io sectors
-            string  'pscode' # FIXME TODO not sure how to deal with the fact that a single purchase may have multiple industries, product lines, and io sectors
-            string  'io_code' # FIXME TODO not sure how to deal with the fact that a single purchase may have multiple industries, product lines, and io sectors
+            string  'naics_code'
+            string  'pscode'
+            string  'io_code'
             float   'purchase_amount'
+            string  'purchase_amount_units'
             float   'tax'
+            string  'tax_units'
             float   'cost'
+            string  'cost_units'
             string  'line_item'
             string  'customer_code'
             string  'zip_code_name'
