@@ -21,8 +21,8 @@ module BrighterPlanet
           
           committee :emission_factor do |provides|
             # FIXME TODO this actually has to access the io model and return a whole array of data
-            provides.quorum :from_io_sector, :needs => [:io_sector] do |characteristics|
-              characteristics[:io_sector]
+            provides.quorum :from_sector, :needs => [:sector] do |characteristics|
+              characteristics[:sector]
             
               provides.quorum :default do
                 # fallback emission_factor
@@ -30,10 +30,10 @@ module BrighterPlanet
             end
           end
             
-          committee :io_sector do |provides|
+          committee :sector do |provides|
             provides.quorum :from_industry, :needs => [:industry] do |characteristics|
-              if characteristics[:industry].io_sector != #FIXME TODO the io sectors for wholesale and retail trade
-                characteristics[:industry].io_sector
+              if characteristics[:industry].sector != #FIXME TODO the io sectors for wholesale and retail trade
+                characteristics[:industry].sector
               else
                 characteristics[:industry].product_line.industry # FIXME TODO look up the industries that make the product lines that are made by the original industry
               end
