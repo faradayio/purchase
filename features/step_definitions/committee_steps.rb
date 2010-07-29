@@ -53,3 +53,7 @@ Then /^the conclusion of the committee should include a key of (.*) and value (.
 
   @report.conclusion[key].should == coerce_value(value)
 end
+
+Then /^the conclusion of the committee should return a merchant_category with mcc (.*)$/ do |mcc|
+  @report.conclusion.mcc.should == mcc.to_s
+end

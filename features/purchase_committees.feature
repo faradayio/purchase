@@ -25,6 +25,16 @@ Feature: Purchase Committee Calculations
       | 831.23 | 2010-08-01 |       748.107 |
       |  11.00 | 2005-07-14 |           9.9 |
 
+  Scenario Outline: Merchant category committee from merchant
+    Given a purchase emitter
+    And a characteristic "merchant.id" of "<id>"
+    When the merchant_category committee is calculated
+    Then the conclusion of the committee should return a merchant_category with mcc <mcc>
+    Examples:
+      | id | mcc  |
+      | 1  | 5111 |
+      | 2  | 5732 |
+
   Scenario Outline: Industry shares committee
     Given a purchase emitter
     And a characteristic "merchant_category.mcc" of "<mcc>"
