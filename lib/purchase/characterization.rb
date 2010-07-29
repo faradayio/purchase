@@ -8,9 +8,9 @@ module BrighterPlanet
         base.characterize do
           has :merchant
           has :merchant_category
-          has :industries
-          has :product_lines
-          has :sectors
+          has :industry_shares 
+          has :product_line_shares
+          has :sector_shares
           has :purchase_amount # full purchase amount
           has :tax             # tax portion of purchase
           has :cost            # cost before tax
