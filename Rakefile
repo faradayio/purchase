@@ -29,8 +29,9 @@ begin
     gem.add_development_dependency 'rake'
     gem.add_development_dependency 'rdoc'
     gem.add_development_dependency 'rspec', '= 2.0.0.beta.17'
-    gem.add_development_dependency 'sniff', '=0.0.17' unless ENV['LOCAL_SNIFF']
+    gem.add_development_dependency 'sniff', '=0.0.18' unless ENV['LOCAL_SNIFF']
     gem.add_dependency 'characterizable', '=0.0.12'
+    gem.add_dependency 'cohort_scope', '~> 0.0'
     gem.add_dependency 'data_miner', '= 0.5.2' unless ENV['LOCAL_DATA_MINER']
     gem.add_dependency 'earth', '>=0.0.14' unless ENV['LOCAL_EARTH']
     gem.add_dependency 'falls_back_on', '= 0.0.2'
