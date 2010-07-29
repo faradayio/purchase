@@ -34,7 +34,8 @@ Gem::Specification.new do |s|
   s.rubygems_version = %q{1.3.7}
   s.summary = %q{A carbon model}
   s.test_files = [
-    "features/support/env.rb",
+    "features/step_definitions/committee_steps.rb",
+     "features/support/env.rb",
      "features/purchase_committees.feature",
      "features/purchase_emissions.feature",
      "lib/test_support/db/schema.rb",
@@ -53,10 +54,11 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<rake>, [">= 0"])
       s.add_development_dependency(%q<rdoc>, [">= 0"])
       s.add_development_dependency(%q<rspec>, ["= 2.0.0.beta.17"])
-      s.add_development_dependency(%q<sniff>, ["= 0.0.18"])
+      s.add_development_dependency(%q<sniff>, ["= 0.0.19"])
       s.add_runtime_dependency(%q<characterizable>, ["= 0.0.12"])
       s.add_runtime_dependency(%q<cohort_scope>, ["~> 0.0"])
       s.add_runtime_dependency(%q<data_miner>, ["= 0.5.2"])
+      s.add_runtime_dependency(%q<earth>, [">= 0.0.16"])
       s.add_runtime_dependency(%q<falls_back_on>, ["= 0.0.2"])
       s.add_runtime_dependency(%q<fast_timestamp>, ["= 0.0.4"])
       s.add_runtime_dependency(%q<leap>, ["= 0.4.1"])
@@ -70,10 +72,11 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<rake>, [">= 0"])
       s.add_dependency(%q<rdoc>, [">= 0"])
       s.add_dependency(%q<rspec>, ["= 2.0.0.beta.17"])
-      s.add_dependency(%q<sniff>, ["= 0.0.18"])
+      s.add_dependency(%q<sniff>, ["= 0.0.19"])
       s.add_dependency(%q<characterizable>, ["= 0.0.12"])
       s.add_dependency(%q<cohort_scope>, ["~> 0.0"])
       s.add_dependency(%q<data_miner>, ["= 0.5.2"])
+      s.add_dependency(%q<earth>, [">= 0.0.16"])
       s.add_dependency(%q<falls_back_on>, ["= 0.0.2"])
       s.add_dependency(%q<fast_timestamp>, ["= 0.0.4"])
       s.add_dependency(%q<leap>, ["= 0.4.1"])
@@ -88,10 +91,11 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<rake>, [">= 0"])
     s.add_dependency(%q<rdoc>, [">= 0"])
     s.add_dependency(%q<rspec>, ["= 2.0.0.beta.17"])
-    s.add_dependency(%q<sniff>, ["= 0.0.18"])
+    s.add_dependency(%q<sniff>, ["= 0.0.19"])
     s.add_dependency(%q<characterizable>, ["= 0.0.12"])
     s.add_dependency(%q<cohort_scope>, ["~> 0.0"])
     s.add_dependency(%q<data_miner>, ["= 0.5.2"])
+    s.add_dependency(%q<earth>, [">= 0.0.16"])
     s.add_dependency(%q<falls_back_on>, ["= 0.0.2"])
     s.add_dependency(%q<fast_timestamp>, ["= 0.0.4"])
     s.add_dependency(%q<leap>, ["= 0.4.1"])
