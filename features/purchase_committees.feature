@@ -27,10 +27,16 @@ Feature: Purchase Committee Calculations
 
   Scenario Outline: Industry shares committee
     Given a purchase emitter
-    And a characteristic "merchant_category.description" of "<merchant_category>"
+    And a characteristic "merchant_category.mcc" of "<mcc>"
     When the merchant_category committee is calculated
     And the industry_shares committee is calculated
     Then the conclusion of the committee should include a key of <naics> and value <ratio>
     Examples:
-      | merchant_category | naics  | ratio |
-      | Electronics shops | 443112 |   1.0 |
+      | mcc  | naics  | ratio  |
+      | 5111 | 45321  |   1.0  |
+      | 5732 | 443112 |   1.0  |
+      | 5172 | 32411  |   0.8  |
+      | 5172 | 324121 |   0.05 |
+      | 5172 | 324122 |   0.05 |
+      | 5172 | 324191 |   0.05 |
+      | 5172 | 324199 |   0.05 |
