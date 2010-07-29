@@ -9,7 +9,7 @@ module BrighterPlanet
             string  'merchant_id'
             string  'mcc'
             string  'naics_code'
-            string  'pscode'
+            string  'ps_code'
             string  'io_code'
             float   'purchase_amount'
             string  'purchase_amount_units'
