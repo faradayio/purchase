@@ -82,9 +82,11 @@ module BrighterPlanet
           
           committee :industry_shares do
             quorum 'from merchant category', :needs => [:merchant_category] do |characteristics|
-              # go to the merchant_categories_industries table
-              # look up all the rows where mcc = characteristics[:merchant_category].mcc
-              # take naics_code and ratio from those rows
+              mc_industries = characteristics[:merchant_category].merchant_categories_industries
+              mc_industries.inject({}) do |hash, mci|
+                hash[mci.naics_code] = mci.ratio
+                hash
+              end
             end
           end
           
