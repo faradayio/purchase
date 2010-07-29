@@ -4,9 +4,9 @@ Sniff::Database.define_schema do
   create_table "purchase_records", :force => true do |t|
     t.integer 'merchant_id'
     t.string  'mcc'
-    t.string  'naics_code' # FIXME TODO not sure how to deal with the fact that a single purchase may have multiple industries, product lines, and io sectors
-    t.string  'pscode' # FIXME TODO not sure how to deal with the fact that a single purchase may have multiple industries, product lines, and io sectors
-    t.string  'io_code' # FIXME TODO not sure how to deal with the fact that a single purchase may have multiple industries, product lines, and io sectors
+    t.string  'naics_code'
+    t.string  'ps_code'
+    t.string  'io_code'
     t.float   'purchase_amount'
     t.float   'tax'
     t.float   'cost'

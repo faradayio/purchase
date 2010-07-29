@@ -10,6 +10,6 @@ class PurchaseRecord < ActiveRecord::Base
   belongs_to :merchant,          :foreign_key => 'merchant_id'
   belongs_to :merchant_category, :foreign_key => 'mcc'
   # belongs_to :industry,          :foreign_key => 'naics_code'
-  # belongs_to :product_line,      :foreign_key => 'pscode'
+  # belongs_to :product_line,      :foreign_key => 'ps_code'
   # belongs_to :sector,            :foreign_key => 'io_code'
 end
