@@ -20,8 +20,12 @@ module BrighterPlanet
           end
           
           committee :emission_factor do
-            quorum 'from sectors', :needs => [:sectors] do |characteristics|
-              sum(characteristics[:sectors].each.emission_factor)
+            quorum 'from sector_shares', :needs => [:sector_shares] do |characteristics|
+              sum(
+                characteristics[:sector_shares].each do |sector_share|
+                  sector_share.emission_factor * sector_share.share
+                end
+              )
             end
             
             quorum 'default' do
@@ -30,28 +34,41 @@ module BrighterPlanet
             end
           end
           
-          committee :sectors do
-            quorum 'from industries and product lines', :needs => [:industries, :product_lines] do |characteristics|
+          committee :sector_shares do
+            quorum 'from industry shares and product line shares', :needs => [:industry_shares, :product_line_shares] do |characteristics|
               collect(
-                characteristics[:industries].each do |industry|
-                  if (industry != "420000" && industry != "4A0000")
-                    industry.sectors
-                  end
+                characteristics[:industry_shares].each do |industry_share|
+                  # go to the industries_sectors table
+                  # look up all the rows where naics_code = industry_share.naics_code and io_code is not 420000 and io_code is not 4A0000
+                  # take io_code and (ratio * industry_share.share) for those rows
                 end
                 
-                characteristics[:product_lines].each do |product_line|
-                  product_line.sectors
+                characteristics[:product_line_shares].each do |product_line_share|
+                  # go to the product_lines_sectors table
+                  # look up all the rows where ps_code = product_line_share.ps_code
+                  # take io_code and (ratio * product_line_share.share) for those rows
                 end
               )
             end
             
-            quorum 'from industries', :needs => [:industries] do |characteristics|
-              collect(characteristics[:industries].each.sectors)
+            quorum 'from industry shares', :needs => [:industry_shares] do |characteristics|
+              collect(
+                characteristics[:industry_shares].each do |industry_share|
+                  # go to the industries_sectors table
+                  # look up all the rows where naics_code = industry_share.naics_code and io_code is not 420000 and io_code is not 4A0000
+                  # take io_code and (ratio * industry_share.share) for those rows
+                end
+              )
             end
             
-            quorum 'from product lines', :needs => [:product_lines] do |characteristics|
-              collect(characteristics[:product_lines].each.sectors)
-              end
+            quorum 'from product line shares', :needs => [:product_line_shares] do |characteristics|
+              collect(
+                characteristics[:product_line_shares].each do |product_line_share|
+                  # go to the product_lines_sectors table
+                  # look up all the rows where ps_code = product_line_share.ps_code
+                  # take io_code and (ratio * product_line_share.share) for those rows
+                end
+              )
             end
             
             quorum 'default' do
@@ -59,15 +76,23 @@ module BrighterPlanet
             end
           end
           
-          committee :product_lines do
-            quorum 'from industries', :needs => [:industries] do |characteristics|
-              collect(characteristics[:industries].each.product_lines)
+          committee :product_line_shares do
+            quorum 'from industry shares', :needs => [:industry_shares] do |characteristics|
+              collect(
+                characteristics[:industry_shares].each do |industry_share|
+                  # go to the industries_product_lines table
+                  # look up all the rows where naics_code = industry_share.naics_code
+                  # take naics_code and (ratio * industry_share.share) for those rows
+                end
+              )
             end
           end
           
-          committee :industries do
+          committee :industry_shares do
             quorum 'from merchant category', :needs => [:merchant_category] do |characteristics|
-              characteristics[:merchant_category].industries
+              # go to the merchant_categories_industries table
+              # look up all the rows where mcc = characteristics[:merchant_category].mcc
+              # take naics_code and ratio from those rows
             end
           end
           
