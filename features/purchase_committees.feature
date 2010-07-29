@@ -32,5 +32,5 @@ Feature: Purchase Committee Calculations
     And the industry_shares committee is calculated
     Then the conclusion of the committee should include a key of <naics> and value <ratio>
     Examples:
-      | merchant_category | key | value |
-      | Electronics shops |     |       |
+      | merchant_category | naics  | ratio |
+      | Electronics shops | 443112 |   1.0 |

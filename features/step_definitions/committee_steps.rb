@@ -27,7 +27,6 @@ Given /^(a )?characteristic "(.*)" of "(.*)"$/ do |_, name, value|
 end
 
 When /^the (.*) committee is calculated$/ do |committee_name|
-  puts "calcing #{committee_name} committee with chars #{@characteristics.inspect}"
   @decision ||= @activity.decisions[:emission]
   @committee = @decision.committees.find { |c| c.name.to_s == committee_name }
   @report = @committee.report(@characteristics, [])
@@ -52,5 +51,5 @@ end
 Then /^the conclusion of the committee should include a key of (.*) and value (.*)$/ do |key, value|
   @report.conclusion.keys.should include(key)
 
-  @report.conclusion[key].should == value
+  @report.conclusion[key].should == coerce_value(value)
 end
