@@ -36,39 +36,33 @@ module BrighterPlanet
           
           committee :sector_shares do
             quorum 'from industry shares and product line shares', :needs => [:industry_shares, :product_line_shares] do |characteristics|
-              collect(
-                characteristics[:industry_shares].each do |industry_share|
-                  # go to the industries_sectors table
-                  # look up all the rows where naics_code = industry_share.naics_code and io_code is not 420000 and io_code is not 4A0000
-                  # take io_code and (ratio * industry_share.share) for those rows
-                end
-                
-                characteristics[:product_line_shares].each do |product_line_share|
-                  # go to the product_lines_sectors table
-                  # look up all the rows where ps_code = product_line_share.ps_code
-                  # take io_code and (ratio * product_line_share.share) for those rows
-                end
-              )
+              industry_shares = characteristics[:industry_shares].collect do |industry_share|
+                # go to the industries_sectors table
+                # look up all the rows where naics_code = industry_share.naics_code and io_code is not 420000 and io_code is not 4A0000
+                # take io_code and (ratio * industry_share.share) for those rows
+              end
+              product_line_shares = characteristics[:product_line_shares].collect do |product_line_share|
+                # go to the product_lines_sectors table
+                # look up all the rows where ps_code = product_line_share.ps_code
+                # take io_code and (ratio * product_line_share.share) for those rows
+              end
+              industry_shares + product_line_shares
             end
             
             quorum 'from industry shares', :needs => [:industry_shares] do |characteristics|
-              collect(
-                characteristics[:industry_shares].each do |industry_share|
-                  # go to the industries_sectors table
-                  # look up all the rows where naics_code = industry_share.naics_code and io_code is not 420000 and io_code is not 4A0000
-                  # take io_code and (ratio * industry_share.share) for those rows
-                end
-              )
+              characteristics[:industry_shares].collect do |industry_share|
+                # go to the industries_sectors table
+                # look up all the rows where naics_code = industry_share.naics_code and io_code is not 420000 and io_code is not 4A0000
+                # take io_code and (ratio * industry_share.share) for those rows
+              end
             end
             
             quorum 'from product line shares', :needs => [:product_line_shares] do |characteristics|
-              collect(
-                characteristics[:product_line_shares].each do |product_line_share|
-                  # go to the product_lines_sectors table
-                  # look up all the rows where ps_code = product_line_share.ps_code
-                  # take io_code and (ratio * product_line_share.share) for those rows
-                end
-              )
+              characteristics[:product_line_shares].collect do |product_line_share|
+                # go to the product_lines_sectors table
+                # look up all the rows where ps_code = product_line_share.ps_code
+                # take io_code and (ratio * product_line_share.share) for those rows
+              end
             end
             
             quorum 'default' do
@@ -78,13 +72,11 @@ module BrighterPlanet
           
           committee :product_line_shares do
             quorum 'from industry shares', :needs => [:industry_shares] do |characteristics|
-              collect(
-                characteristics[:industry_shares].each do |industry_share|
-                  # go to the industries_product_lines table
-                  # look up all the rows where naics_code = industry_share.naics_code
-                  # take naics_code and (ratio * industry_share.share) for those rows
-                end
-              )
+              characteristics[:industry_shares].collect do |industry_share|
+                # go to the industries_product_lines table
+                # look up all the rows where naics_code = industry_share.naics_code
+                # take naics_code and (ratio * industry_share.share) for those rows
+              end
             end
           end
           
