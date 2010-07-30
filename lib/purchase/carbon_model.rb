@@ -34,33 +34,26 @@ module BrighterPlanet
           
           committee :sector_shares do
             quorum 'from industry shares and product line shares', :needs => [:industry_shares, :product_line_shares] do |characteristics|
-              industry_shares = characteristics[:industry_shares].collect do |industry_share|
-                # go to the industries_sectors table
-                # look up all the rows where naics_code = industry_share.naics_code and io_code is not 420000 and io_code is not 4A0000
-                # take io_code and (ratio * industry_share.share) for those rows
+              industry_sector_shares = sector_shares_from_industry_shares(characteristics[:industry_shares])
+
+              product_line_shares = characteristics[:product_line_shares]
+              product_lines_sectors = ProductLinesSectors.find :all,
+                :conditions => { :ps_code => product_line_shares.keys }
+              product_sector_shares = product_lines_sectors.inject({}) do |hash, product_line_sector|
+                io_code = product_line_sector.io_code
+                ps_code = product_line_sector.ps_code
+                product_line_share = product_line_shares[ps_code]
+                hash[io_code] = 
+                  product_line_sector.ratio * product_line_share
+                hash
               end
-              product_line_shares = characteristics[:product_line_shares].collect do |product_line_share|
-                # go to the product_lines_sectors table
-                # look up all the rows where ps_code = product_line_share.ps_code
-                # take io_code and (ratio * product_line_share.share) for those rows
-              end
-              industry_shares + product_line_shares
+
+              industry_sector_shares.merge product_sector_shares
             end
             
             # TODO Do we need this?
             quorum 'from industry shares', :needs => [:industry_shares] do |characteristics|
-              industry_shares = characteristics[:industry_shares]
-              industry_sectors = industry_shares.map(&:industries_sectors).flatten
-              industry_sectors.inject({}) do |hash, industry_sector|
-                io_code = industry_sector.io_code
-                unless ['420000','4A0000'].include?(io_code.to_s)
-                  naics_code = industry_sector.naics_code
-                  industry_share = industry_shares.find_by_naics_code naics_code
-                  hash[io_code] = 
-                    industry_share.ratio * industry_sector.ratio
-                end
-                hash
-              end
+              sector_shares_from_industry_shares(characteristics[:industry_shares])
             end
             
             quorum 'default' do
@@ -114,6 +107,20 @@ module BrighterPlanet
           end
         end
         # FIXME TODO make other committees to report emissions by gas, by io sector, etc.
+      end
+
+      def self.sector_shares_from_industry_shares(industry_shares)
+        industry_sectors = industry_shares.map(&:industries_sectors).flatten
+        industry_sectors.inject({}) do |hash, industry_sector|
+          io_code = industry_sector.io_code
+          unless ['420000','4A0000'].include?(io_code.to_s)
+            naics_code = industry_sector.naics_code
+            industry_share = industry_shares.find_by_naics_code naics_code
+            hash[io_code] = 
+              industry_share.ratio * industry_sector.ratio
+          end
+          hash
+        end
       end
     end
   end
