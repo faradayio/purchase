@@ -7,7 +7,7 @@ Feature: Purchase Committee Calculations
     And characteristic "date" of "<date>"
     When the "adjusted_cost" committee is calculated
     Then the committee should have used quorum "from cost and date"
-    And the conclusion of the committee should be <adjusted_cost>
+    And the conclusion of the committee should be "<adjusted_cost>"
     Examples:
       | cost   | date       | adjusted_cost |
       | 831.23 | 2010-08-01 |        831.23 |
@@ -19,7 +19,7 @@ Feature: Purchase Committee Calculations
     And characteristic "date" of "<date>"
     When the "adjusted_cost" committee is calculated
     Then the committee should have used quorum "from purchase amount and date"
-    And the conclusion of the committee should be <adjusted_cost>
+    And the conclusion of the committee should be "<adjusted_cost>"
     Examples:
       | amount | date       | adjusted_cost |
       | 831.23 | 2010-08-01 |       748.107 |
@@ -88,20 +88,51 @@ Feature: Purchase Committee Calculations
     When the "industry_shares" committee is calculated
     And the "product_line_shares" committee is calculated
     And the "sector_shares" committee is calculated
-    Then the conclusion of the committee should include a key of <io_code> and value <ratio>
+    Then the conclusion of the committee should include a key of "<io_code>" and subvalue "share" of "<share>" and subvalue "emission_factor" of "<emission_factor>"
     Examples:
-      | mcc  | io_code | ratio  |
-      | 5111 | 334111  |   0.24 |
-      | 5111 | 33411A  |   0.18 |
-      | 5111 | 511200  |   0.18 |
-      | 5111 | 339940  |    0.2 |
-      | 5111 | 322230  |    0.2 |
-      | 5732 | 33411A  |    0.5 |
-      | 5732 | 334300  |   0.25 |
-      | 5732 | 334210  |    0.2 |
-      | 5172 | 324110  |    0.8 |
-      | 5172 | 324121  |   0.05 |
-      | 5172 | 324122  |   0.05 |
-      | 5172 | 324191  |   0.05 |
-      | 5172 | 324199  |   0.05 |
-      | 8225 | 722000  |   0.15 |
+      | mcc  | io_code | emission_factor | share  |
+      | 5111 | 334111  |                 |   0.24 |
+      | 5111 | 33411A  |                 |   0.18 |
+      | 5111 | 511200  |                 |   0.18 |
+      | 5111 | 339940  |                 |    0.2 |
+      | 5111 | 322230  |                 |    0.2 |
+      | 5732 | 33411A  |                 |    0.5 |
+      | 5732 | 334300  |                 |   0.25 |
+      | 5732 | 334210  |                 |    0.2 |
+      | 5172 | 324110  |                 |    0.8 |
+      | 5172 | 324121  |                 |   0.05 |
+      | 5172 | 324122  |                 |   0.05 |
+      | 5172 | 324191  |                 |   0.05 |
+      | 5172 | 324199  |                 |   0.05 |
+      | 8225 | 722000  |             0.8 |   0.15 |
+
+  Scenario Outline: Emission factor from sector shares
+    Given a purchase emitter
+    And a characteristic "merchant_category.mcc" of "<mcc>"
+    When the "industry_shares" committee is calculated
+    And the "product_line_shares" committee is calculated
+    And the "sector_shares" committee is calculated
+    And the "emission_factor" committee is calculated
+    Then the conclusion of the committee should be "<emission_factor>"
+    Examples:
+      | mcc  | emission_factor |
+      | 5111 |            3    |
+      | 5111 | 33411A  |
+      | 5111 | 511200  |
+      | 5111 | 339940  |
+      | 5111 | 322230  |
+      | 5732 | 33411A  |
+      | 5732 | 334300  |
+      | 5732 | 334210  |
+      | 5172 | 324110  |
+      | 5172 | 324121  |
+      | 5172 | 324122  |
+      | 5172 | 324191  |
+      | 5172 | 324199  |
+      | 8225 | 722000  |
+
+  Scenario Outline: Emission factor from default
+    Given a purchase emitter
+    And a characteristic "merchant_category.mcc" of "<mcc>"
+    When the "emission_factor" committee is calculated
+    Then the conclusion of the committee should be "100"
