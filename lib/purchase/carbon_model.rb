@@ -72,10 +72,15 @@ module BrighterPlanet
           
           committee :product_line_shares do
             quorum 'from industry shares', :needs => [:industry_shares] do |characteristics|
-              characteristics[:industry_shares].collect do |industry_share|
-                # go to the industries_product_lines table
-                # look up all the rows where naics_code = industry_share.naics_code
-                # take naics_code and (ratio * industry_share.share) for those rows
+              industry_shares = characteristics[:industry_shares]
+              industries_product_lines = IndustriesProductLines.find :all,
+                :conditions => { :naics_code => industry_shares.keys }
+              industries_product_lines.inject({}) do |hash, industry_product_lines|
+                naics_code = industry_product_lines.naics_code
+                industry_shares_ratio = industry_shares[naics_code]
+                hash[naics_code] = 
+                  industry_product_lines.ratio * industry_shares_ratio
+                hash
               end
             end
           end
