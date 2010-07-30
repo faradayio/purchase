@@ -65,3 +65,19 @@ Feature: Purchase Committee Calculations
       | 5172 | 30862    | 0.0175 |
       | 5172 | 30863    |  0.018 |
       | 5172 | 30864    |  0.019 |
+
+  Scenario Outline: Sector shares committee from industry shares
+    Given a purchase emitter
+    And a characteristic "merchant_category.mcc" of "<mcc>"
+    When the "industry_shares" committee is calculated
+    And the "sector_shares" committee is calculated
+    Then the conclusion of the committee should include a key of <io_code> and value <ratio>
+    Examples:
+      | mcc  | io_code | ratio  |
+      | 5111 | 339940  |    0.2 |
+      | 5732 | 33411A  |    0.2 |
+      | 5172 | 44101   |   0.32 |
+      | 5172 | 44102   | 0.0225 |
+      | 5172 | 44103   | 0.0175 |
+      | 5172 | 44104   |  0.018 |
+      | 5172 | 44105   |  0.019 |

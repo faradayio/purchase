@@ -21,11 +21,9 @@ module BrighterPlanet
           
           committee :emission_factor do
             quorum 'from sector_shares', :needs => [:sector_shares] do |characteristics|
-              sum(
-                characteristics[:sector_shares].each do |sector_share|
-                  sector_share.emission_factor * sector_share.share
-                end
-              )
+              characteristics[:sector_shares].inject(0) do |sum, sector_share|
+                sum + sector_share[:emission_factor] * sector_share[:share]
+              end
             end
             
             quorum 'default' do
@@ -49,20 +47,22 @@ module BrighterPlanet
               industry_shares + product_line_shares
             end
             
+            # TODO Do we need this?
             quorum 'from industry shares', :needs => [:industry_shares] do |characteristics|
-              characteristics[:industry_shares].collect do |industry_share|
+              industry_shares = characteristics[:industry_shares]
+              industry_sectors = industry_shares.map(&:industries_sectors).
+                flatten.uniq
+              industry_sectors.inject({}) do |hash, industry_sector|
+                io_code = industry_sector.io_code
+                naics_code = industry_sector.naics_code
+                industry_share = industry_shares.find_by_naics_code naics_code
+                hash[io_code] = 
+                  industry_sector.ratio * industry_share.ratio
+                hash
+              end
                 # go to the industries_sectors table
                 # look up all the rows where naics_code = industry_share.naics_code and io_code is not 420000 and io_code is not 4A0000
                 # take io_code and (ratio * industry_share.share) for those rows
-              end
-            end
-            
-            quorum 'from product line shares', :needs => [:product_line_shares] do |characteristics|
-              characteristics[:product_line_shares].collect do |product_line_share|
-                # go to the product_lines_sectors table
-                # look up all the rows where ps_code = product_line_share.ps_code
-                # take io_code and (ratio * product_line_share.share) for those rows
-              end
             end
             
             quorum 'default' do
@@ -73,14 +73,17 @@ module BrighterPlanet
           committee :product_line_shares do
             quorum 'from industry shares', :needs => [:industry_shares] do |characteristics|
               industry_shares = characteristics[:industry_shares]
-              industries_product_lines = IndustriesProductLines.find :all,
-                :conditions => { :naics_code => industry_shares.keys }
-              industries_product_lines.inject({}) do |hash, industry_product_lines|
-                ps_code = industry_product_lines.ps_code
-                naics_code = industry_product_lines.naics_code
-                industry_shares_ratio = industry_shares[naics_code]
+              puts "industyr shares: #{industry_shares.map(&:naics_code).inspect}"
+              industries_product_lines = industry_shares.
+                map(&:industries_product_lines).flatten.uniq
+              puts "industries_product_lines: #{industry_shares.map(&:industries_product_lines).inspect}"
+                  
+              industries_product_lines.inject({}) do |hash, industry_product_line|
+                ps_code = industry_product_line.ps_code
+                naics_code = industry_product_line.naics_code
+                industry_share = industry_shares.find_by_naics_code naics_code
                 hash[ps_code] = 
-                  industry_product_lines.ratio * industry_shares_ratio
+                  industry_product_line.ratio * industry_share.ratio
                 hash
               end
             end
