@@ -38,9 +38,8 @@ Feature: Purchase Committee Calculations
   Scenario Outline: Industry shares committee
     Given a purchase emitter
     And a characteristic "merchant_category.mcc" of "<mcc>"
-    When the "merchant_category" committee is calculated
-    And the "industry_shares" committee is calculated
-    Then the conclusion of the committee should include a key of <naics> and value <ratio>
+    When the "industry_shares" committee is calculated
+    Then the conclusion of the committee should have a record identified with "naics_code" of "<naics>" and having "ratio" of "<ratio>"
     Examples:
       | mcc  | naics  | ratio  |
       | 5111 | 45321  |   1.0  |

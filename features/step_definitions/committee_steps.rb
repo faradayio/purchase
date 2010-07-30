@@ -67,3 +67,9 @@ Then /^the conclusion of the committee should have "(.*)" of "(.*)"$/ do |attrib
   report_value.should == coerce_value(value)
 end
 
+Then /^the conclusion of the committee should have a record identified with "(.*)" of "(.*)" and having "(.*)" of "(.*)"$/ do |id_field, id, field, value|
+  id_field = id_field.to_sym
+  records = @report.conclusion
+  record = records.send("find_by_#{id_field}", id)
+  coerce_value(record.send(field)).should == coerce_value(value)
+end
