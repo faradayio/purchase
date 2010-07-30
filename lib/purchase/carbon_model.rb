@@ -50,19 +50,17 @@ module BrighterPlanet
             # TODO Do we need this?
             quorum 'from industry shares', :needs => [:industry_shares] do |characteristics|
               industry_shares = characteristics[:industry_shares]
-              industry_sectors = industry_shares.map(&:industries_sectors).
-                flatten.uniq
+              industry_sectors = industry_shares.map(&:industries_sectors).flatten
               industry_sectors.inject({}) do |hash, industry_sector|
                 io_code = industry_sector.io_code
-                naics_code = industry_sector.naics_code
-                industry_share = industry_shares.find_by_naics_code naics_code
-                hash[io_code] = 
-                  industry_sector.ratio * industry_share.ratio
+                unless ['420000','4A0000'].include?(io_code.to_s)
+                  naics_code = industry_sector.naics_code
+                  industry_share = industry_shares.find_by_naics_code naics_code
+                  hash[io_code] = 
+                    industry_share.ratio * industry_sector.ratio
+                end
                 hash
               end
-                # go to the industries_sectors table
-                # look up all the rows where naics_code = industry_share.naics_code and io_code is not 420000 and io_code is not 4A0000
-                # take io_code and (ratio * industry_share.share) for those rows
             end
             
             quorum 'default' do
@@ -73,10 +71,8 @@ module BrighterPlanet
           committee :product_line_shares do
             quorum 'from industry shares', :needs => [:industry_shares] do |characteristics|
               industry_shares = characteristics[:industry_shares]
-              puts "industyr shares: #{industry_shares.map(&:naics_code).inspect}"
               industries_product_lines = industry_shares.
-                map(&:industries_product_lines).flatten.uniq
-              puts "industries_product_lines: #{industry_shares.map(&:industries_product_lines).inspect}"
+                map(&:industries_product_lines).flatten
                   
               industries_product_lines.inject({}) do |hash, industry_product_line|
                 ps_code = industry_product_line.ps_code
