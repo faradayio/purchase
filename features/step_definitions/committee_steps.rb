@@ -49,7 +49,7 @@ Then /^the committee should have used quorum "(.*)"$/ do |quorum|
   @report.quorum.name.should == quorum
 end
 
-Then /^the conclusion of the committee should be (.+)$/ do |conclusion|
+Then /^the conclusion of the committee should be "(.+)"$/ do |conclusion|
   compare_values(@report.conclusion, conclusion)
 end
 
@@ -78,4 +78,16 @@ Then /^the conclusion of the committee should have a record identified with "(.*
   records = @report.conclusion
   record = records.send("find_by_#{id_field}", id)
   coerce_value(record.send(field)).should == coerce_value(value)
+end
+
+Then /^the conclusion of the committee should include a key of "(.*)" and subvalue "(.*)" of "(.*)" and subvalue "(.*)" of "(.*)"$/ do |key, subkey1, subvalue1, subkey2, subvalue2|
+  if key.present?
+    @report.conclusion.keys.map(&:to_s).should include(key)
+    actual_subvalue1 = coerce_value(@report.conclusion[key.to_s][subkey1.to_sym].to_s)
+    compare_values(actual_subvalue1, subvalue1)
+    actual_subvalue2 = coerce_value(@report.conclusion[key.to_s][subkey2.to_sym].to_s)
+    compare_values(actual_subvalue2, subvalue2)
+  else
+    @report.conclusion.keys.map(&:to_s).should be_empty
+  end
 end

@@ -43,8 +43,12 @@ module BrighterPlanet
                 io_code = product_line_sector.io_code
                 ps_code = product_line_sector.ps_code
                 product_line_share = product_line_shares[ps_code]
-                hash[io_code] = 
-                  product_line_sector.ratio * product_line_share
+
+                share = product_line_sector.ratio * product_line_share
+                hash[io_code] = {
+                  :share => share, 
+                  :emission_factor => product_line_sector.sector.emission_factor
+                }
                 hash
               end
 
