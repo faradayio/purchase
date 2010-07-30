@@ -56,13 +56,13 @@ Feature: Purchase Committee Calculations
     And a characteristic "merchant_category.mcc" of "<mcc>"
     When the "industry_shares" committee is calculated
     And the "product_line_shares" committee is calculated
-    Then the conclusion of the committee should include a key of <naics> and value <ratio>
+    Then the conclusion of the committee should include a key of <ps_code> and value <ratio>
     Examples:
-      | mcc  | naics  | ratio  |
-      | 5111 | 45321  |    0.2 |
-      | 5732 | 443112 |    0.2 |
-      | 5172 | 32411  |   0.32 |
-      | 5172 | 324121 | 0.0225 |
-      | 5172 | 324122 | 0.0175 |
-      | 5172 | 324191 |  0.018 |
-      | 5172 | 324199 |  0.019 |
+      | mcc  | ps_code  | ratio  |
+      | 5111 | 20370    |    0.6 |
+      | 5732 | 20375    |    0.5 |
+      | 5172 | 30860    |   0.32 |
+      | 5172 | 30861    | 0.0225 |
+      | 5172 | 30862    | 0.0175 |
+      | 5172 | 30863    |  0.018 |
+      | 5172 | 30864    |  0.019 |

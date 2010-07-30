@@ -76,9 +76,10 @@ module BrighterPlanet
               industries_product_lines = IndustriesProductLines.find :all,
                 :conditions => { :naics_code => industry_shares.keys }
               industries_product_lines.inject({}) do |hash, industry_product_lines|
+                ps_code = industry_product_lines.ps_code
                 naics_code = industry_product_lines.naics_code
                 industry_shares_ratio = industry_shares[naics_code]
-                hash[naics_code] = 
+                hash[ps_code] = 
                   industry_product_lines.ratio * industry_shares_ratio
                 hash
               end
