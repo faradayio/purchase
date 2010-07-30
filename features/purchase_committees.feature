@@ -74,10 +74,10 @@ Feature: Purchase Committee Calculations
     Then the conclusion of the committee should include a key of <io_code> and value <ratio>
     Examples:
       | mcc  | io_code | ratio  |
-      | 5111 | 339940  |    0.2 |
-      | 5732 | 33411A  |    0.2 |
-      | 5172 | 44101   |   0.32 |
-      | 5172 | 44102   | 0.0225 |
-      | 5172 | 44103   | 0.0175 |
-      | 5172 | 44104   |  0.018 |
-      | 5172 | 44105   |  0.019 |
+      | 5111 |         |        |
+      | 5732 |         |        |
+      | 5172 | 324110  |    0.8 |
+      | 5172 | 324121  |   0.05 |
+      | 5172 | 324122  |   0.05 |
+      | 5172 | 324191  |   0.05 |
+      | 5172 | 324199  |   0.05 |

@@ -54,12 +54,18 @@ Then /^the conclusion of the committee should be (.+)$/ do |conclusion|
 end
 
 Then /^the conclusion of the committee should include a key of (.*) and value (.*)$/ do |key, value|
-  @report.conclusion.keys.map(&:to_s).should include(key)
-
-  @report.conclusion.each do |k, v|
-    @report.conclusion[k.to_s] == v
+  if key.present?
+    @report.conclusion.keys.map(&:to_s).should include(key)
+  else
+    @report.conclusion.keys.map(&:to_s).should be_empty
   end
-  compare_values(@report.conclusion[key.to_s], value)
+
+  if value.present?
+    @report.conclusion.each do |k, v|
+      @report.conclusion[k.to_s] == v
+    end
+    compare_values(@report.conclusion[key.to_s], value)
+  end
 end
 
 Then /^the conclusion of the committee should have "(.*)" of "(.*)"$/ do |attribute, value|
