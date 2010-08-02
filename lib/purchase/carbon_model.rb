@@ -5,6 +5,7 @@ module BrighterPlanet
   module Purchase
     module CarbonModel
       class MissingSectorForProductLineSector < Exception; end
+      class MissingEmissionFactor < Exception; end
 
       def self.included(base)
         base.extend ::Leap::Subject
@@ -23,8 +24,12 @@ module BrighterPlanet
           
           committee :emission_factor do
             quorum 'from sector_shares', :needs => [:sector_shares] do |characteristics|
-              characteristics[:sector_shares].inject(0) do |sum, sector_share|
-                sum + sector_share[:emission_factor] * sector_share[:share]
+              characteristics[:sector_shares].inject(0) do |sum, (io_code, data)|
+                if data[:emission_factor].nil?
+                  raise MissingEmissionFactor,
+                    "Missing emission factor for sector #{io_code}"
+                end
+                sum + data[:emission_factor] * data[:share]
               end
             end
             
