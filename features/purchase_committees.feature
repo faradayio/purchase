@@ -116,20 +116,10 @@ Feature: Purchase Committee Calculations
     Then the conclusion of the committee should be "<emission_factor>"
     Examples:
       | mcc  | emission_factor |
-      | 5111 |            3    |
-      | 5111 | 33411A  |
-      | 5111 | 511200  |
-      | 5111 | 339940  |
-      | 5111 | 322230  |
-      | 5732 | 33411A  |
-      | 5732 | 334300  |
-      | 5732 | 334210  |
-      | 5172 | 324110  |
-      | 5172 | 324121  |
-      | 5172 | 324122  |
-      | 5172 | 324191  |
-      | 5172 | 324199  |
-      | 8225 | 722000  |
+      | 5111 |           1.082 |
+      | 5732 |            0.87 |
+      | 5172 |        0.799205 |
+      | 8225 |            0.12 |
 
   Scenario Outline: Emission factor from default
     Given a purchase emitter

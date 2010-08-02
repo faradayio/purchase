@@ -14,7 +14,7 @@ io_code,description,emission_factor,emission_factor_units
 511200,Software publishers,1,kilograms_per_2002_dollar
 7211A0,"Hotels and motels, including casino hotels",1,kilograms_per_2002_dollar
 722000,Food services and drinking places,0.8,kilograms_per_2002_dollar
-44102,Diesel fuel
-44103,Raw coal
-44104,Unrefined shale
-44105,CNG
+44102,Diesel fuel,0.7,kilograms_per_2002_dollar
+44103,Raw coal,1.2,kilograms_per_2002_dollar
+44104,Unrefined shale,1.4,kilograms_per_2002_dollar
+44105,CNG,0.3,kilograms_per_2002_dollar
