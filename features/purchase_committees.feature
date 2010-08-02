@@ -71,16 +71,16 @@ Feature: Purchase Committee Calculations
     And a characteristic "merchant_category.mcc" of "<mcc>"
     When the "industry_shares" committee is calculated
     And the "sector_shares" committee is calculated
-    Then the conclusion of the committee should include a key of <io_code> and value <ratio>
+    Then the conclusion of the committee should include a key of "<io_code>" and subvalue "share" of "<share>" and subvalue "emission_factor" of "<emission_factor>"
     Examples:
-      | mcc  | io_code | ratio  |
-      | 5111 |         |        |
-      | 5732 |         |        |
-      | 5172 | 324110  |    0.8 |
-      | 5172 | 324121  |   0.05 |
-      | 5172 | 324122  |   0.05 |
-      | 5172 | 324191  |   0.05 |
-      | 5172 | 324199  |   0.05 |
+      | mcc  | io_code | emission_factor | share  |
+      | 5111 |         |                 |        |
+      | 5732 |         |                 |        |
+      | 5172 | 324110  |             2.0 |    0.8 |
+      | 5172 | 324121  |             1.3 |   0.05 |
+      | 5172 | 324122  |             0.9 |   0.05 |
+      | 5172 | 324191  |             0.2 |   0.05 |
+      | 5172 | 324199  |             1.2 |   0.05 |
 
   Scenario Outline: Sector shares committee from industry shares and product line shares
     Given a purchase emitter
@@ -91,19 +91,19 @@ Feature: Purchase Committee Calculations
     Then the conclusion of the committee should include a key of "<io_code>" and subvalue "share" of "<share>" and subvalue "emission_factor" of "<emission_factor>"
     Examples:
       | mcc  | io_code | emission_factor | share  |
-      | 5111 | 334111  |                 |   0.24 |
-      | 5111 | 33411A  |                 |   0.18 |
-      | 5111 | 511200  |                 |   0.18 |
-      | 5111 | 339940  |                 |    0.2 |
-      | 5111 | 322230  |                 |    0.2 |
-      | 5732 | 33411A  |                 |    0.5 |
-      | 5732 | 334300  |                 |   0.25 |
-      | 5732 | 334210  |                 |    0.2 |
-      | 5172 | 324110  |                 |    0.8 |
-      | 5172 | 324121  |                 |   0.05 |
-      | 5172 | 324122  |                 |   0.05 |
-      | 5172 | 324191  |                 |   0.05 |
-      | 5172 | 324199  |                 |   0.05 |
+      | 5111 | 334111  |             1.3 |   0.24 |
+      | 5111 | 33411A  |             0.5 |   0.18 |
+      | 5111 | 511200  |             1.0 |   0.18 |
+      | 5111 | 339940  |             1.1 |    0.2 |
+      | 5111 | 322230  |             1.4 |    0.2 |
+      | 5732 | 33411A  |             0.5 |    0.5 |
+      | 5732 | 334300  |             1.2 |   0.25 |
+      | 5732 | 334210  |             1.6 |    0.2 |
+      | 5172 | 324110  |             2.0 |  0.256 |
+      | 5172 | 324121  |             1.3 |   0.05 |
+      | 5172 | 324122  |             0.9 |   0.05 |
+      | 5172 | 324191  |             0.2 |   0.32 |
+      | 5172 | 324199  |             1.2 |   0.05 |
       | 8225 | 722000  |             0.8 |   0.15 |
 
   Scenario Outline: Emission factor from sector shares

@@ -4,6 +4,8 @@ require 'timeframe'
 module BrighterPlanet
   module Purchase
     module CarbonModel
+      class MissingSectorForProductLineSector < Exception; end
+
       def self.included(base)
         base.extend ::Leap::Subject
         base.extend FastTimestamp
@@ -45,9 +47,14 @@ module BrighterPlanet
                 product_line_share = product_line_shares[ps_code]
 
                 share = product_line_sector.ratio * product_line_share
+                sector = product_line_sector.sector
+                if sector.nil?
+                  raise MissingSectorForProductLineSector, 
+                    "Missing a related sector for ProductLineSector #{product_line_sector.inspect}"
+                end
                 hash[io_code] = {
                   :share => share, 
-                  :emission_factor => product_line_sector.sector.emission_factor
+                  :emission_factor => sector.emission_factor
                 }
                 hash
               end
@@ -120,8 +127,12 @@ module BrighterPlanet
           unless ['420000','4A0000'].include?(io_code.to_s)
             naics_code = industry_sector.naics_code
             industry_share = industry_shares.find_by_naics_code naics_code
-            hash[io_code] = 
-              industry_share.ratio * industry_sector.ratio
+            calculated_share = industry_share.ratio * industry_sector.ratio
+            sector = industry_sector.sector
+            hash[io_code] = {
+              :share => calculated_share,
+              :emission_factor => sector.emission_factor
+            }
           end
           hash
         end
