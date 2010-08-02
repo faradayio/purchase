@@ -1,11 +1,11 @@
 PATH
   remote: .
   specs:
-    purchase (0.0.2)
+    purchase (0.0.3)
       characterizable (= 0.0.12)
       cohort_scope (~> 0.0)
       data_miner (= 0.5.2)
-      earth (>= 0.0.17)
+      earth (>= 0.0.19)
       falls_back_on (= 0.0.2)
       fast_timestamp (= 0.0.4)
       leap (= 0.4.1)
@@ -61,7 +61,7 @@ GEM
       remote_table (>= 0.2.27)
       taps (= 0.3.11)
     diff-lcs (1.1.2)
-    earth (0.0.17)
+    earth (0.0.19)
       activerecord (>= 3.0.0.beta4)
       cohort_scope (= 0.0.6)
       conversions (= 1.4.5)
@@ -172,7 +172,7 @@ DEPENDENCIES
   cohort_scope (~> 0.0)
   cucumber (= 0.8.3)
   data_miner (= 0.5.2)
-  earth (>= 0.0.17)
+  earth (>= 0.0.19)
   falls_back_on (= 0.0.2)
   fast_timestamp (= 0.0.4)
   jeweler (= 1.4.0)
