@@ -6,6 +6,7 @@ module BrighterPlanet
     module CarbonModel
       class MissingSectorForProductLineSector < Exception; end
       class MissingEmissionFactor < Exception; end
+      class MissingSectorForIndustrySector < Exception; end
 
       def self.included(base)
         base.extend ::Leap::Subject
@@ -134,6 +135,10 @@ module BrighterPlanet
             industry_share = industry_shares.find_by_naics_code naics_code
             calculated_share = industry_share.ratio * industry_sector.ratio
             sector = industry_sector.sector
+            if sector.nil?
+              raise MissingSectorForIndustrySector, 
+                "Missing a related sector for IndustrySector #{industry_sector.inspect}"
+            end
             hash[io_code] = {
               :share => calculated_share,
               :emission_factor => sector.emission_factor
