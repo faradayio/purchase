@@ -33,7 +33,7 @@ begin
     gem.add_dependency 'characterizable', '=0.0.12'
     gem.add_dependency 'cohort_scope', '~> 0.0'
     gem.add_dependency 'data_miner', '= 0.5.2' unless ENV['LOCAL_DATA_MINER']
-    gem.add_dependency 'earth', '>=0.0.16' unless ENV['LOCAL_EARTH']
+    gem.add_dependency 'earth', '>=0.0.17' unless ENV['LOCAL_EARTH']
     gem.add_dependency 'falls_back_on', '= 0.0.2'
     gem.add_dependency 'fast_timestamp', '= 0.0.4'
     gem.add_dependency 'leap', '= 0.4.1' unless ENV['LOCAL_LEAP']
