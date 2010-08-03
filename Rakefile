@@ -29,7 +29,7 @@ begin
     gem.add_development_dependency 'rake'
     gem.add_development_dependency 'rdoc'
     gem.add_development_dependency 'rspec', '= 2.0.0.beta.17'
-    gem.add_development_dependency 'sniff', '=0.1.0' unless ENV['LOCAL_SNIFF']
+    gem.add_development_dependency 'sniff', '=0.1.1' unless ENV['LOCAL_SNIFF']
     gem.add_dependency 'characterizable', '=0.0.12'
     gem.add_dependency 'cohort_scope', '~> 0.0'
     gem.add_dependency 'data_miner', '= 0.5.2' unless ENV['LOCAL_DATA_MINER']
@@ -48,7 +48,10 @@ end
 unless ENV['NOBUNDLE']
   begin
     require 'sniff'
-    require 'sniff/tasks'
+    require 'sniff/rake_task'
+    Sniff::RakeTask.new(:console) do |t|
+      t.earth_domains = :industry
+    end
   rescue LoadError
     puts 'Sniff gem not found, sniff tasks unavailable'
   end
