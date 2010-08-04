@@ -11,6 +11,30 @@ module BrighterPlanet
       def self.included(base)
         base.extend ::Leap::Subject
         base.extend FastTimestamp
+
+        sector_shares_from_industry_shares = lambda do |characteristics|
+          industry_shares = characteristics[:industry_shares]
+          industry_sectors = industry_shares.map(&:industries_sectors).flatten
+          industry_sectors.inject({}) do |hash, industry_sector|
+            io_code = industry_sector.io_code
+            unless ['420000','4A0000'].include?(io_code.to_s)
+              naics_code = industry_sector.naics_code
+              industry_share = industry_shares.find_by_naics_code naics_code
+              calculated_share = industry_share.ratio * industry_sector.ratio
+              sector = industry_sector.sector
+              if sector.nil?
+                raise MissingSectorForIndustrySector, 
+                  "Missing a related sector for IndustrySector #{industry_sector.inspect}"
+              end
+              hash[io_code] = {
+                :share => calculated_share,
+                :emission_factor => sector.emission_factor
+              }
+            end
+            hash
+          end
+        end
+
         base.decide :emission, :with => :characteristics do
           committee :emission do
             quorum 'from emissions factor and adjusted cost', :needs => [:emission_factor, :adjusted_cost] do |characteristics|
@@ -42,7 +66,8 @@ module BrighterPlanet
           
           committee :sector_shares do
             quorum 'from industry shares and product line shares', :needs => [:industry_shares, :product_line_shares] do |characteristics|
-              industry_sector_shares = sector_shares_from_industry_shares(characteristics[:industry_shares])
+              industry_sector_shares = sector_shares_from_industry_shares.
+                call characteristics
 
               product_line_shares = characteristics[:product_line_shares]
               product_lines_sectors = ProductLinesSectors.find :all,
@@ -69,9 +94,8 @@ module BrighterPlanet
             end
             
             # TODO Do we need this?
-            quorum 'from industry shares', :needs => [:industry_shares] do |characteristics|
-              sector_shares_from_industry_shares(characteristics[:industry_shares])
-            end
+            quorum 'from industry shares', { :needs => [:industry_shares] },
+              &sector_shares_from_industry_shares
             
             quorum 'default' do
               raise "We need a merchant, merchant category, industry, or product_line"
@@ -126,27 +150,6 @@ module BrighterPlanet
         # FIXME TODO make other committees to report emissions by gas, by io sector, etc.
       end
 
-      def self.sector_shares_from_industry_shares(industry_shares)
-        industry_sectors = industry_shares.map(&:industries_sectors).flatten
-        industry_sectors.inject({}) do |hash, industry_sector|
-          io_code = industry_sector.io_code
-          unless ['420000','4A0000'].include?(io_code.to_s)
-            naics_code = industry_sector.naics_code
-            industry_share = industry_shares.find_by_naics_code naics_code
-            calculated_share = industry_share.ratio * industry_sector.ratio
-            sector = industry_sector.sector
-            if sector.nil?
-              raise MissingSectorForIndustrySector, 
-                "Missing a related sector for IndustrySector #{industry_sector.inspect}"
-            end
-            hash[io_code] = {
-              :share => calculated_share,
-              :emission_factor => sector.emission_factor
-            }
-          end
-          hash
-        end
-      end
     end
   end
 end
