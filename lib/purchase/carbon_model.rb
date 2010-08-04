@@ -123,6 +123,11 @@ module BrighterPlanet
             quorum 'from merchant category', :needs => [:merchant_category] do |characteristics|
               characteristics[:merchant_category].merchant_categories_industries
             end
+            quorum 'from industry', :needs => [:naics_codes] do |characteristics|
+              industries = Industry.find :all, :conditions => { 
+                :naics_code => characteristics[:naics_code] }
+              industries.map(&:merchant_categories_industries).flatten
+            end
           end
           
           committee :merchant_category do
@@ -147,7 +152,37 @@ module BrighterPlanet
             end
           end
         end
+
         # FIXME TODO make other committees to report emissions by gas, by io sector, etc.
+        base.decide :sector_emissions, :with => :characteristics do
+          committee :emission do
+            quorum 'from emissions factors and adjusted cost', :needs => [:emission_factor, :adjusted_cost] do |characteristics|
+              #       lbs CO2e / 2002 US $              2002 US $
+              characteristics[:emission_factor] * characteristics[:adjusted_cost]
+            end
+            
+            quorum 'default' do
+              raise "The purchase's default emission quorum should never be called"
+            end
+          end
+          committee :emission_factors do
+            quorum 'from sector_shares', :needs => [:sector_shares] do |characteristics|
+              characteristics[:sector_shares].inject({}) do |hsh, (io_code, data)|
+                if data[:emission_factor].nil?
+                  raise MissingEmissionFactor,
+                    "Missing emission factor for sector #{io_code}"
+                end
+                hsh[io_code] = data[:emission_factor] * data[:share]
+                hsh
+              end
+            end
+            
+            quorum 'default' do
+              # FIXME TODO figure out a real fallback emission factor
+              100
+            end
+          end
+        end
       end
 
     end

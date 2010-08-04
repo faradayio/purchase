@@ -12,4 +12,9 @@ class PurchaseRecord < ActiveRecord::Base
   # belongs_to :industry,          :foreign_key => 'naics_code'
   # belongs_to :product_line,      :foreign_key => 'ps_code'
   # belongs_to :sector,            :foreign_key => 'io_code'
+
+  attr_accessor :naics_codes
+  def naics_codes
+    @naics_codes ||= []
+  end
 end

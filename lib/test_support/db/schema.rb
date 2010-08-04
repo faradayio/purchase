@@ -4,7 +4,6 @@ Sniff::Database.define_schema do
   create_table "purchase_records", :force => true do |t|
     t.integer 'merchant_id'
     t.string  'mcc'
-    t.string  'naics_code'
     t.string  'ps_code'
     t.string  'io_code'
     t.float   'purchase_amount'
