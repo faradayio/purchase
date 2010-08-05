@@ -40,10 +40,6 @@ module BrighterPlanet
             quorum 'from emissions factor and adjusted cost', :needs => :sector_emissions do |characteristics|
               characteristics[:sector_emissions].values.inject(0) { |sum, emission| sum += emission }
             end
-            
-            quorum 'default' do
-              raise "The purchase's default emission quorum should never be called"
-            end
           end
 
           committee :sector_emissions do
@@ -52,10 +48,6 @@ module BrighterPlanet
                 hsh[io_code] = share * characteristics[:adjusted_cost]
                 hsh
               end
-            end
-            
-            quorum 'default' do
-              raise "The purchase's default secotr emissions quorum should never be called"
             end
           end
 
