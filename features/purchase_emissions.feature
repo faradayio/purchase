@@ -48,26 +48,3 @@ Feature: Purchase Emissions Calculations
       | 324191  | 100.00 | 2010-07-28 |   1      |
       | 324199  | 100.00 | 2010-07-28 |   6      |
 
-  Scenario Outline: Calculations for each Sector
-    Given a purchase has "merchant.id" of "<merchant>"
-    And it has "cost" of "<cost>"
-    And it has "date" of "<date>"
-    When sector emissions are calculated
-    Then the emission value for "<io_code>" should be within 1 kgs of <emission>
-    Examples:
-      | merchant | io_code | cost   | date       | emission |
-      |        1 | 322230  | 100.00 | 2010-07-28 |       28 |
-      |        1 | 334111  | 100.00 | 2010-07-28 |     31.2 |
-      |        1 | 339940  | 100.00 | 2010-07-28 |       22 |
-      |        1 | 511200  | 100.00 | 2010-07-28 |       18 |
-      |        1 | 33411A  | 100.00 | 2010-07-28 |        9 |
-      |        2 | 334210  | 100.00 | 2010-07-28 |       32 |
-      |        2 | 334300  | 100.00 | 2010-07-28 |       30 |
-      |        2 | 33411A  | 100.00 | 2010-07-28 |       25 |
-      |        3 | 722000  | 100.00 | 2010-07-28 |       80 |
-      |        4 | 7211A0  | 100.00 | 2010-07-28 |      100 |
-      |        5 | 324110  | 100.00 | 2010-07-28 |      160 |
-      |        5 | 324121  | 100.00 | 2010-07-28 |      6.5 |
-      |        5 | 324122  | 100.00 | 2010-07-28 |      4.5 |
-      |        5 | 324191  | 100.00 | 2010-07-28 |        1 |
-      |        5 | 324199  | 100.00 | 2010-07-28 |        6 |
