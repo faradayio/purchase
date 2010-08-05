@@ -51,6 +51,7 @@ Feature: Purchase Committee Calculations
       | 5172 | 324199 |   0.05 |
 
   Scenario Outline: Industry shares committee from industry
+    Given pending - do we really need this?
     Given a purchase emitter deciding on sector emissions
     And a characteristic "naics_codes" including "<naics>"
     When the "industry_shares" committee is calculated

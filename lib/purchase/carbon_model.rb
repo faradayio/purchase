@@ -125,7 +125,7 @@ module BrighterPlanet
             end
             quorum 'from industry', :needs => [:naics_codes] do |characteristics|
               industries = Industry.find :all, :conditions => { 
-                :naics_code => characteristics[:naics_code] }
+                :naics_code => characteristics[:naics_codes] }
               industries.map(&:merchant_categories_industries).flatten
             end
           end
