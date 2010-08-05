@@ -1,5 +1,6 @@
 require 'leap'
 require 'timeframe'
+require 'date'
 
 module BrighterPlanet
   module Purchase
@@ -156,21 +157,27 @@ module BrighterPlanet
           
           committee :adjusted_cost do
             quorum 'from cost and date', :needs => [:cost, :date] do |characteristics|
-              # FIXME TODO convert cost to 2002 dollars based on date
-              characteristics[:cost]
+              dollars_in_2002 characteristics[:cost], characteristics[:date]
             end
             
             quorum 'from purchase amount and date', :needs => [:purchase_amount, :date] do |characteristics|
               # FIXME TODO take out tax, then convert to 2002 US $ based on date and cost
-              characteristics[:purchase_amount] * 0.9
-            end
-
-            quorum 'default' do
-              raise "We need either a cost or purchase amount"
+              amount_without_tax = characteristics[:purchase_amount] * 0.9
+              dollars_in_2002 amount_without_tax, characteristics[:date]
             end
           end
         end
         # FIXME TODO make other committees to report emissions by gas, by io sector, etc.
+      end
+
+      # TODO: Come up with a way to fetch real CPI conversions
+      def self.dollars_in_2002(amount, date)
+        @cpi_lookup = { 2009 => 1.189, 2010 => 1.207, 2011 => 1.225, 2012 => 1.245, 2013 => 1.265 }
+
+        date = date.is_a?(Date) ? date : Date.parse(date)
+        conversion_factor = @cpi_lookup[date.year] || 1.207
+
+        amount.to_f / conversion_factor
       end
     end
   end
