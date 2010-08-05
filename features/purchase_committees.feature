@@ -148,8 +148,13 @@ Feature: Purchase Committee Calculations
     And a characteristic "merchant.id" of "<merchant>"
     And a characteristic "cost" of "<cost>"
     And a characteristic "date" of "<date>"
-    When the "sector_emissions" committee is calculated
-    Then the emission value for "<io_code>" should be within 1 kgs of <emission>
+    When the "adjusted_cost" committee is calculated
+    And the "merchant_category" committee is calculated
+    And the "industry_shares" committee is calculated
+    And the "product_line_shares" committee is calculated
+    And the "sector_shares" committee is calculated
+    And the "emission_factors" committee is calculated
+    And the "sector_emissions" committee is calculated
     Then the conclusion of the committee should include a key of <io_code> and value <emission>
     Examples:
       | merchant | io_code | cost   | date       | emission |
