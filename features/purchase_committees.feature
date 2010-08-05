@@ -10,8 +10,8 @@ Feature: Purchase Committee Calculations
     And the conclusion of the committee should be "<adjusted_cost>"
     Examples:
       | cost   | date       | adjusted_cost |
-      | 831.23 | 2010-08-01 |        831.23 |
-      |  11.00 | 2005-07-14 |          11.0 |
+      | 831.23 | 2010-08-01 |     688.67439 |
+      |  11.00 | 2005-07-14 |       9.11350 |
 
   Scenario Outline: Adjusted cost committee from purchase amount and date
     Given a purchase emitter 
@@ -22,8 +22,8 @@ Feature: Purchase Committee Calculations
     And the conclusion of the committee should be "<adjusted_cost>"
     Examples:
       | amount | date       | adjusted_cost |
-      | 831.23 | 2010-08-01 |       748.107 |
-      |  11.00 | 2005-07-14 |           9.9 |
+      | 831.23 | 2010-08-01 |     619.80695 |
+      |  11.00 | 2005-07-14 |       8.20215 |
 
   Scenario Outline: Merchant category committee from merchant
     Given a purchase emitter 
