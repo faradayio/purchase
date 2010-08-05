@@ -37,13 +37,43 @@ module BrighterPlanet
 
         base.decide :emission, :with => :characteristics do
           committee :emission do
-            quorum 'from emissions factor and adjusted cost', :needs => [:emission_factor, :adjusted_cost] do |characteristics|
-              #       lbs CO2e / 2002 US $              2002 US $
-              characteristics[:emission_factor] * characteristics[:adjusted_cost]
+            quorum 'from emissions factor and adjusted cost', :needs => :sector_emissions do |characteristics|
+              characteristics[:sector_emissions].values.inject(0) { |sum, emission| sum += emission }
             end
             
             quorum 'default' do
               raise "The purchase's default emission quorum should never be called"
+            end
+          end
+
+          committee :sector_emissions do
+            quorum 'from emissions factors and adjusted cost', :needs => [:emission_factors, :adjusted_cost] do |characteristics|
+              characteristics[:emission_factors].inject({}) do |hsh, (io_code, share)|
+                hsh[io_code] = share * characteristics[:adjusted_cost]
+                hsh
+              end
+            end
+            
+            quorum 'default' do
+              raise "The purchase's default secotr emissions quorum should never be called"
+            end
+          end
+
+          committee :emission_factors do
+            quorum 'from sector_shares', :needs => [:sector_shares] do |characteristics|
+              characteristics[:sector_shares].inject({}) do |hsh, (io_code, data)|
+                if data[:emission_factor].nil?
+                  raise MissingEmissionFactor,
+                    "Missing emission factor for sector #{io_code}"
+                end
+                hsh[io_code] = data[:emission_factor] * data[:share]
+                hsh
+              end
+            end
+            
+            quorum 'default' do
+              # FIXME TODO figure out a real fallback emission factor
+              100
             end
           end
           
@@ -96,10 +126,6 @@ module BrighterPlanet
             # TODO Do we need this?
             quorum 'from industry shares', { :needs => [:industry_shares] },
               &sector_shares_from_industry_shares
-            
-            quorum 'default' do
-              raise "We need a merchant, merchant category, industry, or product_line"
-            end
           end
           
           committee :product_line_shares do
@@ -152,39 +178,8 @@ module BrighterPlanet
             end
           end
         end
-
         # FIXME TODO make other committees to report emissions by gas, by io sector, etc.
-        base.decide :sector_emissions, :with => :characteristics do
-          committee :emission do
-            quorum 'from emissions factors and adjusted cost', :needs => [:emission_factor, :adjusted_cost] do |characteristics|
-              #       lbs CO2e / 2002 US $              2002 US $
-              characteristics[:emission_factor] * characteristics[:adjusted_cost]
-            end
-            
-            quorum 'default' do
-              raise "The purchase's default emission quorum should never be called"
-            end
-          end
-          committee :emission_factors do
-            quorum 'from sector_shares', :needs => [:sector_shares] do |characteristics|
-              characteristics[:sector_shares].inject({}) do |hsh, (io_code, data)|
-                if data[:emission_factor].nil?
-                  raise MissingEmissionFactor,
-                    "Missing emission factor for sector #{io_code}"
-                end
-                hsh[io_code] = data[:emission_factor] * data[:share]
-                hsh
-              end
-            end
-            
-            quorum 'default' do
-              # FIXME TODO figure out a real fallback emission factor
-              100
-            end
-          end
-        end
       end
-
     end
   end
 end
