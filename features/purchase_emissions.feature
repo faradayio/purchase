@@ -30,6 +30,7 @@ Feature: Purchase Emissions Calculations
       | 5172 | 100.00 | 2010-07-28 | 178.0    |
 
   Scenario Outline: Calculations starting from industry NAICS codes
+    Given pending - do we really need this?
     Given a purchase has "naics_codes" including "<naics>"
     And it has "cost" of "<cost>"
     And it has "date" of "<date>"
