@@ -179,13 +179,19 @@ module BrighterPlanet
               dollars_in_2002 amount_without_tax, characteristics[:date]
             end
           end
+
+          committee :date do
+            quorum 'default' do
+              Date.today
+            end
+          end
         end
         # FIXME TODO make other committees to report emissions by gas, by io sector, etc.
       end
 
       # TODO: Come up with a way to fetch real CPI conversions
       def self.dollars_in_2002(amount, date)
-        @cpi_lookup = { 2009 => 1.189, 2010 => 1.207, 2011 => 1.225, 2012 => 1.245, 2013 => 1.265 }
+        @cpi_lookup ||= { 2009 => 1.189, 2010 => 1.207, 2011 => 1.225, 2012 => 1.245, 2013 => 1.265 }
 
         date = date.is_a?(Date) ? date : Date.parse(date)
         conversion_factor = @cpi_lookup[date.year] || 1.207
