@@ -13,29 +13,6 @@ module BrighterPlanet
         base.extend ::Leap::Subject
         base.extend FastTimestamp
 
-        sector_shares_from_industry_shares = lambda do |characteristics|
-          industry_shares = characteristics[:industry_shares]
-          industry_sectors = industry_shares.map(&:industries_sectors).flatten
-          industry_sectors.inject({}) do |hash, industry_sector|
-            io_code = industry_sector.io_code
-            unless ['420000','4A0000'].include?(io_code.to_s)
-              naics_code = industry_sector.naics_code
-              industry_share = industry_shares.find_by_naics_code naics_code
-              calculated_share = industry_share.ratio * industry_sector.ratio
-              sector = industry_sector.sector
-              if sector.nil?
-                raise MissingSectorForIndustrySector, 
-                  "Missing a related sector for IndustrySector #{industry_sector.inspect}"
-              end
-              hash[io_code] = {
-                :share => calculated_share,
-                :emission_factor => sector.emission_factor
-              }
-            end
-            hash
-          end
-        end
-
         base.decide :emission, :with => :characteristics do
           committee :emission do
             quorum 'from emissions factor and adjusted cost', :needs => :sector_emissions do |characteristics|
@@ -88,7 +65,30 @@ module BrighterPlanet
           end
           
           committee :sector_shares do
-            quorum 'from industry shares and product line shares', :needs => [:industry_shares, :product_line_shares] do |characteristics|
+            sector_shares_from_industry_shares = lambda do |characteristics|
+              industry_shares = characteristics[:industry_shares]
+              industry_sectors = industry_shares.map(&:industries_sectors).flatten
+              industry_sectors.inject({}) do |hash, industry_sector|
+                io_code = industry_sector.io_code
+                unless ['420000','4A0000'].include?(io_code.to_s)
+                  naics_code = industry_sector.naics_code
+                  industry_share = industry_shares.find_by_naics_code naics_code
+                  calculated_share = industry_share.ratio * industry_sector.ratio
+                  sector = industry_sector.sector
+                  if sector.nil?
+                    raise MissingSectorForIndustrySector, 
+                      "Missing a related sector for IndustrySector #{industry_sector.inspect}"
+                  end
+                  hash[io_code] = {
+                    :share => calculated_share,
+                    :emission_factor => sector.emission_factor
+                  }
+                end
+                hash
+              end
+            end
+
+            quorum 'from product line shares', :needs => :product_line_shares do |characteristics|
               industry_sector_shares = sector_shares_from_industry_shares.
                 call characteristics
 
@@ -116,9 +116,22 @@ module BrighterPlanet
               industry_sector_shares.merge product_sector_shares
             end
             
-            # TODO Do we need this?
-            quorum 'from industry shares', { :needs => [:industry_shares] },
-              &sector_shares_from_industry_shares
+            quorum 'from ps_codes', :needs => :ps_codes do |characteristics|
+              product_lines_sectors = ProductLinesSectors.find :all, :conditions => { 
+                :ps_code => characteristics[:ps_codes] }
+              product_sector_shares = product_lines_sectors.inject({}) do |hash, product_line_sector|
+                sector = product_line_sector.sector
+                if sector.nil?
+                  raise MissingSectorForProductLineSector, 
+                    "Missing a related sector for ProductLineSector #{product_line_sector.inspect}"
+                end
+                hash[product_line_sector.io_code] = {
+                  :share => product_line_sector.ratio, 
+                  :emission_factor => sector.emission_factor
+                }
+                hash
+              end
+            end
           end
           
           committee :product_line_shares do
