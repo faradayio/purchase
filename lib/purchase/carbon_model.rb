@@ -135,7 +135,7 @@ module BrighterPlanet
           end
           
           committee :product_line_shares do
-            quorum 'from industry shares', :needs => [:industry_shares] do |characteristics|
+            quorum 'from industry shares', :needs => :industry_shares do |characteristics|
               industry_shares = characteristics[:industry_shares]
               industries_product_lines = industry_shares.
                 map(&:industries_product_lines).flatten
