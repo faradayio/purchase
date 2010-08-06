@@ -139,10 +139,10 @@ module BrighterPlanet
           end
           
           committee :industry_shares do
-            quorum 'from merchant category', :needs => [:merchant_category] do |characteristics|
+            quorum 'from merchant category', :needs => :merchant_category do |characteristics|
               characteristics[:merchant_category].merchant_categories_industries
             end
-            quorum 'from industry', :needs => [:naics_codes] do |characteristics|
+            quorum 'from naics_codes', :needs => :naics_codes do |characteristics|
               industries = Industry.find :all, :conditions => { 
                 :naics_code => characteristics[:naics_codes] }
               industries.map(&:merchant_categories_industries).flatten
