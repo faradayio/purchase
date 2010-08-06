@@ -82,6 +82,30 @@ Feature: Purchase Committee Calculations
       | 5172 | 30863    |  0.018 |
       | 5172 | 30864    |  0.019 |
 
+  Scenario Outline: Sector shares committee from sectors
+    Given a purchase emitter 
+    And a characteristic "io_codes" including "<io_codes>"
+    When the "product_lines_sectors" committee is calculated
+    And the "sector_shares" committee is calculated
+    Then the conclusion of the committee should include a key of "<result_io_code>" and subvalue "share" of "<share>" and subvalue "emission_factor" of "<emission_factor>"
+    Examples:
+      | io_codes      | result_io_code | emission_factor | share  |
+      | 322230,324110 | 322230         |             1.4 |    1.0 |
+      | 322230,324110 | 324110         |             2.0 |    0.8 |
+      | 324191        | 324191         |             0.2 |    1.0 |
+      | 334111        | 334111         |             1.3 |    0.4 |
+      | 33411A        | 33411A         |             0.5 |    1.0 |
+      | 334210        | 334210         |             1.6 |    1.0 |
+      | 334300        | 334300         |             1.2 |    1.0 |
+      | 339940        | 339940         |             1.1 |    1.0 |
+      | 511200        | 511200         |             1.0 |    0.3 |
+      | 722000        | 722000         |             0.8 |    0.6 |
+      | 44100         | 44100          |             0.7 |    1.0 |
+      | 44102         | 44102          |             0.7 |    0.3 |
+      | 44103         | 44103          |             1.2 |    1.0 |
+      | 44104         | 44104          |             1.4 |    1.0 |
+      | 44105         | 44105          |             0.3 |    0.4 |
+
   Scenario Outline: Sector shares committee from industry shares and product line shares
     Given a purchase emitter 
     And a characteristic "merchant_category.mcc" of "<mcc>"
@@ -109,7 +133,8 @@ Feature: Purchase Committee Calculations
   Scenario Outline: Sector shares committee from ps_codes
     Given a purchase emitter 
     And a characteristic "ps_codes" including "<ps_codes>"
-    When the "sector_shares" committee is calculated
+    When the "product_lines_sectors" committee is calculated
+    And the "sector_shares" committee is calculated
     Then the conclusion of the committee should include a key of "<io_code>" and subvalue "share" of "<share>" and subvalue "emission_factor" of "<emission_factor>"
     Examples:
       | ps_codes    | io_code | emission_factor | share  |

@@ -116,10 +116,8 @@ module BrighterPlanet
               industry_sector_shares.merge product_sector_shares
             end
             
-            quorum 'from ps_codes', :needs => :ps_codes do |characteristics|
-              product_lines_sectors = ProductLinesSectors.find :all, :conditions => { 
-                :ps_code => characteristics[:ps_codes] }
-              product_sector_shares = product_lines_sectors.inject({}) do |hash, product_line_sector|
+            quorum 'from product lines sectors', :needs => :product_lines_sectors do |characteristics|
+              characteristics[:product_lines_sectors].inject({}) do |hash, product_line_sector|
                 sector = product_line_sector.sector
                 if sector.nil?
                   raise MissingSectorForProductLineSector, 
@@ -131,6 +129,17 @@ module BrighterPlanet
                 }
                 hash
               end
+            end
+          end
+
+          committee :product_lines_sectors do
+            quorum 'from ps_codes', :needs => :ps_codes do |characteristics|
+              ProductLinesSectors.find :all, :conditions => { 
+                :ps_code => characteristics[:ps_codes] }
+            end
+            quorum 'from sectors', :needs => :io_codes do |characteristics|
+              sectors = Sector.find :all, :conditions => { :io_code => characteristics[:io_codes] }
+              sectors.map(&:product_lines_sectors).flatten
             end
           end
           
