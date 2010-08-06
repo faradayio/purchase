@@ -88,7 +88,7 @@ module BrighterPlanet
               end
             end
 
-            quorum 'from product line shares', :needs => :product_line_shares do |characteristics|
+            quorum 'from product line shares', :needs => [:industry_shares, :product_line_shares] do |characteristics|
               industry_sector_shares = sector_shares_from_industry_shares.
                 call characteristics
 
@@ -161,7 +161,7 @@ module BrighterPlanet
               industries.map(&:merchant_categories_industries).flatten
             end
           end
-          
+
           committee :merchant_category do
             quorum 'from merchant', :needs => [:merchant] do |characteristics|
               characteristics[:merchant].merchant_category
