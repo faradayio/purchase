@@ -82,22 +82,6 @@ Feature: Purchase Committee Calculations
       | 5172 | 30863    |  0.018 |
       | 5172 | 30864    |  0.019 |
 
-  Scenario Outline: Sector shares committee from industry shares
-    Given a purchase emitter 
-    And a characteristic "merchant_category.mcc" of "<mcc>"
-    When the "industry_shares" committee is calculated
-    And the "sector_shares" committee is calculated
-    Then the conclusion of the committee should include a key of "<io_code>" and subvalue "share" of "<share>" and subvalue "emission_factor" of "<emission_factor>"
-    Examples:
-      | mcc  | io_code | emission_factor | share  |
-      | 5111 |         |                 |        |
-      | 5732 |         |                 |        |
-      | 5172 | 324110  |             2.0 |    0.8 |
-      | 5172 | 324121  |             1.3 |   0.05 |
-      | 5172 | 324122  |             0.9 |   0.05 |
-      | 5172 | 324191  |             0.2 |   0.05 |
-      | 5172 | 324199  |             1.2 |   0.05 |
-
   Scenario Outline: Sector shares committee from industry shares and product line shares
     Given a purchase emitter 
     And a characteristic "merchant_category.mcc" of "<mcc>"
