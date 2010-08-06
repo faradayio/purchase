@@ -51,20 +51,20 @@ Feature: Purchase Committee Calculations
       | 5172 | 324199 |   0.05 |
 
   Scenario Outline: Industry shares committee from industry
-    Given pending - do we really need this?
     Given a purchase emitter 
     And a characteristic "naics_codes" including "<naics>"
     When the "industry_shares" committee is calculated
-    Then the conclusion of the committee should have a record identified with "naics_code" of "<naics>" and having "ratio" including "<ratio>"
+    Then the conclusion of the committee should have a record identified with "naics_code" of "<result_naics>" and having "ratio" including "<ratio>"
     Examples:
-      | naics        | ratio    |
-      | 45321        |     1.0  |
-      | 443112       |     1.0  |
-      | 32411        |     0.8  |
-      | 324121       |     0.05 |
-      | 324122       |     0.05 |
-      | 324191       |     0.05 |
-      | 324199,45321 | 0.05,1.0 |
+      | naics              | result_naics | ratio    |
+      | 45321,443112,32411 | 45321        |      1.0 |
+      | 45321,443112,32411 | 443112       |      1.0 |
+      | 45321,443112,32411 | 32411        |      0.8 |
+      | 324121             | 324121       |     0.05 |
+      | 324122             | 324122       |     0.05 |
+      | 324191             | 324191       |     0.05 |
+      | 324199,45321       | 324199       |     0.05 |
+      | 324199,45321       | 45321        |      1.0 |
 
   Scenario Outline: Product line shares committee
     Given a purchase emitter 
