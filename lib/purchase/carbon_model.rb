@@ -41,27 +41,7 @@ module BrighterPlanet
               end
             end
             
-            quorum 'default' do
-              # FIXME TODO figure out a real fallback emission factor
-              100
-            end
-          end
-          
-          committee :emission_factor do
-            quorum 'from sector_shares', :needs => [:sector_shares] do |characteristics|
-              characteristics[:sector_shares].inject(0) do |sum, (io_code, data)|
-                if data[:emission_factor].nil?
-                  raise MissingEmissionFactor,
-                    "Missing emission factor for sector #{io_code}"
-                end
-                sum + data[:emission_factor] * data[:share]
-              end
-            end
-            
-            quorum 'default' do
-              # FIXME TODO figure out a real fallback emission factor
-              100
-            end
+            # FIXME TODO can we get a fallback emission factor without sector shares?
           end
           
           committee :sector_shares do
