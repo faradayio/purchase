@@ -158,16 +158,35 @@ module BrighterPlanet
                 hash
               end
             end
+            
+            quorum 'from ps codes and ratios', :needs => [:ps_codes, :ps_ratios] do |characteristics|
+              product_lines = ProductLine.find :all, :conditions => {
+                :ps_code => characteristics[:ps_codes] }
+              # should return the product lines whose ps_codes have been specified and the specified ratios
+            end
+            
+            quorum 'from ps codes', :needs => :ps_codes do |characteristics|
+              product_lines = ProductLine.find :all, :conditions => {
+                :ps_code => characteristics[:ps_codes] }
+              # should return the product lines whose ps_codes have been specified, each with a ratio of (1 / product_lines.length)
+            end
           end
           
           committee :industry_shares do
             quorum 'from merchant category', :needs => :merchant_category do |characteristics|
               characteristics[:merchant_category].merchant_categories_industries
             end
-            quorum 'from naics_codes', :needs => :naics_codes do |characteristics|
+            
+            quorum 'from naics codes and ratios', :needs => [:naics_codes, :naics_ratios] do |characteristics|
+              industries = Industry.find :all, :conditions => {
+                :naics_code => characteristics[:naics_codes] }
+              # should return the industries whose naics codes have been specified and the specified ratios
+            end
+            
+            quorum 'from naics codes', :needs => :naics_codes do |characteristics|
               industries = Industry.find :all, :conditions => { 
                 :naics_code => characteristics[:naics_codes] }
-              industries.map(&:merchant_categories_industries).flatten
+                # should return the industries whose naics codes have been specified, each with a ratio of (1 / industries.length)
             end
           end
 
