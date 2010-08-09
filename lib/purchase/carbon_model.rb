@@ -88,7 +88,7 @@ module BrighterPlanet
               end
             end
 
-            quorum 'from product line shares', :needs => [:industry_shares, :product_line_shares] do |characteristics|
+            quorum 'from industry shares and product line shares', :needs => [:industry_shares, :product_line_shares] do |characteristics|
               industry_sector_shares = sector_shares_from_industry_shares.
                 call characteristics
 
@@ -116,33 +116,56 @@ module BrighterPlanet
               industry_sector_shares.merge product_sector_shares
             end
             
-            quorum 'from product lines sectors', :needs => :product_lines_sectors do |characteristics|
-              characteristics[:product_lines_sectors].inject({}) do |hash, product_line_sector|
+            quorum 'from product line shares', :needs => :product_line_shares do |characteristics|
+              product_line_shares = characteristics[:product_line_shares]
+              product_lines_sectors = ProductLinesSectors.find :all,
+                :conditions => { :ps_code => product_line_shares.keys }
+              product_sector_shares = product_lines_sectors.inject({}) do |hash, product_line_sector|
+                io_code = product_line_sector.io_code
+                ps_code = product_line_sector.ps_code
+                product_line_share = product_line_shares[ps_code]
+                
+                share = product_line_sector.ratio * product_line_share
                 sector = product_line_sector.sector
                 if sector.nil?
-                  raise MissingSectorForProductLineSector, 
+                  raise MissingSectorForProductLineSector,
                     "Missing a related sector for ProductLineSector #{product_line_sector.inspect}"
                 end
-                hash[product_line_sector.io_code] = {
-                  :share => product_line_sector.ratio, 
+                hash[io_code] = {
+                  :share => share,
                   :emission_factor => sector.emission_factor
                 }
                 hash
               end
             end
+            
+            # quorum 'from product lines sectors', :needs => :product_lines_sectors do |characteristics|
+            #   characteristics[:product_lines_sectors].inject({}) do |hash, product_line_sector|
+            #     sector = product_line_sector.sector
+            #     if sector.nil?
+            #       raise MissingSectorForProductLineSector, 
+            #         "Missing a related sector for ProductLineSector #{product_line_sector.inspect}"
+            #     end
+            #     hash[product_line_sector.io_code] = {
+            #       :share => product_line_sector.ratio, 
+            #       :emission_factor => sector.emission_factor
+            #     }
+            #     hash
+            #   end
+            # end
           end
 
-          committee :product_lines_sectors do
-            quorum 'from ps_codes', :needs => :ps_codes do |characteristics|
-              ProductLinesSectors.find :all, :conditions => { 
-                :ps_code => characteristics[:ps_codes] }
-            end
-            quorum 'from sectors', :needs => :io_codes do |characteristics|
-              sectors = Sector.find :all, :conditions => { :io_code => characteristics[:io_codes] }
-              sectors.map(&:product_lines_sectors).flatten
-            end
-          end
-          
+          # committee :product_lines_sectors do
+          #   quorum 'from ps_codes', :needs => :ps_codes do |characteristics|
+          #     ProductLinesSectors.find :all, :conditions => { 
+          #       :ps_code => characteristics[:ps_codes] }
+          #   end
+          #   quorum 'from sectors', :needs => :io_codes do |characteristics|
+          #     sectors = Sector.find :all, :conditions => { :io_code => characteristics[:io_codes] }
+          #     sectors.map(&:product_lines_sectors).flatten
+          #   end
+          # end
+          # 
           committee :product_line_shares do
             quorum 'from ps codes and ratios', :needs => [:ps_codes, :ps_ratios] do |characteristics|
               product_lines = ProductLine.find :all, :conditions => {
