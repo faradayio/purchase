@@ -75,7 +75,7 @@ Feature: Purchase Committee Calculations
       | 32411,324121 | 32411        | 0.5   |
       | 32411,324121 | 324121       | 0.5   |
 
-  Scenario Outline: Product line shares committee from industry shares
+  Scenario Outline: Product line shares committee from merchant category
     Given a purchase emitter 
     And a characteristic "merchant_category.mcc" of "<mcc>"
     When the "industry_shares" committee is calculated
