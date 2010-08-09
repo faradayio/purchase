@@ -75,7 +75,7 @@ Feature: Purchase Committee Calculations
       | 32411,324121 | 32411        | 0.5   |
       | 32411,324121 | 324121       | 0.5   |
 
-  Scenario Outline: Product line shares committee
+  Scenario Outline: Product line shares committee from industry shares
     Given a purchase emitter 
     And a characteristic "merchant_category.mcc" of "<mcc>"
     When the "industry_shares" committee is calculated
@@ -84,12 +84,30 @@ Feature: Purchase Committee Calculations
     Examples:
       | mcc  | ps_code  | ratio  |
       | 5111 | 20370    |    0.6 |
-      | 5732 | 20375    |    0.5 |
-      | 5172 | 30860    |   0.32 |
-      | 5172 | 30861    | 0.0225 |
-      | 5172 | 30862    | 0.0175 |
-      | 5172 | 30863    |  0.018 |
-      | 5172 | 30864    |  0.019 |
+      | 5111 | 20852    |    0.2 |
+      | 5111 | 20853    |    0.2 |
+
+  Scenario Outline: Product line shares committee from ps codes and ratios
+    Given a purchase emitter 
+    And a characteristic "ps_codes" including "<ps_code>"
+    And a characteristic "ps_ratios" including "<ps_ratio>"
+    When the "product_line_shares" committee is calculated
+    Then the conclusion of the committee should have a record identified with "ps_code" of "<result_ps>" and having "ratio" including "<ratio>"
+    Examples:
+      | ps_code     | ps_ratio | result_ps | ratio |
+      | 20370,20852 | 0.6,0.2  | 20370     | 0.6   |
+      | 20370,20852 | 0.6,0.2  | 20852     | 0.2   |
+
+  Scenario Outline: Product line shares committee from ps codes
+    Given a purchase emitter 
+    And a characteristic "ps_codes" including "<ps_code>"
+    When the "product_line_shares" committee is calculated
+    Then the conclusion of the committee should have a record identified with "ps_code" of "<result_ps>" and having "ratio" including "<ratio>"
+    Examples:
+      | ps_code     | result_ps | ratio |
+      | 20370       | 20370     | 1     |
+      | 20370,20852 | 20370     | 0.5   |
+      | 20370,20852 | 20852     | 0.5   |
 
   Scenario Outline: Sector shares committee from sectors
     Given a purchase emitter 
