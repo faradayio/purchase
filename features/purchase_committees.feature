@@ -80,7 +80,7 @@ Feature: Purchase Committee Calculations
     And a characteristic "merchant_category.mcc" of "<mcc>"
     When the "industry_shares" committee is calculated
     And the "product_line_shares" committee is calculated
-    Then the conclusion of the committee should include a key of <ps_code> and value <share>
+    Then the conclusion of the committee should include a key of "<ps_code>" and value "<share>"
     Examples:
       | mcc  | ps_code  | share  |
       | 5111 | 20370    |    0.6 |
@@ -162,15 +162,24 @@ Feature: Purchase Committee Calculations
     When the "industry_shares" committee is calculated
     And the "product_line_shares" committee is calculated
     And the "sector_shares" committee is calculated
-    And the "emission_factor" committee is calculated
-    Then the conclusion of the committee should be "<emission_factor>"
+    And the "emission_factors" committee is calculated
+    Then the conclusion of the committee should include a key of "<io_code>" and value "<emission_factor>"
     Examples:
-      | mcc  | emission_factor |
-      | 5111 |           1.082 |
-      | 5732 |           0.87  |
-      | 5812 |           0.8   |
-      | 3504 |           1.0   |
-      | 5172 |           1.78  |
+      | mcc  | io_code | emission_factor |
+      | 5111 | 334111  |           0.312 |
+      | 5111 | 33411A  |            0.09 |
+      | 5111 | 511200  |            0.18 |
+      | 5111 | 339940  |            0.22 |
+      | 5111 | 322230  |            0.28 |
+      | 5732 | 33411A  |            0.25 |
+      | 5732 | 334300  |             0.3 |
+      | 5732 | 334210  |            0.32 |
+      | 5172 | 324110  |           0.512 |
+      | 5172 | 324121  |           0.065 |
+      | 5172 | 324122  |           0.045 |
+      | 5172 | 324191  |           0.064 |
+      | 5172 | 324199  |            0.06 |
+      | 8225 | 722000  |            0.12 |
 
   Scenario Outline: Emission factor from default
     Given a purchase emitter 
@@ -193,7 +202,7 @@ Feature: Purchase Committee Calculations
     And the "sector_shares" committee is calculated
     And the "emission_factors" committee is calculated
     And the "sector_emissions" committee is calculated
-    Then the conclusion of the committee should include a key of <io_code> and value <emission>
+    Then the conclusion of the committee should include a key of "<io_code>" and value "<emission>"
     Examples:
       | merchant | io_code | cost   | date       | emission  |
       |        1 | 322230  | 100.00 | 2010-07-28 |  23.19801 |
