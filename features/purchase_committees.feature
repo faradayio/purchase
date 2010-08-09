@@ -203,6 +203,9 @@ Feature: Purchase Committee Calculations
     And a characteristic "merchant_category.mcc" of "<mcc>"
     When the "emission_factor" committee is calculated
     Then the conclusion of the committee should be "100"
+    Examples:
+      | mcc |
+      | 0   |
 
   Scenario Outline: Sector emissions from merchant id, cost, and date
     Given a purchase emitter
