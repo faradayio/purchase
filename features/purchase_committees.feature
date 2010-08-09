@@ -183,7 +183,7 @@ Feature: Purchase Committee Calculations
       | 7600        | 722000  |             0.8 |    0.6 |
       | 30860       | 324110  |               2 |    0.8 |
 
-  Scenario Outline: Emission factor from sector shares
+  Scenario Outline: Emission factor from merchant category
     Given a purchase emitter 
     And a characteristic "merchant_category.mcc" of "<mcc>"
     When the "industry_shares" committee is calculated
@@ -194,9 +194,10 @@ Feature: Purchase Committee Calculations
     Examples:
       | mcc  | emission_factor |
       | 5111 |           1.082 |
-      | 5732 |            0.87 |
-      | 5172 |        0.799205 |
-      | 8225 |            0.12 |
+      | 5732 |           0.87  |
+      | 5812 |           0.8   |
+      | 3504 |           1.0   |
+      | 5172 |           1.78  |
 
   Scenario Outline: Emission factor from default
     Given a purchase emitter 
