@@ -90,58 +90,9 @@ module BrighterPlanet
 
               industry_sector_shares.merge product_sector_shares
             end
-
-            quorum 'from io codes and io shares', :needs => [:io_codes, :io_shares] do |characteristics|
-              sectors = Sector.find :all, :conditions => {
-                :io_code => characteristics[:io_codes] }
-              # should return the sectors whose io_codes have been specified and the specified ratios
-            end
-            
-            quorum 'from io codes', :needs => :io_codes do |characteristics|
-              sectors = Sector.find :all, :conditions => {
-                :io_code => characteristics[:io_codes] }
-              # should return the sectors whose io_codes have been specified, each with a ratio of (1 / io_codes.length)
-            end
-            
-            # quorum 'from product lines sectors', :needs => :product_lines_sectors do |characteristics|
-            #   characteristics[:product_lines_sectors].inject({}) do |hash, product_line_sector|
-            #     sector = product_line_sector.sector
-            #     if sector.nil?
-            #       raise MissingSectorForProductLineSector, 
-            #         "Missing a related sector for ProductLineSector #{product_line_sector.inspect}"
-            #     end
-            #     hash[product_line_sector.io_code] = {
-            #       :share => product_line_sector.ratio, 
-            #       :emission_factor => sector.emission_factor
-            #     }
-            #     hash
-            #   end
-            # end
           end
 
-          # committee :product_lines_sectors do
-          #   quorum 'from product sector codes', :needs => :ps_codes do |characteristics|
-          #     ProductLinesSectors.find :all, :conditions => { 
-          #       :ps_code => characteristics[:ps_codes] }
-          #   end
-          #   quorum 'from sectors', :needs => :io_codes do |characteristics|
-          #     sectors = Sector.find :all, :conditions => { :io_code => characteristics[:io_codes] }
-          #     sectors.map(&:product_lines_sectors).flatten
-          #   end
-          # end
-          # 
-
           committee :product_line_shares do
-            quorum 'from product share codes', :needs => :ps_codes do |characteristics|
-              product_lines = ProductLine.find :all, :conditions => {
-                :ps_code => characteristics[:ps_codes] }
-              ratio = 1.0 / product_lines.length.to_f
-              product_lines.inject({}) do |hash, product_line|
-                hash[product_line.ps_code] = ratio
-                hash
-              end
-            end
-            
             quorum 'from industry shares', :needs => :industry_shares do |characteristics|
               industry_shares = characteristics[:industry_shares]
               industries_product_lines = industry_shares.
@@ -159,18 +110,12 @@ module BrighterPlanet
           end
           
           committee :industry_shares do
-            quorum 'from industry NAICS codes', :needs => :naics_codes do |characteristics|
-              industries = Industry.find :all, 
-                :conditions => { :naics_code => characteristics[:naics_codes] }
-              ratio = 1.0 / industries.length.to_f
-              industries.inject({}) do |hash, industry|
-                hash[industry.naics_code] = ratio
-                hash
-              end
-            end
-            
             quorum 'from merchant category', :needs => :merchant_category do |characteristics|
               characteristics[:merchant_category].merchant_categories_industries
+            end
+            quorum 'from industry', :needs => :naics_code do |characteristics|
+              industry = Industry.find_by_naics_code characteristics[:naics_code]
+              industry.merchant_categories_industries
             end
           end
 
