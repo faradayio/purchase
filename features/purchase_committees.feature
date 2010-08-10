@@ -49,17 +49,6 @@ Feature: Purchase Committee Calculations
       | 5172 | 324191 | 0.05  |
       | 5172 | 324199 | 0.05  |
 
-  Scenario Outline: Industry shares committee from naics codes
-    Given a purchase emitter 
-    And a characteristic "naics_codes" including "<naics>"
-    When the "industry_shares" committee is calculated
-    Then the conclusion of the committee should include a key of "<result_naics>" and value "<share>"
-    Examples:
-      | naics        | result_naics | share |
-      | 45321        | 45321        | 1.0   |
-      | 32411,324121 | 32411        | 0.5   |
-      | 32411,324121 | 324121       | 0.5   |
-
   Scenario Outline: Product line shares committee from merchant category
     Given a purchase emitter 
     And a characteristic "merchant_category.mcc" of "<mcc>"
@@ -71,17 +60,6 @@ Feature: Purchase Committee Calculations
       | 5111 | 20370    |    0.6 |
       | 5111 | 20852    |    0.2 |
       | 5111 | 20853    |    0.2 |
-
-  Scenario Outline: Product line shares committee from ps codes
-    Given a purchase emitter 
-    And a characteristic "ps_codes" including "<ps_codes>"
-    When the "product_line_shares" committee is calculated
-    Then the conclusion of the committee should include a key of "<result_ps>" and value "<share>"
-    Examples:
-      | ps_codes    | result_ps | share |
-      | 20370       | 20370     | 1.0   |
-      | 20370,20852 | 20370     | 0.5   |
-      | 20370,20852 | 20852     | 0.5   |
 
   Scenario Outline: Sector shares committee from merchant category
     Given a purchase emitter 
@@ -107,29 +85,6 @@ Feature: Purchase Committee Calculations
       | 5172 | 324191  |             0.2 |   0.05 |
       | 5172 | 324199  |             1.2 |   0.05 |
 
-  Scenario Outline: Sector shares committee from io codes and shares
-    Given a purchase emitter
-    And a characteristic "io_codes" including "<io_codes>"
-    And a characteristic "io_shares" including "<io_shares>"
-    When the "sector_shares" committee is calculated
-    Then the conclusion of the committee should include a key of "<result_io_code>" and subvalue "share" of "<share>" and subvalue "emission_factor" of "<emission_factor>"
-    Examples:
-      | io_codes      | io_shares | result_io_code | emission_factor | share  |
-      | 334111        | 1.0       | 334111         |             1.3 |    1.0 |
-      | 33411A,511200 | 0.6,0.4   | 33411A         |             0.5 |    0.6 |
-      | 33411A,511200 | 0.6,0.4   | 511200         |             1.0 |    0.4 |
-
-  Scenario Outline: Sector shares committee from io codes
-    Given a purchase emitter 
-    And a characteristic "io_codes" including "<io_codes>"
-    When the "sector_shares" committee is calculated
-    Then the conclusion of the committee should include a key of "<result_io_code>" and subvalue "share" of "<share>" and subvalue "emission_factor" of "<emission_factor>"
-    Examples:
-      | io_codes      | result_io_code | emission_factor | share  |
-      | 334111        | 334111         |             1.3 |    1.0 |
-      | 33411A,511200 | 33411A         |             0.5 |    0.5 |
-      | 33411A,511200 | 511200         |             1.0 |    0.5 |
-
   Scenario Outline: Emission factor from merchant category
     Given a purchase emitter 
     And a characteristic "merchant_category.mcc" of "<mcc>"
@@ -137,32 +92,28 @@ Feature: Purchase Committee Calculations
     And the "product_line_shares" committee is calculated
     And the "sector_shares" committee is calculated
     And the "emission_factors" committee is calculated
-    Then the conclusion of the committee should include a key of "<io_code>" and value "<emission_factor>"
+    Then the conclusion of the committee should include a key of "<io_code>" and value "<emission_factor_share>"
     Examples:
-      | mcc  | io_code | emission_factor |
-      | 5111 | 334111  |           0.312 |
-      | 5111 | 33411A  |            0.09 |
-      | 5111 | 511200  |            0.18 |
-      | 5111 | 339940  |            0.22 |
-      | 5111 | 322230  |            0.28 |
-      | 5732 | 33411A  |            0.25 |
-      | 5732 | 334300  |             0.3 |
-      | 5732 | 334210  |            0.32 |
-      | 5172 | 324110  |           0.512 |
-      | 5172 | 324121  |           0.065 |
-      | 5172 | 324122  |           0.045 |
-      | 5172 | 324191  |           0.064 |
-      | 5172 | 324199  |            0.06 |
-      | 8225 | 722000  |            0.12 |
+      | mcc  | io_code | emission_factor_share |
+      | 5111 | 334111  |                 0.312 |
+      | 5111 | 33411A  |                  0.09 |
+      | 5111 | 511200  |                  0.18 |
+      | 5111 | 339940  |                  0.22 |
+      | 5111 | 322230  |                  0.28 |
+      | 5732 | 33411A  |                  0.25 |
+      | 5732 | 334300  |                   0.3 |
+      | 5732 | 334210  |                  0.32 |
+      | 5172 | 324110  |                   1.6 |
+      | 5172 | 324121  |                 0.065 |
+      | 5172 | 324122  |                 0.045 |
+      | 5172 | 324191  |                  0.01 |
+      | 5172 | 324199  |                  0.06 |
 
-  Scenario Outline: Emission factor from default
-    Given a purchase emitter 
-    And a characteristic "merchant_category.mcc" of "<mcc>"
-    When the "emission_factor" committee is calculated
+  Scenario: Emission factor from default
+    Given pending - is this really possible?
+    And a purchase emitter 
+    When the "emission_factors" committee is calculated
     Then the conclusion of the committee should be "100"
-    Examples:
-      | mcc |
-      | 0   |
 
   Scenario Outline: Sector emissions from merchant id, cost, and date
     Given a purchase emitter
