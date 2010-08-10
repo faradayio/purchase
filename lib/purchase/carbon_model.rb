@@ -132,16 +132,14 @@ module BrighterPlanet
           # 
 
           committee :product_line_shares do
-            quorum 'from product share codes and ratios', :needs => [:ps_codes, :ps_ratios] do |characteristics|
-              product_lines = ProductLine.find :all, :conditions => {
-                :ps_code => characteristics[:ps_codes] }
-              # should return the product lines whose ps_codes have been specified and the specified ratios
-            end
-            
             quorum 'from product share codes', :needs => :ps_codes do |characteristics|
               product_lines = ProductLine.find :all, :conditions => {
                 :ps_code => characteristics[:ps_codes] }
-              # should return the product lines whose ps_codes have been specified, each with a ratio of (1 / product_lines.length)
+              ratio = 1.0 / product_lines.length.to_f
+              product_lines.inject({}) do |hash, product_line|
+                hash[product_line.ps_code] = ratio
+                hash
+              end
             end
             
             quorum 'from industry shares', :needs => :industry_shares do |characteristics|
@@ -161,15 +159,14 @@ module BrighterPlanet
           end
           
           committee :industry_shares do
-            quorum 'from naics codes and ratios', :needs => [:naics_codes, :naics_ratios] do |characteristics|
-              industries = Industry.find :all, :conditions => {
-                :naics_code => characteristics[:naics_codes] }
-              # should return the industries whose naics codes have been specified and the specified ratios
-            end
             quorum 'from industry NAICS codes', :needs => :naics_codes do |characteristics|
-              industries = Industry.find :all, :conditions => { 
-                :naics_code => characteristics[:naics_codes] }
-                # should return the industries whose naics codes have been specified, each with a ratio of (1 / industries.length)
+              industries = Industry.find :all, 
+                :conditions => { :naics_code => characteristics[:naics_codes] }
+              ratio = 1.0 / industries.length.to_f
+              industries.inject({}) do |hash, industry|
+                hash[industry.naics_code] = ratio
+                hash
+              end
             end
             
             quorum 'from merchant category', :needs => :merchant_category do |characteristics|
