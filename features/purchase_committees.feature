@@ -109,30 +109,6 @@ Feature: Purchase Committee Calculations
       | 20370,20852 | 20370     | 0.5   |
       | 20370,20852 | 20852     | 0.5   |
 
-  Scenario Outline: Sector shares committee from sectors
-    Given a purchase emitter 
-    And a characteristic "io_codes" including "<io_codes>"
-    When the "product_lines_sectors" committee is calculated
-    And the "sector_shares" committee is calculated
-    Then the conclusion of the committee should include a key of "<result_io_code>" and subvalue "share" of "<share>" and subvalue "emission_factor" of "<emission_factor>"
-    Examples:
-      | io_codes      | result_io_code | emission_factor | share  |
-      | 322230,324110 | 322230         |             1.4 |    1.0 |
-      | 322230,324110 | 324110         |             2.0 |    0.8 |
-      | 324191        | 324191         |             0.2 |    1.0 |
-      | 334111        | 334111         |             1.3 |    0.4 |
-      | 33411A        | 33411A         |             0.5 |    1.0 |
-      | 334210        | 334210         |             1.6 |    1.0 |
-      | 334300        | 334300         |             1.2 |    1.0 |
-      | 339940        | 339940         |             1.1 |    1.0 |
-      | 511200        | 511200         |             1.0 |    0.3 |
-      | 722000        | 722000         |             0.8 |    0.6 |
-      | 44100         | 44100          |             0.7 |    1.0 |
-      | 44102         | 44102          |             0.7 |    0.3 |
-      | 44103         | 44103          |             1.2 |    1.0 |
-      | 44104         | 44104          |             1.4 |    1.0 |
-      | 44105         | 44105          |             0.3 |    0.4 |
-
   Scenario Outline: Sector shares committee from merchant category
     Given a purchase emitter 
     And a characteristic "merchant_category.mcc" of "<mcc>"
@@ -157,31 +133,28 @@ Feature: Purchase Committee Calculations
       | 5172 | 324191  |             0.2 |   0.05 |
       | 5172 | 324199  |             1.2 |   0.05 |
 
-  Scenario Outline: Sector shares committee from ps_codes
-    Given a purchase emitter 
-    And a characteristic "ps_codes" including "<ps_codes>"
-    When the "product_lines_sectors" committee is calculated
-    And the "sector_shares" committee is calculated
-    Then the conclusion of the committee should include a key of "<io_code>" and subvalue "share" of "<share>" and subvalue "emission_factor" of "<emission_factor>"
+  Scenario Outline: Sector shares committee from io codes and shares
+    Given a purchase emitter
+    And a characteristic "io_codes" including "<io_codes>"
+    And a characteristic "io_shares" including "<io_shares>"
+    When the "sector_shares" committee is calculated
+    Then the conclusion of the committee should include a key of "<result_io_code>" and subvalue "share" of "<share>" and subvalue "emission_factor" of "<emission_factor>"
     Examples:
-      | ps_codes    | io_code | emission_factor | share  |
-      | 20321,20370 | 334300  |             1.2 |      1 |
-      | 20321,20370 | 334111  |             1.3 |    0.4 |
-      | 20321,20370 | 33411A  |             0.5 |    0.3 |
-      | 20321,20370 | 511200  |               1 |    0.3 |
-      | 20321,20370 | 511200  |               1 |    0.3 |
-      | 20375       | 33411A  |             0.5 |      1 |
-      | 20852       | 322230  |             1.4 |      1 |
-      | 20853       | 339940  |             1.1 |      1 |
-      | 20865       | 334210  |             1.6 |      1 |
-      | 30540       | 44100   |             0.7 |      1 |
-      | 30860       | 324191  |             0.2 |      1 |
-      | 30861       | 44102   |             0.7 |    0.3 |
-      | 30862       | 44103   |             1.2 |      1 |
-      | 30863       | 44104   |             1.4 |      1 |
-      | 30864       | 44105   |             0.3 |    0.4 |
-      | 7600        | 722000  |             0.8 |    0.6 |
-      | 30860       | 324110  |               2 |    0.8 |
+      | io_codes      | io_shares | result_io_code | emission_factor | share  |
+      | 334111        | 1.0       | 334111         |             1.3 |    1.0 |
+      | 33411A,511200 | 0.6,0.4   | 33411A         |             0.5 |    0.6 |
+      | 33411A,511200 | 0.6,0.4   | 511200         |             1.0 |    0.4 |
+
+  Scenario Outline: Sector shares committee from io codes
+    Given a purchase emitter 
+    And a characteristic "io_codes" including "<io_codes>"
+    When the "sector_shares" committee is calculated
+    Then the conclusion of the committee should include a key of "<result_io_code>" and subvalue "share" of "<share>" and subvalue "emission_factor" of "<emission_factor>"
+    Examples:
+      | io_codes      | result_io_code | emission_factor | share  |
+      | 334111        | 334111         |             1.3 |    1.0 |
+      | 33411A,511200 | 33411A         |             0.5 |    0.5 |
+      | 33411A,511200 | 511200         |             1.0 |    0.5 |
 
   Scenario Outline: Emission factor from merchant category
     Given a purchase emitter 
