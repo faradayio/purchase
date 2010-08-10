@@ -88,6 +88,18 @@ module BrighterPlanet
               end
             end
 
+            quorum 'from io codes and io shares', :needs => [:io_codes, :io_shares] do |characteristics|
+              sectors = Sector.find :all, :conditions => {
+                :io_code => characteristics[:io_codes] }
+              # should return the sectors whose io_codes have been specified and the specified ratios
+            end
+            
+            quorum 'from io codes', :needs => :io_codes do |characteristics|
+              sectors = Sector.find :all, :conditions => {
+                :io_code => characteristics[:io_codes] }
+              # should return the sectors whose io_codes have been specified, each with a ratio of (1 / io_codes.length)
+            end
+            
             quorum 'from industry shares and product line shares', :needs => [:industry_shares, :product_line_shares] do |characteristics|
               industry_sector_shares = sector_shares_from_industry_shares.
                 call characteristics
