@@ -30,21 +30,39 @@ Feature: Purchase Emissions Calculations
       | 5172 | 100.00 | 2010-07-28 | 147.5    |
 
   Scenario Outline: Calculations starting from industry NAICS codes
-    Given pending - do we really need this?
     Given a purchase has "naics_codes" including "<naics>"
     And it has "cost" of "<cost>"
     And it has "date" of "<date>"
     When emissions are calculated
     Then the emission value should be within 1 kgs of <emission>
     Examples:
-      | naics   | cost   | date       | emission |
-      | 45321   | 100.00 | 2010-07-28 | 108.2    |
-      | 443112  | 100.00 | 2010-07-28 |  87      |
-      | 72211   | 100.00 | 2010-07-28 |  80      |
-      | 7221111 | 100.00 | 2010-07-28 | 100      |
-      | 32411   | 100.00 | 2010-07-28 | 160      |
-      | 324121  | 100.00 | 2010-07-28 |   6.5    |
-      | 324122  | 100.00 | 2010-07-28 |   4.5    |
-      | 324191  | 100.00 | 2010-07-28 |   1      |
-      | 324199  | 100.00 | 2010-07-28 |   6      |
+      | naics        | cost   | date       | emission |
+      | 45321        | 100.00 | 2010-07-28 |  89.6    |
+      | 72211        | 100.00 | 2010-07-28 |  82.9    |
+      | 32411,324121 | 100.00 | 2010-07-28 | 136.7    |
+      
+
+  Scenario Outline: Calculations starting from product line ps codes
+    Given a purchase has "ps_codes" including "<ps_code>"
+    And it has "cost" of "<cost>"
+    And it has "date" of "<date>"
+    When emissions are calculated
+    Then the emission value should be within 1 kgs of <emission>
+    Examples:
+      | ps_code     | cost   | date       | emission |
+      | 20370       | 100.00 | 2010-07-28 |  80.4    |
+      | 20852       | 100.00 | 2010-07-28 | 116.0    |
+      | 20375,20865 | 100.00 | 2010-07-28 |  87.0    |
+      
+
+  Scenario Outline: Calculations starting from sector io codes
+    Given a purchase has "io_codes" including "<io_code>"
+    And it has "cost" of "<cost>"
+    And it has "date" of "<date>"
+    When emissions are calculated
+    Then the emission value should be within 1 kgs of <emission>
+    Examples:
+      | io_code       | cost   | date       | emission |
+      | 334111        | 100.00 | 2010-07-28 | 107.7    |
+      | 324191,324199 | 100.00 | 2010-07-28 | 58       |
 
