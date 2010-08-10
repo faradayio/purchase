@@ -30,7 +30,7 @@ module BrighterPlanet
           end
 
           committee :emission_factors do
-            quorum 'from sector_shares', :needs => [:sector_shares] do |characteristics|
+            quorum 'from sector shares', :needs => [:sector_shares] do |characteristics|
               characteristics[:sector_shares].inject({}) do |hsh, (io_code, data)|
                 if data[:emission_factor].nil?
                   raise MissingEmissionFactor,
@@ -148,7 +148,7 @@ module BrighterPlanet
           end
 
           # committee :product_lines_sectors do
-          #   quorum 'from ps_codes', :needs => :ps_codes do |characteristics|
+          #   quorum 'from product sector codes', :needs => :ps_codes do |characteristics|
           #     ProductLinesSectors.find :all, :conditions => { 
           #       :ps_code => characteristics[:ps_codes] }
           #   end
@@ -158,14 +158,15 @@ module BrighterPlanet
           #   end
           # end
           # 
+
           committee :product_line_shares do
-            quorum 'from ps codes and ratios', :needs => [:ps_codes, :ps_ratios] do |characteristics|
+            quorum 'from product share codes and ratios', :needs => [:ps_codes, :ps_ratios] do |characteristics|
               product_lines = ProductLine.find :all, :conditions => {
                 :ps_code => characteristics[:ps_codes] }
               # should return the product lines whose ps_codes have been specified and the specified ratios
             end
             
-            quorum 'from ps codes', :needs => :ps_codes do |characteristics|
+            quorum 'from product share codes', :needs => :ps_codes do |characteristics|
               product_lines = ProductLine.find :all, :conditions => {
                 :ps_code => characteristics[:ps_codes] }
               # should return the product lines whose ps_codes have been specified, each with a ratio of (1 / product_lines.length)
@@ -193,8 +194,7 @@ module BrighterPlanet
                 :naics_code => characteristics[:naics_codes] }
               # should return the industries whose naics codes have been specified and the specified ratios
             end
-            
-            quorum 'from naics codes', :needs => :naics_codes do |characteristics|
+            quorum 'from industry NAICS codes', :needs => :naics_codes do |characteristics|
               industries = Industry.find :all, :conditions => { 
                 :naics_code => characteristics[:naics_codes] }
                 # should return the industries whose naics codes have been specified, each with a ratio of (1 / industries.length)
