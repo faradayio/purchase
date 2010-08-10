@@ -17,8 +17,9 @@ Feature: Purchase Committee Calculations
     Given a purchase emitter 
     And a characteristic "purchase_amount" of "<amount>"
     And characteristic "date" of "<date>"
-    When the "adjusted_cost" committee is calculated
-    Then the committee should have used quorum "from purchase amount and date"
+    When the "cost" committee is calculated
+    And the "adjusted_cost" committee is calculated
+    Then the committee should have used quorum "from cost and date"
     And the conclusion of the committee should be "<adjusted_cost>"
     Examples:
       | amount | date       | adjusted_cost |
@@ -54,7 +55,7 @@ Feature: Purchase Committee Calculations
     And a characteristic "merchant_category.mcc" of "<mcc>"
     When the "industry_shares" committee is calculated
     And the "product_line_shares" committee is calculated
-    Then the conclusion of the committee should include a key of "<ps_code>" and value "<share>"
+    Then the conclusion of the committee should have a record identified with "ps_code" of "<ps_code>" and having "ratio" of "<share>"
     Examples:
       | mcc  | ps_code  | share  |
       | 5111 | 20370    |    0.6 |
@@ -67,7 +68,8 @@ Feature: Purchase Committee Calculations
     When the "industry_shares" committee is calculated
     And the "product_line_shares" committee is calculated
     And the "sector_shares" committee is calculated
-    Then the conclusion of the committee should include a key of "<io_code>" and subvalue "share" of "<share>" and subvalue "emission_factor" of "<emission_factor>"
+    Then the conclusion of the committee should have a record identified with "io_code" of "<io_code>" and having "emission_factor" of "<emission_factor>"
+    And the conclusion of the committee should have a record identified with "io_code" of "<io_code>" and having "share" of "<share>"
     Examples:
       | mcc  | io_code | emission_factor | share  |
       | 5111 | 334111  |             1.3 |   0.24 |
@@ -92,7 +94,7 @@ Feature: Purchase Committee Calculations
     And the "product_line_shares" committee is calculated
     And the "sector_shares" committee is calculated
     And the "emission_factors" committee is calculated
-    Then the conclusion of the committee should include a key of "<io_code>" and value "<emission_factor_share>"
+    Then the conclusion of the committee should have a record identified with "io_code" of "<io_code>" and having "factor" of "<emission_factor_share>"
     Examples:
       | mcc  | io_code | emission_factor_share |
       | 5111 | 334111  |                 0.312 |

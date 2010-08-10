@@ -31,13 +31,13 @@ module BrighterPlanet
 
           committee :emission_factors do
             quorum 'from sector shares', :needs => [:sector_shares] do |characteristics|
-              characteristics[:sector_shares].inject({}) do |hsh, (io_code, data)|
-                if data[:emission_factor].nil?
+              characteristics[:sector_shares].inject([]) do |list, sector_share|
+                if sector_share.emission_factor.nil?
                   raise MissingEmissionFactor,
-                    "Missing emission factor for sector #{io_code}"
+                    "Missing emission factor for sector #{sector_share.io_code}"
                 end
-                hsh[io_code] = data[:emission_factor] * data[:share]
-                hsh
+                factor = sector_share.emission_factor * sector_share.share
+                list << EmissionFactor.new(sector_share.io_code, factor)
               end
             end
             
@@ -50,75 +50,52 @@ module BrighterPlanet
           committee :sector_shares do
             quorum 'from industry shares and product line shares', :needs => [:industry_shares, :product_line_shares] do |characteristics|
               industry_shares = characteristics[:industry_shares]
-              industry_sectors = industry_shares.map(&:industries_sectors).flatten
-              industry_sector_shares = industry_sectors.inject({}) do |hash, industry_sector|
-                io_code = industry_sector.io_code
-                unless ['420000','4A0000'].include?(io_code.to_s)
-                  naics_code = industry_sector.naics_code
-                  industry_share = industry_shares.find_by_naics_code naics_code
-                  calculated_share = industry_share.ratio * industry_sector.ratio
-                  sector = industry_sector.sector
-                  if sector.nil?
-                    raise MissingSectorForIndustrySector, 
-                      "Missing a related sector for IndustrySector #{industry_sector.inspect}"
+              industry_sector_shares = industry_shares.inject([]) do |list, industry_share|
+                industry_share.industries_sectors.each do |industry_sector|
+                  io_code = industry_sector.io_code
+                  unless ['420000','4A0000'].include?(io_code.to_s)
+                    calculated_share = industry_share.ratio * industry_sector.ratio
+                    sector = industry_sector.sector
+                    list << SectorShare.new(sector, calculated_share)
                   end
-                  hash[io_code] = {
-                    :share => calculated_share,
-                    :emission_factor => sector.emission_factor
-                  }
                 end
-                hash
+                list
               end
 
               product_line_shares = characteristics[:product_line_shares]
-              product_lines_sectors = ProductLinesSectors.find :all,
-                :conditions => { :ps_code => product_line_shares.keys }
-              product_sector_shares = product_lines_sectors.inject({}) do |hash, product_line_sector|
-                io_code = product_line_sector.io_code
-                ps_code = product_line_sector.ps_code
-                product_line_share = product_line_shares[ps_code]
-
-                share = product_line_sector.ratio * product_line_share
-                sector = product_line_sector.sector
-                if sector.nil?
-                  raise MissingSectorForProductLineSector, 
-                    "Missing a related sector for ProductLineSector #{product_line_sector.inspect}"
+              product_sector_shares = product_line_shares.inject([]) do |list, product_line_share|
+                product_line_share.product_lines_sectors.each do |product_line_sector|
+                  calculated_share = product_line_sector.ratio * product_line_share.ratio
+                  sector = product_line_sector.sector
+                  list << SectorShare.new(sector, calculated_share)
                 end
-                hash[io_code] = {
-                  :share => share, 
-                  :emission_factor => sector.emission_factor
-                }
-                hash
+                list
               end
 
-              industry_sector_shares.merge product_sector_shares
+              industry_sector_shares + product_sector_shares
             end
           end
 
           committee :product_line_shares do
             quorum 'from industry shares', :needs => :industry_shares do |characteristics|
               industry_shares = characteristics[:industry_shares]
-              industries_product_lines = industry_shares.
-                map(&:industries_product_lines).flatten
-                  
-              industries_product_lines.inject({}) do |hash, industry_product_line|
-                ps_code = industry_product_line.ps_code
-                naics_code = industry_product_line.naics_code
-                industry_share = industry_shares.find_by_naics_code naics_code
-                hash[ps_code] = 
-                  industry_product_line.ratio * industry_share.ratio
-                hash
+              industry_shares.inject([]) do |list, industry_share|
+                industry_share.industries_product_lines.each do |industry_product_line|
+                  ratio = industry_product_line.ratio * industry_share.ratio
+                  list << ProductLineShare.new(industry_product_line.ps_code, 
+                                               ratio)
+                end
+                list
               end
             end
           end
           
           committee :industry_shares do
             quorum 'from merchant category', :needs => :merchant_category do |characteristics|
-              characteristics[:merchant_category].merchant_categories_industries
+              IndustryShare.find_all_by_merchant_category characteristics[:merchant_category]
             end
             quorum 'from industry', :needs => :naics_code do |characteristics|
-              industry = Industry.find_by_naics_code characteristics[:naics_code]
-              industry.merchant_categories_industries
+              IndustryShare.find_all_by_naics_code characteristics[:naics_code]
             end
           end
 
@@ -160,6 +137,72 @@ module BrighterPlanet
 
       def self.parse_date(date)
         date = date.is_a?(Date) ? date : Date.parse(date)
+      end
+
+      class IndustryShare
+        class << self
+          def find_all_by_naics_code(naics_code)
+            industry = Industry.find_by_naics_code naics_code
+            from_merchant_categories_industries industry.merchant_categories_industries
+          end
+          def find_all_by_merchant_category(merchant_category)
+            from_merchant_categories_industries merchant_category.merchant_categories_industries
+          end
+
+        private
+          def from_merchant_categories_industries(merchant_categories_industries)
+            merchant_categories_industries.map do |mci|
+              new mci.naics_code, mci.ratio
+            end
+          end
+        end
+
+        attr_accessor :naics_code, :ratio
+
+        def initialize(naics_code, ratio)
+          self.naics_code = naics_code
+          self.ratio = ratio
+        end
+
+        def industries_product_lines
+          IndustriesProductLines.find_all_by_naics_code naics_code
+        end
+
+        def industries_sectors
+          IndustriesSectors.find_all_by_naics_code naics_code
+        end
+      end
+
+      class ProductLineShare
+        attr_accessor :ps_code, :ratio
+
+        def initialize(ps_code, ratio)
+          self.ps_code = ps_code
+          self.ratio = ratio
+        end
+
+        def product_lines_sectors
+          ProductLinesSectors.find_all_by_ps_code ps_code
+        end
+      end
+
+      class SectorShare
+        attr_accessor :io_code, :share, :emission_factor
+
+        def initialize(sector, share)
+          self.io_code = sector.io_code
+          self.share = share
+          self.emission_factor = sector.emission_factor
+        end
+      end
+
+      class EmissionFactor
+        attr_accessor :io_code, :factor
+
+        def initialize(io_code, factor)
+          self.io_code = io_code
+          self.factor = factor
+        end
       end
     end
   end
