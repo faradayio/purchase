@@ -9,11 +9,11 @@ Feature: Purchase Emissions Calculations
     Then the emission value should be within 1 kgs of <emission>
     Examples:
       | id  | cost   | date       | emission |
-      | 1   | 100.00 | 2010-07-28 | 108.2    |
-      | 2   | 100.00 | 2010-07-28 |  87.0    |
-      | 3   | 100.00 | 2010-07-28 |  80.0    |
-      | 4   | 100.00 | 2010-07-28 | 100.0    |
-      | 5   | 100.00 | 2010-07-28 | 178.0    |
+      | 1   | 100.00 | 2010-07-28 |  89.6    |
+      | 2   | 100.00 | 2010-07-28 |  72.1    |
+      | 3   | 100.00 | 2010-07-28 |  66.3    |
+      | 4   | 100.00 | 2010-07-28 |  82.9    |
+      | 5   | 100.00 | 2010-07-28 | 147.5    |
   
   Scenario Outline: Calculations starting from a merchant category
     Given a purchase has "merchant_category.mcc" of "<mcc>"
@@ -23,11 +23,11 @@ Feature: Purchase Emissions Calculations
     Then the emission value should be within 1 kgs of <emission>
     Examples:
       | mcc  | cost   | date       | emission |
-      | 5111 | 100.00 | 2010-07-28 | 108.2    |
-      | 5732 | 100.00 | 2010-07-28 |  87.0    |
-      | 5812 | 100.00 | 2010-07-28 |  80.0    |
-      | 3504 | 100.00 | 2010-07-28 | 100.0    |
-      | 5172 | 100.00 | 2010-07-28 | 178.0    |
+      | 5111 | 100.00 | 2010-07-28 |  89.6    |
+      | 5732 | 100.00 | 2010-07-28 |  72.8    |
+      | 5812 | 100.00 | 2010-07-28 |  66.3    |
+      | 3504 | 100.00 | 2010-07-28 |  82.9    |
+      | 5172 | 100.00 | 2010-07-28 | 147.5    |
 
   Scenario Outline: Calculations starting from industry NAICS codes
     Given pending - do we really need this?
