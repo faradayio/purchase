@@ -39,9 +39,9 @@ Feature: Purchase Committee Calculations
     Given a purchase emitter 
     And a characteristic "merchant_category.mcc" of "<mcc>"
     When the "industry_shares" committee is calculated
-    Then the conclusion of the committee should have a record identified with "naics_code" of "<naics>" and having "ratio" of "<ratio>"
+    Then the conclusion of the committee should have a record identified with "naics_code" of "<naics>" and having "share" of "<share>"
     Examples:
-      | mcc  | naics  | ratio |
+      | mcc  | naics  | share |
       | 5111 | 45321  | 1.0   |
       | 5172 | 32411  | 0.8   |
       | 5172 | 324121 | 0.05  |
@@ -49,14 +49,14 @@ Feature: Purchase Committee Calculations
       | 5172 | 324191 | 0.05  |
       | 5172 | 324199 | 0.05  |
 
-  Scenario Outline: Industry shares committee from naics codes and ratios
+  Scenario Outline: Industry shares committee from naics codes and shares
     Given a purchase emitter
     And a characteristic "naics_codes" including "<naics>"
-    And a characteristic "naics_ratios" including "<naics_ratio>"
+    And a characteristic "naics_shares" including "<naics_share>"
     When the "industry_shares" committee is calculated
-    Then the conclusion of the committee should have a record identified with "naics_code" of "<result_naics>" and having "ratio" including "<ratio>"
+    Then the conclusion of the committee should have a record identified with "naics_code" of "<result_naics>" and having "share" including "<share>"
     Examples:
-    | naics                             | naics_ratio             | result_naics | ratio |
+    | naics                             | naics_share             | result_naics | share |
     | 45321                             | 1.0                     | 45321        | 1.0   |
     | 32411,324121,324122,324191,324199 | 0.8,0.05,0.05,0.05,0.05 | 32411        | 0.8   |
     | 32411,324121,324122,324191,324199 | 0.8,0.05,0.05,0.05,0.05 | 324121       | 0.05  |
@@ -68,9 +68,9 @@ Feature: Purchase Committee Calculations
     Given a purchase emitter 
     And a characteristic "naics_codes" including "<naics>"
     When the "industry_shares" committee is calculated
-    Then the conclusion of the committee should have a record identified with "naics_code" of "<result_naics>" and having "ratio" including "<ratio>"
+    Then the conclusion of the committee should have a record identified with "naics_code" of "<result_naics>" and having "share" including "<share>"
     Examples:
-      | naics        | result_naics | ratio |
+      | naics        | result_naics | share |
       | 45321        | 45321        | 1.0   |
       | 32411,324121 | 32411        | 0.5   |
       | 32411,324121 | 324121       | 0.5   |
@@ -80,21 +80,21 @@ Feature: Purchase Committee Calculations
     And a characteristic "merchant_category.mcc" of "<mcc>"
     When the "industry_shares" committee is calculated
     And the "product_line_shares" committee is calculated
-    Then the conclusion of the committee should include a key of <ps_code> and value <ratio>
+    Then the conclusion of the committee should include a key of <ps_code> and value <share>
     Examples:
-      | mcc  | ps_code  | ratio  |
+      | mcc  | ps_code  | share  |
       | 5111 | 20370    |    0.6 |
       | 5111 | 20852    |    0.2 |
       | 5111 | 20853    |    0.2 |
 
-  Scenario Outline: Product line shares committee from ps codes and ratios
+  Scenario Outline: Product line shares committee from ps codes and shares
     Given a purchase emitter 
     And a characteristic "ps_codes" including "<ps_code>"
-    And a characteristic "ps_ratios" including "<ps_ratio>"
+    And a characteristic "ps_shares" including "<ps_share>"
     When the "product_line_shares" committee is calculated
-    Then the conclusion of the committee should have a record identified with "ps_code" of "<result_ps>" and having "ratio" including "<ratio>"
+    Then the conclusion of the committee should have a record identified with "ps_code" of "<result_ps>" and having "share" including "<share>"
     Examples:
-      | ps_code     | ps_ratio | result_ps | ratio |
+      | ps_code     | ps_share | result_ps | share |
       | 20370,20852 | 0.6,0.2  | 20370     | 0.6   |
       | 20370,20852 | 0.6,0.2  | 20852     | 0.2   |
 
@@ -102,9 +102,9 @@ Feature: Purchase Committee Calculations
     Given a purchase emitter 
     And a characteristic "ps_codes" including "<ps_code>"
     When the "product_line_shares" committee is calculated
-    Then the conclusion of the committee should have a record identified with "ps_code" of "<result_ps>" and having "ratio" including "<ratio>"
+    Then the conclusion of the committee should have a record identified with "ps_code" of "<result_ps>" and having "share" including "<share>"
     Examples:
-      | ps_code     | result_ps | ratio |
+      | ps_code     | result_ps | share |
       | 20370       | 20370     | 1     |
       | 20370,20852 | 20370     | 0.5   |
       | 20370,20852 | 20852     | 0.5   |
