@@ -108,6 +108,7 @@ Feature: Purchase Committee Calculations
       | 5172 | 324122  |                 0.045 |
       | 5172 | 324191  |                  0.01 |
       | 5172 | 324199  |                  0.06 |
+      | 5812 | 722000  |                   0.8 |
 
   Scenario: Emission factor from default
     Given pending - is this really possible?
