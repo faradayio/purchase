@@ -111,10 +111,9 @@ Feature: Purchase Committee Calculations
       | 5812 | 722000  |                   0.8 |
 
   Scenario: Emission factor from default
-    Given pending - is this really possible?
-    And a purchase emitter 
+    Given a purchase emitter 
     When the "emission_factors" committee is calculated
-    Then the conclusion of the committee should be "100"
+    Then the conclusion of the committee should include a key of "0" and value "1"
 
   Scenario Outline: Sector emissions from merchant id, cost, and date
     Given a purchase emitter

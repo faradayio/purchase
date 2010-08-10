@@ -41,7 +41,10 @@ module BrighterPlanet
               end
             end
             
-            # FIXME TODO can we get a fallback emission factor without sector shares?
+            # FIXME TODO figure out if we really want a fallback and get a real one
+            quorum 'default' do
+              Hash["0" => 1]
+            end
           end
           
           committee :sector_shares do
