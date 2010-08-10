@@ -130,13 +130,22 @@ module BrighterPlanet
           
           committee :adjusted_cost do
             quorum 'from cost and date', :needs => [:cost, :date] do |characteristics|
-              dollars_in_2002 characteristics[:cost], characteristics[:date]
+              # TODO: Come up with a way to fetch real CPI conversions
+              @cpi_lookup ||= { 
+                2009 => 1.189, 2010 => 1.207, 2011 => 1.225, 2012 => 1.245, 
+                2013 => 1.265 }
+
+              date = parse_date characteristics[:date]
+              conversion_factor = @cpi_lookup[date.year] || 1.207
+
+              characteristics[:cost].to_f / conversion_factor
             end
+          end
             
-            quorum 'from purchase amount and date', :needs => [:purchase_amount, :date] do |characteristics|
+          committee :cost do
+            quorum 'from purchase amount', :needs => :purchase_amount do |characteristics|
               # FIXME TODO take out tax, then convert to 2002 US $ based on date and cost
-              amount_without_tax = characteristics[:purchase_amount] * 0.9
-              dollars_in_2002 amount_without_tax, characteristics[:date]
+              characteristics[:purchase_amount] * 0.9
             end
           end
 
@@ -149,14 +158,8 @@ module BrighterPlanet
         # FIXME TODO make other committees to report emissions by gas, by io sector, etc.
       end
 
-      # TODO: Come up with a way to fetch real CPI conversions
-      def self.dollars_in_2002(amount, date)
-        @cpi_lookup ||= { 2009 => 1.189, 2010 => 1.207, 2011 => 1.225, 2012 => 1.245, 2013 => 1.265 }
-
+      def self.parse_date(date)
         date = date.is_a?(Date) ? date : Date.parse(date)
-        conversion_factor = @cpi_lookup[date.year] || 1.207
-
-        amount.to_f / conversion_factor
       end
     end
   end
