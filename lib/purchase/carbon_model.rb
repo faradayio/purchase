@@ -45,10 +45,10 @@ module BrighterPlanet
           end
           
           committee :sector_shares do
-            sector_shares_from_industry_shares = lambda do |characteristics|
+            quorum 'from industry shares and product line shares', :needs => [:industry_shares, :product_line_shares] do |characteristics|
               industry_shares = characteristics[:industry_shares]
               industry_sectors = industry_shares.map(&:industries_sectors).flatten
-              industry_sectors.inject({}) do |hash, industry_sector|
+              industry_sector_shares = industry_sectors.inject({}) do |hash, industry_sector|
                 io_code = industry_sector.io_code
                 unless ['420000','4A0000'].include?(io_code.to_s)
                   naics_code = industry_sector.naics_code
@@ -66,23 +66,6 @@ module BrighterPlanet
                 end
                 hash
               end
-            end
-
-            quorum 'from io codes and io shares', :needs => [:io_codes, :io_shares] do |characteristics|
-              sectors = Sector.find :all, :conditions => {
-                :io_code => characteristics[:io_codes] }
-              # should return the sectors whose io_codes have been specified and the specified ratios
-            end
-            
-            quorum 'from io codes', :needs => :io_codes do |characteristics|
-              sectors = Sector.find :all, :conditions => {
-                :io_code => characteristics[:io_codes] }
-              # should return the sectors whose io_codes have been specified, each with a ratio of (1 / io_codes.length)
-            end
-            
-            quorum 'from industry shares and product line shares', :needs => [:industry_shares, :product_line_shares] do |characteristics|
-              industry_sector_shares = sector_shares_from_industry_shares.
-                call characteristics
 
               product_line_shares = characteristics[:product_line_shares]
               product_lines_sectors = ProductLinesSectors.find :all,
@@ -107,28 +90,17 @@ module BrighterPlanet
 
               industry_sector_shares.merge product_sector_shares
             end
+
+            quorum 'from io codes and io shares', :needs => [:io_codes, :io_shares] do |characteristics|
+              sectors = Sector.find :all, :conditions => {
+                :io_code => characteristics[:io_codes] }
+              # should return the sectors whose io_codes have been specified and the specified ratios
+            end
             
-            quorum 'from product line shares', :needs => :product_line_shares do |characteristics|
-              product_line_shares = characteristics[:product_line_shares]
-              product_lines_sectors = ProductLinesSectors.find :all,
-                :conditions => { :ps_code => product_line_shares.keys }
-              product_sector_shares = product_lines_sectors.inject({}) do |hash, product_line_sector|
-                io_code = product_line_sector.io_code
-                ps_code = product_line_sector.ps_code
-                product_line_share = product_line_shares[ps_code]
-                
-                share = product_line_sector.ratio * product_line_share
-                sector = product_line_sector.sector
-                if sector.nil?
-                  raise MissingSectorForProductLineSector,
-                    "Missing a related sector for ProductLineSector #{product_line_sector.inspect}"
-                end
-                hash[io_code] = {
-                  :share => share,
-                  :emission_factor => sector.emission_factor
-                }
-                hash
-              end
+            quorum 'from io codes', :needs => :io_codes do |characteristics|
+              sectors = Sector.find :all, :conditions => {
+                :io_code => characteristics[:io_codes] }
+              # should return the sectors whose io_codes have been specified, each with a ratio of (1 / io_codes.length)
             end
             
             # quorum 'from product lines sectors', :needs => :product_lines_sectors do |characteristics|
