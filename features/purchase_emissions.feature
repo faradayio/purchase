@@ -9,30 +9,30 @@ Feature: Purchase Emissions Calculations
     Then the emission value should be within 1 kgs of <emission>
     Examples:
       | id  | cost   | date       | emission |
-      | 1   | 100.00 | 2010-07-28 |  89.6    |
-      | 2   | 100.00 | 2010-07-28 |  72.1    |
-      | 3   | 100.00 | 2010-07-28 |  66.3    |
-      | 4   | 100.00 | 2010-07-28 |  82.9    |
-      | 5   | 100.00 | 2010-07-28 | 147.5    |
+      | 1   | 100.00 | 2010-07-28 |  89.64   |
+      | 2   | 100.00 | 2010-07-28 |  72.08   |
+      | 3   | 100.00 | 2010-07-28 |  66.28   |
+      | 4   | 100.00 | 2010-07-28 |  82.85   |
+      | 5   | 100.00 | 2010-07-28 | 147.47   |
   
   Scenario Outline: Calculations starting from a merchant category
     Given a purchase has "merchant_category.mcc" of "<mcc>"
     And it has "cost" of "<cost>"
     And it has "date" of "<date>"
     When emissions are calculated
-    Then the emission value should be within 1 kgs of <emission>
+    Then the emission value should be within 0.1 kgs of <emission>
     Examples:
       | mcc  | cost   | date       | emission |
-      | 5111 | 100.00 | 2010-07-28 |  89.6    |
-      | 5732 | 100.00 | 2010-07-28 |  72.8    |
-      | 5812 | 100.00 | 2010-07-28 |  66.3    |
-      | 3504 | 100.00 | 2010-07-28 |  82.9    |
-      | 5172 | 100.00 | 2010-07-28 | 147.5    |
+      | 5111 | 100.00 | 2010-07-28 |  89.64   |
+      | 5732 | 100.00 | 2010-07-28 |  72.08   |
+      | 5812 | 100.00 | 2010-07-28 |  66.28   |
+      | 3504 | 100.00 | 2010-07-28 |  82.85   |
+      | 5172 | 100.00 | 2010-07-28 | 147.47   |
 
   Scenario Outline: Calculations starting from industry NAICS codes
-    Given a purchase has "naics_codes" including "<naics>"
-    And it has "cost" of "<cost>"
+    Given a purchase has "cost" of "<cost>"
     And it has "date" of "<date>"
+    And it has "naics_codes" including "<naics>"
     When emissions are calculated
     Then the emission value should be within 1 kgs of <emission>
     Examples:
@@ -65,4 +65,16 @@ Feature: Purchase Emissions Calculations
       | io_code       | cost   | date       | emission |
       | 334111        | 100.00 | 2010-07-28 | 107.7    |
       | 324191,324199 | 100.00 | 2010-07-28 | 58       |
+=======
+      | naics   | cost   | date       | emission |
+      | 45321   | 100.00 | 2010-07-28 |    89.64 |
+      | 443112  | 100.00 | 2010-07-28 |    72.08 |
+      | 72211   | 100.00 | 2010-07-28 |    66.28 |
+      | 72111   | 100.00 | 2010-07-28 |    82.85 |
+      | 32411   | 100.00 | 2010-07-28 |   132.56 |
+      | 324121  | 100.00 | 2010-07-28 |     5.39 |
+      | 324122  | 100.00 | 2010-07-28 |     3.73 |
+      | 324191  | 100.00 | 2010-07-28 |     0.83 |
+      | 324199  | 100.00 | 2010-07-28 |     4.97 |
+>>>>>>> Corrected expected emissions values to match spreadsheet
 
