@@ -46,3 +46,14 @@ Feature: Purchase Emissions Calculations
       | 324122 | 100.00 | 2010-07-28 |   3.73   |
       | 324191 | 100.00 | 2010-07-28 |   0.83   |
       | 324199 | 100.00 | 2010-07-28 |   4.97   |
+
+  Scenario Outline: Calculations without merchant, merchant category, or industry
+    Given a purchase has "cost" of "<cost>"
+    And it has "date" of "<date>"
+    When emissions are calculated
+    Then the emission value should be within 0.1 kgs of <emission>
+    Examples:
+      | cost   | date       | emission |
+      | 100.00 | 2010-07-28 |  82.85   |
+      | 100.00 | 2010-08-28 |  82.85   |
+      | 120.00 | 2010-08-28 |  99.42   |
