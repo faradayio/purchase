@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{purchase}
-  s.version = "0.0.4"
+  s.version = "0.1.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Andy Rossmeissl", "Seamus Abshere", "Ian Hough", "Matt Kling", "Derek Kastner"]
@@ -21,8 +21,6 @@ Gem::Specification.new do |s|
      "README.markdown",
      "lib/purchase.rb",
      "lib/purchase/carbon_model.rb",
-     "lib/purchase/carbon_model/industry_share.rb",
-     "lib/purchase/carbon_model/product_line_share.rb",
      "lib/purchase/characterization.rb",
      "lib/purchase/data.rb",
      "lib/purchase/summarization.rb",
