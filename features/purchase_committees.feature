@@ -115,7 +115,7 @@ Feature: Purchase Committee Calculations
   Scenario: Emission factor from default
     Given a purchase emitter 
     When the "emission_factors" committee is calculated
-    Then the conclusion of the committee should include a key of "0" and value "1"
+    Then the conclusion of the committee should have a record identified with "io_code" of "0" and having "factor" of "1"
 
   Scenario Outline: Sector emissions from merchant id, cost, and date
     Given a purchase emitter
@@ -129,7 +129,7 @@ Feature: Purchase Committee Calculations
     And the "sector_shares" committee is calculated
     And the "emission_factors" committee is calculated
     And the "sector_emissions" committee is calculated
-    Then the conclusion of the committee should include a key of "<io_code>" and value "<emission>"
+    Then the conclusion of the committee should include "<emission>"
     Examples:
       | merchant | io_code | cost   | date       | emission  |
       |        1 | 322230  | 100.00 | 2010-07-28 |  23.19801 |

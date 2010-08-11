@@ -16,15 +16,14 @@ module BrighterPlanet
         base.decide :emission, :with => :characteristics do
           committee :emission do
             quorum 'from emissions factor and adjusted cost', :needs => :sector_emissions do |characteristics|
-              characteristics[:sector_emissions].values.inject(0) { |sum, emission| sum += emission }
+              characteristics[:sector_emissions].inject(0) { |sum, emission| sum += emission }
             end
           end
 
           committee :sector_emissions do
             quorum 'from emissions factors and adjusted cost', :needs => [:emission_factors, :adjusted_cost] do |characteristics|
-              characteristics[:emission_factors].inject({}) do |hsh, (io_code, share)|
-                hsh[io_code] = share * characteristics[:adjusted_cost]
-                hsh
+              characteristics[:emission_factors].map do |emission_factor|
+                emission_factor.factor * characteristics[:adjusted_cost]
               end
             end
           end
@@ -43,7 +42,7 @@ module BrighterPlanet
             
             # FIXME TODO figure out if we really want a fallback and get a real one
             quorum 'default' do
-              Hash["0" => 1]
+              [EmissionFactor.new(0, 1)]
             end
           end
           
