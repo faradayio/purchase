@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Andy Rossmeissl", "Seamus Abshere", "Ian Hough", "Matt Kling", "Derek Kastner"]
-  s.date = %q{2010-08-11}
+  s.date = %q{2010-08-12}
   s.description = %q{A software model in Ruby for the greenhouse gas emissions of a purchase}
   s.email = %q{seamus@brighterplanet.com}
   s.extra_rdoc_files = [
@@ -53,15 +53,7 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<rdoc>, [">= 0"])
       s.add_development_dependency(%q<rspec>, ["= 2.0.0.beta.17"])
       s.add_development_dependency(%q<sniff>, ["= 0.1.6"])
-      s.add_runtime_dependency(%q<characterizable>, ["= 0.0.12"])
-      s.add_runtime_dependency(%q<cohort_scope>, ["~> 0.0"])
-      s.add_runtime_dependency(%q<data_miner>, ["= 0.5.2"])
-      s.add_runtime_dependency(%q<earth>, [">= 0.0.20"])
-      s.add_runtime_dependency(%q<falls_back_on>, ["= 0.0.2"])
-      s.add_runtime_dependency(%q<fast_timestamp>, ["= 0.0.4"])
-      s.add_runtime_dependency(%q<leap>, ["= 0.4.2"])
-      s.add_runtime_dependency(%q<summary_judgement>, ["= 1.3.8"])
-      s.add_runtime_dependency(%q<timeframe>, ["= 0.0.8"])
+      s.add_runtime_dependency(%q<emitter>, [">= 0.0.1"])
     else
       s.add_dependency(%q<activerecord>, ["= 3.0.0.beta4"])
       s.add_dependency(%q<bundler>, [">= 1.0.0.beta.2"])
@@ -71,15 +63,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<rdoc>, [">= 0"])
       s.add_dependency(%q<rspec>, ["= 2.0.0.beta.17"])
       s.add_dependency(%q<sniff>, ["= 0.1.6"])
-      s.add_dependency(%q<characterizable>, ["= 0.0.12"])
-      s.add_dependency(%q<cohort_scope>, ["~> 0.0"])
-      s.add_dependency(%q<data_miner>, ["= 0.5.2"])
-      s.add_dependency(%q<earth>, [">= 0.0.20"])
-      s.add_dependency(%q<falls_back_on>, ["= 0.0.2"])
-      s.add_dependency(%q<fast_timestamp>, ["= 0.0.4"])
-      s.add_dependency(%q<leap>, ["= 0.4.2"])
-      s.add_dependency(%q<summary_judgement>, ["= 1.3.8"])
-      s.add_dependency(%q<timeframe>, ["= 0.0.8"])
+      s.add_dependency(%q<emitter>, [">= 0.0.1"])
     end
   else
     s.add_dependency(%q<activerecord>, ["= 3.0.0.beta4"])
@@ -90,15 +74,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<rdoc>, [">= 0"])
     s.add_dependency(%q<rspec>, ["= 2.0.0.beta.17"])
     s.add_dependency(%q<sniff>, ["= 0.1.6"])
-    s.add_dependency(%q<characterizable>, ["= 0.0.12"])
-    s.add_dependency(%q<cohort_scope>, ["~> 0.0"])
-    s.add_dependency(%q<data_miner>, ["= 0.5.2"])
-    s.add_dependency(%q<earth>, [">= 0.0.20"])
-    s.add_dependency(%q<falls_back_on>, ["= 0.0.2"])
-    s.add_dependency(%q<fast_timestamp>, ["= 0.0.4"])
-    s.add_dependency(%q<leap>, ["= 0.4.2"])
-    s.add_dependency(%q<summary_judgement>, ["= 1.3.8"])
-    s.add_dependency(%q<timeframe>, ["= 0.0.8"])
+    s.add_dependency(%q<emitter>, [">= 0.0.1"])
   end
 end
 
