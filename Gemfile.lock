@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    purchase (0.1.1)
+    purchase (0.1.2)
       emitter (>= 0.0.1)
 
 GEM
