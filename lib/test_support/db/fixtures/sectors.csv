@@ -1,18 +1,29 @@
 io_code,description,emission_factor,emission_factor_units
-322230,Stationery product manufacturing,1.4,kilograms_per_2002_dollar
+322230,Stationery product manufacturing,0.81,kilograms_per_2002_dollar
+323110,Printing,0.546,kilograms_per_2002_dollar
+323120,Support activities for printing,0.358,kilograms_per_2002_dollar
+325910,Printing ink manufacturing,1.2,kilograms_per_2002_dollar
+3259A0,All other chemical product and preparation manufacturing,1.08,kilograms_per_2002_dollar
+333315,Photographic and photocopying equipment manufacturing,0.623,kilograms_per_2002_dollar
+33331A,Vending, commerical, industrial, and office machinery manufacturing,0.567,kilograms_per_2002_dollar
+334111,Electronic computer manufacturing,0.284,kilograms_per_2002_dollar
+334112,Computer Storage Device Manufacturing,0.37,kilograms_per_2002_dollar
+33411A,Computer terminals and other computer peripheral equipment manufacturing,0.362,kilograms_per_2002_dollar
+812900,Other personal services,0.22,kilograms_per_2002_dollar
+334300,Audio and video equipment manufacturing,0.549,kilograms_per_2002_dollar
+337212,Office furniture and custom architectural woodwork and millwork manufacturing,0.544,kilograms_per_2002_dollar
+339940,Office supplies (except paper) manufacturing,0.535,kilograms_per_2002_dollar
+511200,Software publishers,0.101,kilograms_per_2002_dollar
+532400,Commercial and industrial machinery and equipment rental and leasing,0.245,kilograms_per_2002_dollar
+532A00,General and consumer goods rental except video tapes and discs,0.23,kilograms_per_2002_dollar
+561400,Business support services,0.186,kilograms_per_2002_dollar
+7211A0,Hotels and motels, including casino hotels,0.559,kilograms_per_2002_dollar
 324110,Petroleum refineries,2,kilograms_per_2002_dollar
 324121,Asphalt paving mixture and block manufacturing,1.3,kilograms_per_2002_dollar
 324122,Asphalt shingle and coating materials manufacturing,0.9,kilograms_per_2002_dollar
 324191,Petroleum lubricating oil and grease manufacturing,0.2,kilograms_per_2002_dollar
 324199,All other petroleum and coal products manufacturing,1.2,kilograms_per_2002_dollar
-334111,Electronic computer manufacturing,1.3,kilograms_per_2002_dollar
-33411A,Computer terminals and other computer peripheral equipment manufacturing,0.5,kilograms_per_2002_dollar
 334210,Telephone apparatus manufacturing,1.6,kilograms_per_2002_dollar
-334300,Audio and video equipment manufacturing,1.2,kilograms_per_2002_dollar
-339940,Office supplies (except paper) manufacturing,1.1,kilograms_per_2002_dollar
-4A0000,Retail trade,1.5,kilograms_per_2002_dollar
-511200,Software publishers,1,kilograms_per_2002_dollar
-7211A0,"Hotels and motels, including casino hotels",1,kilograms_per_2002_dollar
 722000,Food services and drinking places,0.8,kilograms_per_2002_dollar
 44100,Pancake,0.7,kilograms_per_2002_dollar
 44102,Diesel fuel,0.7,kilograms_per_2002_dollar
