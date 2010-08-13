@@ -9,10 +9,10 @@ Feature: Purchase Emissions Calculations
     Then the emission value should be within 1 kgs of <emission>
     Examples:
       | id  | cost   | date       | emission |
-      | 1   | 100.00 | 2010-07-28 |  89.64   |
-      | 2   | 100.00 | 2010-07-28 |  72.08   |
+      | 1   | 100.00 | 2010-07-28 |  48.29   |
+      | 2   | 100.00 | 2010-07-28 |  52.88   |
       | 3   | 100.00 | 2010-07-28 |  66.28   |
-      | 4   | 100.00 | 2010-07-28 |  82.85   |
+      | 4   | 100.00 | 2010-07-28 |  46.31   |
       | 5   | 100.00 | 2010-07-28 | 147.47   |
   
   Scenario Outline: Calculations starting from a merchant category
@@ -23,10 +23,10 @@ Feature: Purchase Emissions Calculations
     Then the emission value should be within 0.1 kgs of <emission>
     Examples:
       | mcc  | cost   | date       | emission |
-      | 5111 | 100.00 | 2010-07-28 |  89.64   |
-      | 5732 | 100.00 | 2010-07-28 |  72.08   |
+      | 5111 | 100.00 | 2010-07-28 |  48.29   |
+      | 5732 | 100.00 | 2010-07-28 |  52.88   |
       | 5812 | 100.00 | 2010-07-28 |  66.28   |
-      | 3504 | 100.00 | 2010-07-28 |  82.85   |
+      | 3504 | 100.00 | 2010-07-28 |  46.31   |
       | 5172 | 100.00 | 2010-07-28 | 147.47   |
 
   Scenario Outline: Calculations starting from industry
@@ -37,10 +37,10 @@ Feature: Purchase Emissions Calculations
     Then the emission value should be within 0.1 kgs of <emission>
     Examples:
       | naics  | cost   | date       | emission |
-      | 45321  | 100.00 | 2010-07-28 |  89.64   |
-      | 443112 | 100.00 | 2010-07-28 |  72.08   |
+      | 45321  | 100.00 | 2010-07-28 |  48.29   |
+      | 443112 | 100.00 | 2010-07-28 |  52.88   |
       | 72211  | 100.00 | 2010-07-28 |  66.28   |
-      | 72111  | 100.00 | 2010-07-28 |  82.85   |
+      | 72111  | 100.00 | 2010-07-28 |  46.31   |
       | 32411  | 100.00 | 2010-07-28 | 132.56   |
       | 324121 | 100.00 | 2010-07-28 |   5.39   |
       | 324122 | 100.00 | 2010-07-28 |   3.73   |
