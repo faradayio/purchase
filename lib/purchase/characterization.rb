@@ -15,6 +15,7 @@ module BrighterPlanet
           has :cost            # cost before tax
           has :date
         end
+        base.add_implicit_characteristics
       end
     end
   end
