@@ -23,10 +23,10 @@ Feature: Purchase Emissions Calculations
     Then the emission value should be within 1 kgs of <emission>
     Examples:
       | id  | amount | date       | emission |
-      | 1   | 100.00 | 2010-07-28 |  89.64   |
-      | 2   | 100.00 | 2010-07-28 |  64.87   |
+      | 1   | 100.00 | 2010-07-28 |  43.46   |
+      | 2   | 100.00 | 2010-07-28 |  47.59   |
       | 3   | 100.00 | 2010-07-28 |  59.65   |
-      | 4   | 100.00 | 2010-07-28 |  74.56   |
+      | 4   | 100.00 | 2010-07-28 |  41.68   |
       | 5   | 100.00 | 2010-07-28 | 132.72   |
   
   Scenario Outline: Calculations starting from a merchant category
