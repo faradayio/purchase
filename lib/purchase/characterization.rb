@@ -6,6 +6,7 @@ module BrighterPlanet
       def self.included(base)
         base.send :include, Characterizable
         base.characterize do
+          has :purchase_amount
           has :merchant
           has :merchant_category
           has :naics_code

@@ -120,8 +120,8 @@ module BrighterPlanet
             
           committee :cost do
             quorum 'from purchase amount', :needs => :purchase_amount do |characteristics|
-              # FIXME TODO take out tax, then convert to 2002 US $ based on date and cost
-              characteristics[:purchase_amount] * 0.9
+              # FIXME TODO take out tax
+              characteristics[:purchase_amount].to_f * 0.9
             end
           end
 
