@@ -10,5 +10,5 @@ class PurchaseRecord < ActiveRecord::Base
   belongs_to :merchant,          :foreign_key => 'merchant_id'
   belongs_to :merchant_category, :foreign_key => 'mcc'
 
-  attr_accessor :naics_code
+  attr_accessor :naics_code, :purchase_amount
 end

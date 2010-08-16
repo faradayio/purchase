@@ -1,6 +1,16 @@
 Feature: Purchase Committee Calculations
   The purchase model should generate correct committee calculations
 
+  Scenario Outline: Cost committee from purchase amount
+    Given a purchase emitter 
+    And a characteristic "purchase_amount" of "<amount>"
+    When the "cost" committee is calculated
+    And the conclusion of the committee should be "<cost>"
+    Examples:
+      | amount | cost    |
+      | 831.23 | 748.107 |
+      |  11.00 |   9.9   |
+
   Scenario Outline: Adjusted cost committee from cost and date
     Given a purchase emitter 
     And a characteristic "cost" of "<cost>"
@@ -12,19 +22,6 @@ Feature: Purchase Committee Calculations
       | cost   | date       | adjusted_cost |
       | 831.23 | 2010-08-01 |     688.67439 |
       |  11.00 | 2005-07-14 |       9.11350 |
-
-  Scenario Outline: Adjusted cost committee from purchase amount and date
-    Given a purchase emitter 
-    And a characteristic "purchase_amount" of "<amount>"
-    And characteristic "date" of "<date>"
-    When the "cost" committee is calculated
-    And the "adjusted_cost" committee is calculated
-    Then the committee should have used quorum "from cost and date"
-    And the conclusion of the committee should be "<adjusted_cost>"
-    Examples:
-      | amount | date       | adjusted_cost |
-      | 831.23 | 2010-08-01 |     619.80695 |
-      |  11.00 | 2005-07-14 |       8.20215 |
 
   Scenario Outline: Merchant category committee from merchant
     Given a purchase emitter 
