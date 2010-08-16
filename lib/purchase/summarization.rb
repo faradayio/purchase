@@ -11,7 +11,7 @@ module BrighterPlanet
           has.verb :take
           has.aspect :perfect
 
-          has.modifier lambda { |purchase| "from #{flight.merchant}" }, :if => :merchant
+          has.modifier lambda { |purchase| "from #{purchase.merchant}" }, :if => :merchant
           has.modifier lambda { |purchase| "(#{purchase.inudstry} industry)" }, :if => :industry
           has.modifier lambda { |purchase| "for $#{purchase.purchase_amount}" }, :if => :purchase_amount
           has.modifier lambda { |purchase| "on #{date.to_formatted_s(:archive)}" }, :if => :date
