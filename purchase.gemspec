@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{purchase}
-  s.version = "0.1.2"
+  s.version = "0.1.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Andy Rossmeissl", "Seamus Abshere", "Ian Hough", "Matt Kling", "Derek Kastner"]
-  s.date = %q{2010-08-12}
+  s.date = %q{2010-08-15}
   s.description = %q{A software model in Ruby for the greenhouse gas emissions of a purchase}
   s.email = %q{seamus@brighterplanet.com}
   s.extra_rdoc_files = [
