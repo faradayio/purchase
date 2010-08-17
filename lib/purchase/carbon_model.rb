@@ -16,7 +16,7 @@ module BrighterPlanet
         base.decide :emission, :with => :characteristics do
           committee :emission do
             quorum 'from emissions factor and adjusted cost', :needs => :sector_emissions do |characteristics|
-              characteristics[:sector_emissions].inject(0) { |sum, emission| sum += emission }
+              characteristics[:sector_emissions].sum
             end
           end
 
@@ -31,10 +31,6 @@ module BrighterPlanet
           committee :emission_factors do
             quorum 'from sector shares', :needs => [:sector_shares] do |characteristics|
               characteristics[:sector_shares].inject([]) do |list, sector_share|
-                if sector_share.emission_factor.nil?
-                  raise MissingEmissionFactor,
-                    "Missing emission factor for sector #{sector_share.io_code}"
-                end
                 factor = sector_share.emission_factor * sector_share.share
                 list << EmissionFactor.new(sector_share.io_code, factor)
               end
