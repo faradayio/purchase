@@ -29,6 +29,21 @@ Feature: Purchase Emissions Calculations
       | 4   | 100.00 | 2010-07-28 |  41.68   |
       | 5   | 100.00 | 2010-07-28 | 132.72   |
   
+  Scenario Outline: Calculations starting from a merchant with purchase amount and tax
+    Given a purchase has "merchant.id" of "<id>"
+    And it has "purchase_amount" of "<amount>"
+    And it has "tax" of "<tax>"
+    And it has "date" of "<date>"
+    When emissions are calculated
+    Then the emission value should be within 1 kgs of <emission>
+    Examples:
+      | id  | amount | tax  | date       | emission |
+      | 1   | 100.00 | 8.00 | 2010-07-28 |  44.43   |
+      | 2   | 100.00 | 8.00 | 2010-07-28 |  48.65   |
+      | 3   | 100.00 | 8.00 | 2010-07-28 |  60.98   |
+      | 4   | 100.00 | 8.00 | 2010-07-28 |  42.61   |
+      | 5   | 100.00 | 8.00 | 2010-07-28 | 135.68   |
+  
   Scenario Outline: Calculations starting from a merchant category
     Given a purchase has "merchant_category.mcc" of "<mcc>"
     And it has "cost" of "<cost>"

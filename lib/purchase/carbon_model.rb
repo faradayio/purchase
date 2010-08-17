@@ -115,6 +115,10 @@ module BrighterPlanet
           end
             
           committee :cost do
+            quorum 'from purchase amount and tax', :needs => [:purchase_amount, :tax] do |characteristics|
+              characteristics[:purchase_amount].to_f - characteristics[:tax].to_f
+            end
+            
             quorum 'from purchase amount', :needs => :purchase_amount do |characteristics|
               # FIXME TODO take out tax
               characteristics[:purchase_amount].to_f * 0.9
