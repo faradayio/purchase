@@ -43,6 +43,24 @@ Feature: Purchase Committee Calculations
       | 1  | 5111 |
       | 2  | 5732 |
 
+  Scenario Outline: Merchant categories industries committee from merchant category
+    Given a purchase emitter 
+    And a characteristic "merchant_category.mcc" of "<mcc>"
+    When the "merchant_categories_industries" committee is calculated
+    Then the conclusion of the committee should have a record identified with "naics_code" of "<naics>" and having "ratio" of "<ratio>"
+    Examples:
+      | mcc  | naics  | ratio |
+      | 3504 | 72111  | 1     |
+      | 5111 | 45321  | 1     |
+      | 5172 | 32411  | 0.8   |
+      | 5172 | 324121 | 0.05  |
+      | 5172 | 324122 | 0.05  |
+      | 5172 | 324191 | 0.05  |
+      | 5172 | 324199 | 0.05  |
+      | 5732 | 443112 | 1     |
+      | 5812 | 72211  | 1     |
+      | 8225 | 6623   | 0.5   |
+
   Scenario Outline: Industry shares committee from merchant category
     Given a purchase emitter 
     And a characteristic "merchant_category.mcc" of "<mcc>"
@@ -74,6 +92,26 @@ Feature: Purchase Committee Calculations
       | 5111 | 20854   | 0.071 |
       | 5111 | 29938   | 0.011 |
       | 5111 | 29979   | 0.013 |
+
+    Scenario Outline: Product line shares committee from industry
+      Given a purchase emitter 
+      And a characteristic "naics_code" of "<naics>"
+      When the "product_line_shares" committee is calculated
+      Then the conclusion of the committee should have a record identified with "ps_code" of "<ps_code>" and having "ratio" of "<share>"
+      Examples:
+        | naics  | ps_code | share |
+        | 45321  | 20340   | 0.084 |
+        | 45321  | 20370   | 0.283 |
+        | 45321  | 20440   | 0.006 |
+        | 45321  | 20851   | 0.122 |
+        | 45321  | 20852   | 0.145 |
+        | 45321  | 20853   | 0.265 |
+        | 45321  | 20854   | 0.071 |
+        | 45321  | 29938   | 0.011 |
+        | 45321  | 29979   | 0.013 |
+        | 443112 | 20375   | 0.5   |
+        | 443112 | 20321   | 0.25  |
+        | 443112 | 20865   | 0.2   |
 
   Scenario Outline: Sector shares committee from merchant category
     Given a purchase emitter 
