@@ -5,10 +5,6 @@ require 'date'
 module BrighterPlanet
   module Purchase
     module CarbonModel
-      class MissingSectorForProductLineSector < Exception; end
-      class MissingEmissionFactor < Exception; end
-      class MissingSectorForIndustrySector < Exception; end
-
       def self.included(base)
         base.extend ::Leap::Subject
         base.extend FastTimestamp
@@ -105,7 +101,7 @@ module BrighterPlanet
           end
           
           committee :industry_shares do
-            quorum 'from merchant_categories_industries', :needs => :naics_code do |characteristics|
+            quorum 'from merchant_categories_industries', :needs => :merchant_categories_industries do |characteristics|
               characteristics[:merchant_categories_industries].map do |mci|
                 IndustryShare.new mci.naics_code, mci.ratio
               end
@@ -135,7 +131,8 @@ module BrighterPlanet
                 2009 => 1.189, 2010 => 1.207, 2011 => 1.225, 2012 => 1.245, 
                 2013 => 1.265 }
 
-              date = date.is_a?(Date) ? date : Date.parse(date)
+              date = characteristics[:date]
+              date = date.is_a?(String) ? Date.parse(date) : date
               conversion_factor = @cpi_lookup[date.year] || 1.207
 
               characteristics[:cost].to_f / conversion_factor

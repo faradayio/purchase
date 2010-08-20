@@ -61,10 +61,29 @@ Feature: Purchase Committee Calculations
       | 5812 | 72211  | 1     |
       | 8225 | 6623   | 0.5   |
 
-  Scenario Outline: Industry shares committee from merchant category
+  Scenario Outline: Merchant categories industries committee from industry
+    Given a purchase emitter 
+    And a characteristic "naics_code" of "<naics>"
+    When the "merchant_categories_industries" committee is calculated
+    Then the conclusion of the committee should have a record identified with "naics_code" of "<naics>" and having "ratio" of "<ratio>"
+    Examples:
+      | naics  | ratio |
+      | 72111  | 1     |
+      | 45321  | 1     |
+      | 32411  | 0.8   |
+      | 324121 | 0.05  |
+      | 324122 | 0.05  |
+      | 324191 | 0.05  |
+      | 324199 | 0.05  |
+      | 443112 | 1     |
+      | 72211  | 1     |
+      | 6623   | 0.5   |
+
+  Scenario Outline: Industry shares committee from merchant categories industries
     Given a purchase emitter 
     And a characteristic "merchant_category.mcc" of "<mcc>"
-    When the "industry_shares" committee is calculated
+    When the "merchant_categories_industries" committee is calculated
+    And the "industry_shares" committee is calculated
     Then the conclusion of the committee should have a record identified with "naics_code" of "<naics>" and having "ratio" of "<share>"
     Examples:
       | mcc  | naics  | share |
