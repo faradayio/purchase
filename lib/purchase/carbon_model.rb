@@ -134,43 +134,7 @@ module BrighterPlanet
         # FIXME TODO make other committees to report emissions by gas, by io sector, etc.
       end
 
-      def self.parse_date(date)
-        date = date.is_a?(Date) ? date : Date.parse(date)
-      end
-
-      class IndustryShare
-        class << self
-          def find_all_by_naics_code(naics_code)
-            industry = Industry.find_by_naics_code naics_code
-            from_merchant_categories_industries industry.merchant_categories_industries
-          end
-          def find_all_by_merchant_category(merchant_category)
-            from_merchant_categories_industries merchant_category.merchant_categories_industries
-          end
-
-        private
-          def from_merchant_categories_industries(merchant_categories_industries)
-            merchant_categories_industries.map do |mci|
-              new mci.naics_code, mci.ratio
-            end
-          end
-        end
-
-        attr_accessor :naics_code, :ratio
-
-        def initialize(naics_code, ratio)
-          self.naics_code = naics_code
-          self.ratio = ratio
-        end
-
-        def industries_product_lines
-          IndustriesProductLines.find_all_by_naics_code naics_code
-        end
-
-        def industries_sectors
-          IndustriesSectors.find_all_by_naics_code naics_code
-        end
-      end
+      class IndustryShare < Struct.new(:naics_code, :ratio); end
 
       class ProductLineShare
         attr_accessor :ps_code, :ratio
@@ -185,9 +149,7 @@ module BrighterPlanet
         end
       end
 
-      class SectorShare
-        attr_accessor :io_code, :share, :emission_factor
-
+      class SectorShare < Struct.new(:io_code, :share, :emission_factor)
         def initialize(sector, share)
           self.io_code = sector.io_code
           self.share = share
@@ -195,14 +157,7 @@ module BrighterPlanet
         end
       end
 
-      class EmissionFactor
-        attr_accessor :io_code, :factor
-
-        def initialize(io_code, factor)
-          self.io_code = io_code
-          self.factor = factor
-        end
-      end
+      class EmissionFactor < Struct.new(:io_code, :factor); end
     end
   end
 end
