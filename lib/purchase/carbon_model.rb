@@ -107,7 +107,7 @@ module BrighterPlanet
                 2009 => 1.189, 2010 => 1.207, 2011 => 1.225, 2012 => 1.245, 
                 2013 => 1.265 }
 
-              date = parse_date characteristics[:date]
+              date = date.is_a?(Date) ? date : Date.parse(date)
               conversion_factor = @cpi_lookup[date.year] || 1.207
 
               characteristics[:cost].to_f / conversion_factor
