@@ -127,7 +127,7 @@ module BrighterPlanet
             end
             quorum 'from industry', :needs => :naics_code do |characteristics|
               industry = Industry.find_by_naics_code characteristics[:naics_code]
-              industry.merchant_categories_industries
+              industry.andand.merchant_categories_industries
             end
           end
 
