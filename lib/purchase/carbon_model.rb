@@ -42,7 +42,7 @@ module BrighterPlanet
             quorum 'from industry shares and product line shares', :needs => [:industry_shares, :product_line_shares] do |characteristics|
               industry_shares = characteristics[:industry_shares]
               industry_sector_shares = industry_shares.inject([]) do |list, industry_share|
-                industry_sectors = IndustriesSectors.
+                industries_sectors = IndustriesSectors.
                   find_all_by_naics_code industry_share.naics_code
                 industries_sectors.each do |industry_sector|
                   io_code = industry_sector.io_code

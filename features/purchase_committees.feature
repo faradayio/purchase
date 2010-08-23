@@ -97,7 +97,8 @@ Feature: Purchase Committee Calculations
   Scenario Outline: Product line shares committee from merchant category
     Given a purchase emitter 
     And a characteristic "merchant_category.mcc" of "<mcc>"
-    When the "industry_shares" committee is calculated
+    When the "merchant_categories_industries" committee is calculated
+    And the "industry_shares" committee is calculated
     And the "product_line_shares" committee is calculated
     Then the conclusion of the committee should have a record identified with "ps_code" of "<ps_code>" and having "ratio" of "<share>"
     Examples:
@@ -132,10 +133,11 @@ Feature: Purchase Committee Calculations
         | 443112 | 20321   | 0.25  |
         | 443112 | 20865   | 0.2   |
 
-  Scenario Outline: Sector shares committee from merchant category
+  Scenario Outline: Sector shares committee from industry and product line shares
     Given a purchase emitter 
     And a characteristic "merchant_category.mcc" of "<mcc>"
-    When the "industry_shares" committee is calculated
+    When the "merchant_categories_industries" committee is calculated
+    And the "industry_shares" committee is calculated
     And the "product_line_shares" committee is calculated
     And the "sector_shares" committee is calculated
     Then the conclusion of the committee should be a vector with value "<share>" and position for key "<io_code>"
