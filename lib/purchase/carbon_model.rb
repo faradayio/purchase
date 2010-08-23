@@ -27,16 +27,14 @@ module BrighterPlanet
           end
           
           committee :sector_shares do
-            quorum 'from industry shares and product line shares', :needs => [:industry_shares, :product_line_shares] do |characteristics|
+            quorum 'from industry shares and product line shares', :needs => [:industries_sectors, :product_line_shares] do |characteristics|
               industry_sector_shares = {}
-              characteristics[:industry_shares].each do |industry_share|
-                industry_share.industries_sectors.each do |industry_sector|
-                  unless ['420000','4A0000'].include?(industry_sector.io_code)
-                    sector = industry_sector.sector
-                    industry_sector_shares[sector.io_code] ||= 0
-                    industry_sector_shares[sector.io_code] += 
-                      industry_share.ratio * industry_sector.ratio * sector.emission_factor
-                  end
+              characteristics[:industries_sectors].each do |industry_sector|
+                unless ['420000','4A0000'].include?(industry_sector.io_code)
+                  sector = Sector.find_by_io_code industry_sector.io_code
+                  industry_sector_shares[sector.io_code] ||= 0
+                  industry_sector_shares[sector.io_code] += 
+                    industry_sector.ratio * sector.emission_factor
                 end
               end
 
