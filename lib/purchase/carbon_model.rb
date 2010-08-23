@@ -58,9 +58,33 @@ module BrighterPlanet
             end
 
             quorum 'from industry', :needs => :naics_code do |characteristics|
+              sector_shares = characteristics[:industries_sectors_shares]
+              v = SectorShareVector.create sector_shares
+              puts "keymap: #{BrighterPlanet::Purchase::KEY_MAP.inspect}"
+              puts "vector: #{v}"
+              v
+            end
+          end
+
+          committee :industries_sectors do
+            quorum 'from industry shares', :needs => :industry_shares do |characteristics|
+              characteristics[:industry_shares].inject([]) do |list, industry_share|
+                sectors = IndustriesSectors.
+                  find_all_by_naics_code industry_share.naics_code
+                sectors.each do |sector|
+                  ratio = industry_share.ratio * sector.ratio
+                  list << IndustrySectorShare.new(sector.io_code, ratio)
+                end
+                list
+              end
+            end
+
+            quorum 'from industry', :needs => :naics_code do |characteristics|
               industries_sectors = IndustriesSectors.
                 find_all_by_naics_code characteristics[:naics_code]
-              vector_items = industries_sectors
+              industries_sectors.map do |industry_sector|
+                IndustrySectorShare.new industry_sector.io_code, industry_sector.ratio
+              end
             end
           end
 
