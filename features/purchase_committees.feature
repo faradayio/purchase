@@ -110,43 +110,6 @@ Feature: Purchase Committee Calculations
       | 324191  | 0.05  |
       | 324199  | 0.05  |
 
-  Scenario Outline: Industries sectors committee from industry shares
-    Given a purchase emitter 
-    And a characteristic "merchant_category.mcc" of "<mcc>"
-    When the "merchant_categories_industries" committee is calculated
-    And the "industry_shares" committee is calculated
-    And the "industries_sectors" committee is calculated
-    Then the conclusion of the committee should have a record identified with "io_code" of "<io_code>" and having "ratio" of "<share>"
-    Examples:
-      | mcc  | io_code  | share |
-      | 3504 | 19       | 1.0   |
-      | 5111 | 4A0000   | 1.0   |
-      | 5172 | 20       | 0.8   |
-      | 5172 | 21       | 0.05  |
-      | 5172 | 22       | 0.05  |
-      | 5172 | 23       | 0.05  |
-      | 5172 | 24       | 0.05  |
-      | 5732 | 4A0000   | 1     |
-      | 5812 | 26       | 1     |
-
-  Scenario Outline: Industries sectors committee from industry
-    Given a purchase emitter 
-    And a characteristic "naics_code" of "<naics>"
-    When the "merchant_categories_industries" committee is calculated
-    And the "industries_sectors" committee is calculated
-    Then the conclusion of the committee should have a single record identified with "io_code" of "<io_code>" and having "ratio" of "<share>"
-    Examples:
-      | naics   | io_code | share |
-      | 32411   | 20      | 1.0   |
-      | 324121  | 21      | 1.0   |
-      | 324122  | 22      | 1.0   |
-      | 324191  | 23      | 1.0   |
-      | 324199  | 24      | 1.0   |
-      | 443112  | 4A0000  | 1.0   |
-      | 45321   | 4A0000  | 1.0   |
-      | 72111   | 19      | 1.0   |
-      | 72211   | 26      | 1.0   |
-
   Scenario Outline: Product line shares committee from merchant category
     Given a purchase emitter 
     And a characteristic "merchant_category.mcc" of "<mcc>"
@@ -186,12 +149,50 @@ Feature: Purchase Committee Calculations
         | 443112 | 20321   | 0.25  |
         | 443112 | 20865   | 0.2   |
 
+    Scenario Outline: Industries sectors committee from industry shares
+      Given a purchase emitter 
+      And a characteristic "merchant_category.mcc" of "<mcc>"
+      When the "merchant_categories_industries" committee is calculated
+      And the "industry_shares" committee is calculated
+      And the "industries_sectors" committee is calculated
+      Then the conclusion of the committee should have a record identified with "io_code" of "<io_code>" and having "ratio" of "<share>"
+      Examples:
+        | mcc  | io_code  | share |
+        | 3504 | 19       | 1.0   |
+        | 5111 | 4A0000   | 1.0   |
+        | 5172 | 20       | 0.8   |
+        | 5172 | 21       | 0.05  |
+        | 5172 | 22       | 0.05  |
+        | 5172 | 23       | 0.05  |
+        | 5172 | 24       | 0.05  |
+        | 5732 | 4A0000   | 1     |
+        | 5812 | 26       | 1     |
+
+    Scenario Outline: Industries sectors committee from industry
+      Given a purchase emitter 
+      And a characteristic "naics_code" of "<naics>"
+      When the "merchant_categories_industries" committee is calculated
+      And the "industries_sectors" committee is calculated
+      Then the conclusion of the committee should have a single record identified with "io_code" of "<io_code>" and having "ratio" of "<share>"
+      Examples:
+        | naics   | io_code | share |
+        | 32411   | 20      | 1.0   |
+        | 324121  | 21      | 1.0   |
+        | 324122  | 22      | 1.0   |
+        | 324191  | 23      | 1.0   |
+        | 324199  | 24      | 1.0   |
+        | 443112  | 4A0000  | 1.0   |
+        | 45321   | 4A0000  | 1.0   |
+        | 72111   | 19      | 1.0   |
+        | 72211   | 26      | 1.0   |
+
   Scenario Outline: Sector shares committee from industry and product line shares
     Given a purchase emitter 
     And a characteristic "merchant_category.mcc" of "<mcc>"
     When the "merchant_categories_industries" committee is calculated
     And the "industry_shares" committee is calculated
     And the "product_line_shares" committee is calculated
+    And the "industries_sectors" committee is calculated
     And the "sector_shares" committee is calculated
     Then the conclusion of the committee should be a vector with value "<share>" and position for key "<io_code>"
     Examples:
