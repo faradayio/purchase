@@ -181,6 +181,7 @@ module BrighterPlanet
       end
 
       class IndustryShare < Struct.new(:naics_code, :ratio); end
+      class IndustrySectorShare < Struct.new(:io_code, :ratio); end
 
       class ProductLineShare
         attr_accessor :ps_code, :ratio
