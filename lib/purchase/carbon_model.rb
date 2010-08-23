@@ -51,18 +51,22 @@ module BrighterPlanet
               end
               sector_shares = industry_sector_shares.merge product_line_sector_shares
 
-              v = SectorShareVector.create sector_shares
-              puts "keymap: #{BrighterPlanet::Purchase::KEY_MAP.inspect}"
-              puts "vector: #{v}"
-              v
+              SectorShareVector.create sector_shares
             end
 
             quorum 'from industry', :needs => :naics_code do |characteristics|
-              sector_shares = characteristics[:industries_sectors_shares]
-              v = SectorShareVector.create sector_shares
-              puts "keymap: #{BrighterPlanet::Purchase::KEY_MAP.inspect}"
-              puts "vector: #{v}"
-              v
+              industries_sectors = IndustriesSectors.
+                find_all_by_naics_code characteristics[:naics_code]
+              industry_sector_shares = {}
+              industries_sectors.each do |industry_sector|
+                unless ['420000','4A0000'].include?(industry_sector.io_code)
+                  sector = Sector.find_by_io_code industry_sector.io_code
+                  industry_sector_shares[sector.io_code] ||= 0
+                  industry_sector_shares[sector.io_code] += 
+                    industry_sector.ratio * sector.emission_factor
+                end
+              end
+              SectorShareVector.create industry_sector_shares
             end
           end
 
