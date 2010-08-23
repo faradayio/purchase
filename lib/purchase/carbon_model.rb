@@ -1,6 +1,7 @@
 require 'leap'
 require 'timeframe'
 require 'date'
+require 'matrix'
 
 module BrighterPlanet
   module Purchase
@@ -11,61 +12,49 @@ module BrighterPlanet
 
         base.decide :emission, :with => :characteristics do
           committee :emission do
-            quorum 'from emissions factor and adjusted cost', :needs => :sector_emissions do |characteristics|
-              characteristics[:sector_emissions].sum
+            quorum 'from emissions factor and adjusted cost', :needs => :economic_flows do |characteristics|
+              characteristics[:economic_flows].sum
             end
           end
 
-          committee :sector_emissions do
-            quorum 'from emissions factors and adjusted cost', :needs => [:emission_factors, :adjusted_cost] do |characteristics|
-              characteristics[:emission_factors].map do |emission_factor|
-                emission_factor.factor * characteristics[:adjusted_cost]
-              end
-            end
-          end
-
-          committee :emission_factors do
-            quorum 'from sector shares', :needs => [:sector_shares] do |characteristics|
-              characteristics[:sector_shares].inject([]) do |list, sector_share|
-                factor = sector_share.emission_factor * sector_share.share
-                list << EmissionFactor.new(sector_share.io_code, factor)
-              end
-            end
-            
-            # FIXME TODO figure out if we really want a fallback and get a real one
-            quorum 'default' do
-              [EmissionFactor.new(0, 1)]
+          committee :economic_flows do
+            quorum 'from sector shares', :needs => [:sector_shares, :adjusted_cost, :sector_direct_requirements] do |characteristics|
+              y = characteristics[:sector_shares]
+              i = Matrix.identity(y.column_size)
+              a = SectorDirectRequirementsVector.new
+              y * (a - i).inverse
             end
           end
           
           committee :sector_shares do
             quorum 'from industry shares and product line shares', :needs => [:industry_shares, :product_line_shares] do |characteristics|
-              industry_shares = characteristics[:industry_shares]
-              industry_sector_shares = industry_shares.inject([]) do |list, industry_share|
-                industries_sectors = IndustriesSectors.
-                  find_all_by_naics_code industry_share.naics_code
-                industries_sectors.each do |industry_sector|
-                  io_code = industry_sector.io_code
-                  unless ['420000','4A0000'].include?(io_code.to_s)
-                    calculated_share = industry_share.ratio * industry_sector.ratio
+              industry_sector_shares = {}
+              characteristics[:industry_shares].each do |industry_share|
+                industry_share.industries_sectors.each do |industry_sector|
+                  unless ['420000','4A0000'].include?(industry_sector.io_code)
                     sector = industry_sector.sector
-                    list << SectorShare.new(sector, calculated_share)
+                    industry_sector_shares[sector.io_code] ||= 0
+                    industry_sector_shares[sector.io_code] += 
+                      industry_share.ratio * industry_sector.ratio * sector.emission_factor
                   end
                 end
-                list
               end
 
-              product_line_shares = characteristics[:product_line_shares]
-              product_sector_shares = product_line_shares.inject([]) do |list, product_line_share|
+              product_line_sector_shares = {}
+              characteristics[:product_line_shares].each do |product_line_share|
                 product_line_share.product_lines_sectors.each do |product_line_sector|
-                  calculated_share = product_line_sector.ratio * product_line_share.ratio
                   sector = product_line_sector.sector
-                  list << SectorShare.new(sector, calculated_share)
+                  product_line_sector_shares[sector.io_code] ||= 0
+                  product_line_sector_shares[sector.io_code] += 
+                    product_line_sector.ratio * product_line_share.ratio * sector.emission_factor
                 end
-                list
               end
+              sector_shares = industry_sector_shares.merge product_line_sector_shares
 
-              industry_sector_shares + product_sector_shares
+              v = SectorShareVector.create sector_shares
+              puts "keymap: #{BrighterPlanet::Purchase::KEY_MAP.inspect}"
+              puts "vector: #{v}"
+              v
             end
 
             quorum 'from industry', :needs => :naics_code do |characteristics|
@@ -190,7 +179,41 @@ module BrighterPlanet
         end
       end
 
+      class SectorShareVector < Vector
+        def self.create(sector_shares_hash)
+          hsh = {}
+          vector = key_map.map do |key|
+            a = sector_shares_hash[key] || 0
+            hsh[key] = a
+            a
+          end
+          self[*vector]
+        end
+
+        def self.key_map
+          BrighterPlanet::Purchase::KEY_MAP
+        end
+      end
+
+      class SectorDirectRequirementsVector < Vector
+        class << self
+          def create
+            vector = sectors
+            data.each do |row| 
+              vector[row[:io_code]] = row[:impact]
+            end
+            self[vector]
+          end
+
+          def data
+            Array.new
+          end
+        end
+      end
+
       class EmissionFactor < Struct.new(:io_code, :factor); end
     end
+
+    KEY_MAP = (1..31).to_a.map(&:to_s)
   end
 end
