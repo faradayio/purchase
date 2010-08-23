@@ -94,6 +94,21 @@ Feature: Purchase Committee Calculations
       | 5172 | 324191 | 0.05  |
       | 5172 | 324199 | 0.05  |
 
+  Scenario Outline: Industry shares committee from industry
+    Given a purchase emitter 
+    And a characteristic "naics_code" of "<naics>"
+    When the "industry_shares" committee is calculated
+    Then the conclusion of the committee should have a record identified with "naics_code" of "<naics>" and having "ratio" of "<share>"
+    Examples:
+      | naics   | share |
+      | 45321   | 1.0   |
+      | 32411   | 0.8   |
+      | 324121  | 0.05  |
+      | 324122  | 0.05  |
+      | 324191  | 0.05  |
+      | 324199  | 0.05  |
+      | invalid |       |
+
   Scenario Outline: Product line shares committee from merchant category
     Given a purchase emitter 
     And a characteristic "merchant_category.mcc" of "<mcc>"
