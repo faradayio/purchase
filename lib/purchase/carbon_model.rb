@@ -20,22 +20,17 @@ module BrighterPlanet
           committee :economic_flows do
             quorum 'from sector shares', :needs => [:sector_shares, :adjusted_cost, :sector_direct_requirements] do |characteristics|
               y = characteristics[:sector_shares]
-              i = Matrix.identity(y.row_size)
+              i = Matrix.identity(y.column_size)
               a = characteristics[:sector_direct_requirements]
-              puts "y: #{y.inspect}"
-              puts "a: #{a.inspect}"
-              puts "i: #{i.inspect}"
-              puts "a - i: #{(a - i).inspect}"
-              y * (a - i).inverse
+              result = y * (i - a).inverse
+              result
             end
           end
 
           committee :sector_direct_requirements do
-            quorum 'from production data' do
-              nil
-            end
-            quorum 'from test data' do
-              SectorDirectRequirementsMatrix.create
+            quorum 'from direct industry requirements' do
+              adapter = BrighterPlanet::Purchase.sector_direct_requirements_adapter
+              Matrix[*adapter.data]
             end
           end
           
@@ -227,7 +222,7 @@ module BrighterPlanet
             hsh[key] = a
             a
           end
-          self[*vector]
+          self[*vector].covector
         end
 
         def self.key_map
@@ -235,18 +230,30 @@ module BrighterPlanet
         end
       end
 
-      class SectorDirectRequirementsMatrix < Matrix
-        class << self
-          def create
-            adapter = BrighterPlanet::Purchase.sector_direct_requirements_adapter
-            self[*adapter.data]
-          end
-        end
-      end
-
       class EmissionFactor < Struct.new(:io_code, :factor); end
     end
 
-    KEY_MAP = (1..31).to_a.map(&:to_s)
+    KEY_MAP = (1..26).to_a.map(&:to_s) + %w{44100 44101 44102 44103 44104 44105}
+  end
+end
+
+class Matrix
+  def inspect
+    str = "Matrix:\n"
+    keys = BrighterPlanet::Purchase::KEY_MAP
+    str += '|' + (['X'.center(5)] + keys.map { |k| k.center(5) }).join('|') + "|\n"
+    @rows.each_with_index do |row, i|
+      str += '|' + ([keys[i].center(5)] + row.map { |r| r.to_s.center(5) }).join('|') + "|\n"
+    end
+    str
+  end
+end
+class Vector
+  def inspect
+    str = "Vector:\n"
+    keys = BrighterPlanet::Purchase::KEY_MAP
+    str += '|' + (keys.map { |k| k.center(5) }).join('|') + "|\n"
+    str += '|' + (to_a.map { |r| r.to_s.center(5) }).join('|') + "|\n"
+    str
   end
 end
