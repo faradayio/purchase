@@ -20,9 +20,22 @@ module BrighterPlanet
           committee :economic_flows do
             quorum 'from sector shares', :needs => [:sector_shares, :adjusted_cost, :sector_direct_requirements] do |characteristics|
               y = characteristics[:sector_shares]
-              i = Matrix.identity(y.column_size)
-              a = SectorDirectRequirementsVector.new
+              i = Matrix.identity(y.row_size)
+              a = characteristics[:sector_direct_requirements]
+              puts "y: #{y.inspect}"
+              puts "a: #{a.inspect}"
+              puts "i: #{i.inspect}"
+              puts "a - i: #{(a - i).inspect}"
               y * (a - i).inverse
+            end
+          end
+
+          committee :sector_direct_requirements do
+            quorum 'from production data' do
+              nil
+            end
+            quorum 'from test data' do
+              SectorDirectRequirementsMatrix.create
             end
           end
           
@@ -222,18 +235,11 @@ module BrighterPlanet
         end
       end
 
-      class SectorDirectRequirementsVector < Vector
+      class SectorDirectRequirementsMatrix < Matrix
         class << self
           def create
-            vector = sectors
-            data.each do |row| 
-              vector[row[:io_code]] = row[:impact]
-            end
-            self[vector]
-          end
-
-          def data
-            Array.new
+            adapter = BrighterPlanet::Purchase.sector_direct_requirements_adapter
+            self[*adapter.data]
           end
         end
       end

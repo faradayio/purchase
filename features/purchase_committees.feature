@@ -240,6 +240,11 @@ Feature: Purchase Committee Calculations
       | 72111  | 19      | 0.559       |
       | 72211  | 26      | 0.8         |
 
+  Scenario: Sector direct requirements
+    Given a purchase emitter 
+    When the "sector_direct_requirements" committee is calculated
+    Then the conclusion of the committee should be a square matrix with "32" rows and columns
+
   Scenario Outline: Economic flows from merchant category code
     Given a purchase emitter 
     And a characteristic "merchant_category.mcc" of "<mcc>"
