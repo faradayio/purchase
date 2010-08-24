@@ -10,12 +10,11 @@ Then /^the conclusion of the committee should be a square matrix with "(\d+)" ro
   matrix.should be_square
 end
 
-Then /^the conclusion of the committee should be a single-row matrix with values "(.*)"$/ do |column_values|
+Then /^the conclusion of the committee should be a vector with values "(.*)"$/ do |column_values|
   column_values = column_values.split(/,/).map(&:to_f)
-  matrix = @report.conclusion
-  matrix.row_size.should == 1
+  vector = @report.conclusion
 
   BrighterPlanet::Purchase::KEY_MAP.each_with_index do |key, index|
-    matrix[0, index].should be_close(column_values[index].to_f, 0.00001)
+    vector[index].should be_close(column_values[index].to_f, 0.00001)
   end
 end

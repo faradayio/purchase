@@ -257,7 +257,7 @@ Feature: Purchase Committee Calculations
     And the "sector_shares" committee is calculated
     And the "sector_direct_requirements" committee is calculated
     And the "economic_flows" committee is calculated
-    Then the conclusion of the committee should be a single-row matrix with values "<1>,<2>,<3>,<4>,<5>,<6>,<7>,<8>,<9>,<10>,<11>,<12>,<13>,<14>,<15>,<16>,<17>,<18>,<19>,<20>,<21>,<22>,<23>,<24>,<25>,<26>,<44100>,<44101>,<44102>,<44103>,<44104>,<44105>"
+    Then the conclusion of the committee should be a vector with values "<1>,<2>,<3>,<4>,<5>,<6>,<7>,<8>,<9>,<10>,<11>,<12>,<13>,<14>,<15>,<16>,<17>,<18>,<19>,<20>,<21>,<22>,<23>,<24>,<25>,<26>,<44100>,<44101>,<44102>,<44103>,<44104>,<44105>"
     Examples:
       |mcc |1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|44100|44101|44102|44103|44104|44105|
       |3504|0|0|0|0|0|0|0|0|0|00|00|00|00|00|00|00|00|00|0.559|00|00|00|00|00|00|00|00000|00000|00000|00000|00000|00000|
