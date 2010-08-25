@@ -72,7 +72,10 @@ module BrighterPlanet
               end
               sector_shares = industry_sector_shares.merge product_line_sector_shares
 
-              SectorShareVector.create sector_shares
+              shares = BrighterPlanet::Purchase::KEY_MAP.map do |key|
+                sector_shares[key] || 0
+              end
+              Vector[*shares]
             end
 
             quorum 'from industry', :needs => :naics_code do |characteristics|
@@ -226,22 +229,6 @@ module BrighterPlanet
           self.io_code = sector.io_code
           self.share = share
           self.emission_factor = sector.emission_factor
-        end
-      end
-
-      class SectorShareVector < Vector
-        def self.create(sector_shares_hash)
-          hsh = {}
-          vector = key_map.map do |key|
-            a = sector_shares_hash[key] || 0
-            hsh[key] = a
-            a
-          end
-          self[*vector].covector
-        end
-
-        def self.key_map
-          BrighterPlanet::Purchase::KEY_MAP
         end
       end
 

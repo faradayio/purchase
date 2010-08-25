@@ -11,7 +11,7 @@ class Matrix
     keys.each_with_index do |key, i|
       paddings[key] = MatrixVectorHelper.column_width(column(i).to_a + [key])
     end
-    str = "Matrix:\n"
+    str = "Matrix: (#{row_size}x#{column_size})\n"
     str += '|' + (['X'.center(5)] + keys.map { |k| k.center(paddings[k]) }).join('|') + "|\n"
     @rows.each_with_index do |row, i|
       items = [keys[i].center(5)]
@@ -28,7 +28,7 @@ class Vector
     keys.each_with_index do |key, i|
       paddings[key] = MatrixVectorHelper.column_width([to_a[i],key])
     end
-    str = "Vector:\n"
+    str = "Vector: (#{size})\n"
     str += '|' + (keys.map { |k| k.center(paddings[k]) }).join('|') + "|\n"
     items = []
     to_a.each_with_index { |r, i| items << r.to_s.center(paddings[keys[i]]) }

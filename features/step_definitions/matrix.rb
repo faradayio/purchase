@@ -13,6 +13,7 @@ end
 Then /^the conclusion of the committee should be a vector with values "(.*)"$/ do |column_values|
   column_values = column_values.split(/,/).map(&:to_f)
   vector = @report.conclusion
+  vector = vector.row(0) if vector.is_a? Matrix  #some vectors are single-row matrices
 
   BrighterPlanet::Purchase::KEY_MAP.each_with_index do |key, index|
     vector[index].should be_close(column_values[index].to_f, 0.00001)
