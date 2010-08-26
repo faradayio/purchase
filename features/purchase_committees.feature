@@ -5,7 +5,8 @@ Feature: Purchase Committee Calculations
     Given a purchase emitter 
     And a characteristic "purchase_amount" of "<amount>"
     When the "cost" committee is calculated
-    Then the conclusion of the committee should be "<cost>"
+    Then the committee should have used quorum "from purchase amount"
+    And the conclusion of the committee should be "<cost>"
     Examples:
       | amount | cost    |
       | 831.23 | 748.107 |
@@ -16,41 +17,39 @@ Feature: Purchase Committee Calculations
     And a characteristic "purchase_amount" of "<amount>"
     And a characteristic "tax" of "<tax>"
     When the "cost" committee is calculated
-    Then the conclusion of the committee should be "<cost>"
+    Then the committee should have used quorum "from purchase amount and tax"
+    And the conclusion of the committee should be "<cost>"
     Examples:
       | amount | tax  | cost |
       | 10.00  | 1.00 | 9.00 |
 
-  Scenario Outline: Adjusted cost committee from cost and date
+  Scenario Outline: Adjusted cost committee
     Given a purchase emitter 
     And a characteristic "cost" of "<cost>"
     And characteristic "date" of "<date>"
     When the "adjusted_cost" committee is calculated
-    Then the committee should have used quorum "from cost and date"
-    And the conclusion of the committee should be "<adjusted_cost>"
+    Then the conclusion of the committee should be "<adjusted_cost>"
     Examples:
       | cost   | date       | adjusted_cost |
       | 831.23 | 2010-08-01 |     688.67439 |
       |  11.00 | 2005-07-14 |       9.11350 |
 
-  Scenario Outline: Merchant category committee from merchant
+  Scenario Outline: Merchant category committee
     Given a purchase emitter 
     And a characteristic "merchant.id" of "<id>"
     When the "merchant_category" committee is calculated
-    Then the committee should have used quorum "from merchant"
-    And the conclusion of the committee should have "mcc" of "<mcc>"
+    Then the conclusion of the committee should have "mcc" of "<mcc>"
     Examples:
       | id | mcc  |
       | 1  | 5111 |
       | 2  | 5732 |
       | 9  | 9999 |
 
-  Scenario Outline: Merchant categories industries committee from merchant category
+  Scenario Outline: Merchant categories industries committee
     Given a purchase emitter 
     And a characteristic "merchant_category.mcc" of "<mcc>"
     When the "merchant_categories_industries" committee is calculated
-    Then the committee should have used quorum "from merchant category"
-    And the conclusion of the committee should have a record identified with "naics_code" of "<naics>" and having "ratio" of "<ratio>"
+    Then the conclusion of the committee should have a record identified with "naics_code" of "<naics>" and having "ratio" of "<ratio>"
     Examples:
       | mcc  | naics  | ratio |
       | 3504 | 72111  | 1     |
