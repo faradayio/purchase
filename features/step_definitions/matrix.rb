@@ -1,7 +1,7 @@
 Then /^the conclusion of the committee should be a vector with value "(.*)" and position for key "(.*)"$/ do |value, key|
   vector = @report.conclusion
   position = BrighterPlanet::Purchase::KEY_MAP.index key
-  compare_values vector[0, position], value
+  compare_values vector[position], value
 end
 
 Then /^the conclusion of the committee should be a square matrix with "(\d+)" rows and columns$/ do |num|

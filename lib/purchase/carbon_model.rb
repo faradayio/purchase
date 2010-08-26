@@ -89,7 +89,11 @@ module BrighterPlanet
                     industry_sector.ratio * sector.emission_factor
                 end
               end
-              SectorShareVector.create industry_sector_shares
+
+              shares = BrighterPlanet::Purchase::KEY_MAP.map do |key|
+                industry_sector_shares[key] || 0
+              end
+              Vector[*shares]
             end
           end
 
