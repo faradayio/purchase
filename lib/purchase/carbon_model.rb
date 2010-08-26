@@ -153,10 +153,6 @@ module BrighterPlanet
             quorum 'from merchant category', :needs => :merchant_category do |characteristics|
               characteristics[:merchant_category].merchant_categories_industries
             end
-            quorum 'from industry', :needs => :naics_code do |characteristics|
-              industry = Industry.find_by_naics_code characteristics[:naics_code]
-              industry.andand.merchant_categories_industries
-            end
           end
 
           committee :merchant_category do

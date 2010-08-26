@@ -5,10 +5,12 @@ ps_code,description,broadline,parent
 20852,"Office paper, including computer printer, copier, fax, and typewriter cut sheet paper",0,20850
 20853,Office and school supplies,0,20850
 20865,"Telephones, including cellular phones",0,20850
-7600,"Meat, including fantastical creatures"
 30540,"Sautéed quick breads, including pancakes and waffles"
 30860,"Petroleum products, including gasoline and kerosene"
 30861,"Petroleum products, including diesel and bunker fuel"
 30862,"Coal"
 30863,"Shale Oil"
 30864,"Natural Gas"
+99991,"Fresh meat, including fantastical creatures"
+99992,"Frozen meat, including fantastical creatures"
+99993,"Frozen horns, including fantastical creatures"
