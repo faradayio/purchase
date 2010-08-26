@@ -1,34 +1,32 @@
-io_code,description,emission_factor,emission_factor_units
-1,Staples,0.81,kilograms_per_2002_dollar
-2,Example,0.546,kilograms_per_2002_dollar
-3,Pencils,0.358,kilograms_per_2002_dollar
-4,Pens,1.2,kilograms_per_2002_dollar
-5,Rulers,1.08,kilograms_per_2002_dollar
-6,Printers,0.623,kilograms_per_2002_dollar
-7,Computers,0.567,kilograms_per_2002_dollar
-8,Ink,0.284,kilograms_per_2002_dollar
-9,Paper,0.37,kilograms_per_2002_dollar
-10,Furniture,0.362,kilograms_per_2002_dollar
-11,Trucking,0.22,kilograms_per_2002_dollar
-12,Sales,0.549,kilograms_per_2002_dollar
-13,Strip Malls,0.544,kilograms_per_2002_dollar
-14,Displays,0.535,kilograms_per_2002_dollar
-15,Cameras,0.101,kilograms_per_2002_dollar
-16,Scanners,0.245,kilograms_per_2002_dollar
-17,Disks,0.23,kilograms_per_2002_dollar
-18,Media,0.186,kilograms_per_2002_dollar
-19,Hotel Industry,0.559,kilograms_per_2002_dollar
-20,Example,2,kilograms_per_2002_dollar
-21,Example,1.3,kilograms_per_2002_dollar
-22,Example,0.9,kilograms_per_2002_dollar
-23,Example,0.2,kilograms_per_2002_dollar
-24,Example,1.2,kilograms_per_2002_dollar
-25,Example,1.6,kilograms_per_2002_dollar
-26,Example,0.8,kilograms_per_2002_dollar
-44100,Example,0.7,kilograms_per_2002_dollar
-44102,Example,0.7,kilograms_per_2002_dollar
-44103,Example,1.2,kilograms_per_2002_dollar
-44104,Example,1.4,kilograms_per_2002_dollar
-44105,Example,0.3,kilograms_per_2002_dollar
-99999A,Fantasy creature processing
-99999B,Fantasy creature freezing
+io_code,description
+1,Staples
+2,Example
+3,Pencils
+4,Pens
+5,Rulers
+6,Printers
+7,Computers
+8,Ink
+9,Paper
+10,Furniture
+11,Trucking
+12,Sales
+13,Strip Malls
+14,Displays
+15,Cameras
+16,Scanners
+17,Disks
+18,Media
+19,Hotel Industry
+20,Example
+21,Example
+22,Example
+23,Example
+24,Example
+25,Example
+26,Example
+44100,Example
+44102,Example
+44103,Example
+44104,Example
+44105,Example

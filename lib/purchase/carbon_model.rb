@@ -53,20 +53,18 @@ module BrighterPlanet
               industry_sector_shares = {}
               characteristics[:industries_sectors].each do |industry_sector|
                 unless ['420000','4A0000'].include?(industry_sector.io_code)
-                  sector = Sector.find_by_io_code industry_sector.io_code
-                  industry_sector_shares[sector.io_code] ||= 0
-                  industry_sector_shares[sector.io_code] += 
-                    industry_sector.ratio * sector.emission_factor
+                  industry_sector_shares[industry_sector.io_code] ||= 0
+                  industry_sector_shares[industry_sector.io_code] += industry_sector.ratio
                 end
               end
 
               product_line_sector_shares = {}
               characteristics[:product_line_shares].each do |product_line_share|
                 product_line_share.product_lines_sectors.each do |product_line_sector|
-                  sector = product_line_sector.sector
-                  product_line_sector_shares[sector.io_code] ||= 0
-                  product_line_sector_shares[sector.io_code] += 
-                    product_line_sector.ratio * product_line_share.ratio * sector.emission_factor
+                  io_code = product_line_sector.io_code
+                  product_line_sector_shares[io_code] ||= 0
+                  product_line_sector_shares[io_code] += 
+                    product_line_sector.ratio * product_line_share.ratio
                 end
               end
               sector_shares = industry_sector_shares.merge product_line_sector_shares
@@ -82,10 +80,8 @@ module BrighterPlanet
               industry_sector_shares = {}
               characteristics[:industries_sectors].each do |industry_sector|
                 unless ['420000','4A0000'].include?(industry_sector.io_code)
-                  sector = Sector.find_by_io_code industry_sector.io_code
-                  industry_sector_shares[sector.io_code] ||= 0
-                  industry_sector_shares[sector.io_code] += 
-                    industry_sector.ratio * sector.emission_factor
+                  industry_sector_shares[industry_sector.io_code] ||= 0
+                  industry_sector_shares[industry_sector.io_code] += industry_sector.ratio
                 end
               end
 
