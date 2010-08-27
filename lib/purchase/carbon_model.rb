@@ -74,22 +74,24 @@ module BrighterPlanet
               Vector[*shares]
             end
 
-            # need this because if no industries mapped to product lines then :product_line_shares is nil
-            quorum 'from industries sectors', :needs => [:industries_sectors, :adjusted_cost] do |characteristics|
-              industry_sector_shares = {}
-              characteristics[:industries_sectors].each do |industry_sector|
-                unless ['420000','4A0000'].include?(industry_sector.io_code)
-                  industry_sector_shares[industry_sector.io_code] ||= 0
-                  industry_sector_shares[industry_sector.io_code] += 
-                    industry_sector.ratio * characteristics[:adjusted_cost]
-                end
-              end
-
-              shares = BrighterPlanet::Purchase::KEY_MAP.map do |key|
-                industry_sector_shares[key] || 0
-              end
-              Vector[*shares]
-            end
+            # [Ian] I thought we needed this because if no industries mapped to product lines then :product_line_shares is nil
+            # BUT if you run tests and calculate the product_line_shares committee then this quorom doesn't get used,
+            #   even if you use a merchant category or industry that doesn't translate to product lines
+            # quorum 'from industries sectors', :needs => [:industries_sectors, :adjusted_cost] do |characteristics|
+            #   industry_sector_shares = {}
+            #   characteristics[:industries_sectors].each do |industry_sector|
+            #     unless ['420000','4A0000'].include?(industry_sector.io_code)
+            #       industry_sector_shares[industry_sector.io_code] ||= 0
+            #       industry_sector_shares[industry_sector.io_code] += 
+            #         industry_sector.ratio * characteristics[:adjusted_cost]
+            #     end
+            #   end
+            # 
+            #   shares = BrighterPlanet::Purchase::KEY_MAP.map do |key|
+            #     industry_sector_shares[key] || 0
+            #   end
+            #   Vector[*shares]
+            # end
           end
 
           committee :industries_sectors do
