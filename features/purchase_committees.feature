@@ -119,37 +119,34 @@ Feature: Purchase Committee Calculations
       | 9999 | A        | 0.375 |
       | 9999 | B        | 0.125 |
 
-  Scenario Outline: Sector shares committee from industry and product line shares
+  Scenario Outline: Sector shares committee from industry
+    Given a purchase emitter
+    And a characteristic "adjusted_cost" of "1"
+    And a characteristic "industry.naics_code" of "<naics>"
+    When the "product_line_shares" committee is calculated
+    And the "industries_sectors" committee is calculated
+    And the "sector_shares" committee is calculated
+    Then the conclusion of the committee should be a vector with values "<26>,<A>,<B>,<C>,<D>"
+    Examples:
+      |naics | 26   | A    | B    | C    | D    |
+      |72211 | 1.0  | 0    | 0    | 0    | 0    |
+      |999991| 0    | 0.75 | 0.25 | 0    | 0    |
+      |999992| 0    | 0.375| 0.375| 0.125| 0.125|
+
+  Scenario Outline: Sector shares committee from merchant category
     Given a purchase emitter 
+    And a characteristic "adjusted_cost" of "1"
     And a characteristic "merchant_category.mcc" of "<mcc>"
     When the "merchant_categories_industries" committee is calculated
     And the "industry_shares" committee is calculated
     And the "product_line_shares" committee is calculated
     And the "industries_sectors" committee is calculated
     And the "sector_shares" committee is calculated
-    Then the conclusion of the committee should be a vector with values "<1>,<2>,<3>,<4>,<5>,<6>,<7>,<8>,<9>,<10>,<11>,<12>,<13>,<14>,<15>,<16>,<17>,<18>,<19>,<20>,<21>,<22>,<23>,<24>,<25>,<26>,<44100>,<44101>,<44102>,<44103>,<44104>,<44105>"
+    Then the conclusion of the committee should be a vector with values "<26>,<A>,<B>,<C>,<D>"
     Examples:
-    |mcc |       1|       2|       3|       4|       5|       6|       7|       8|       9|      10|      11|      12|      13|      14|      15|      16|      17|      18|   19| 20|  21|  22|  23|  24|  25| 26|44100|44101|44102|44103|44104|44105|
-    |3504|       0|       0|       0|       0|       0|       0|       0|       0|       0|       0|       0|       0|       0|       0|       0|       0|       0|       0|    1|  0|   0|   0|   0|   0|   0|  0|    0|    0|    0|    0|    0|    0|
-    |5111|0.344645|0.010505|0.000495|0.109180|0.004194|0.003245|0.002556|0.099200|0.025721|0.029618|0.001599|0.000762|0.084000|0.078175|0.194704|0.004251|0.001755|0.005395|    0|  0|   0|   0|   0|   0|   0|  0|    0|    0|    0|    0|    0|    0|
-    |5172|       0|       0|       0|       0|       0|       0|       0|       0|       0|       0|       0|       0|       0|       0|       0|       0|       0|       0|    0|0.8|0.05|0.05|0.05|0.05|   0|  0|    0|    0|    0|    0|    0|    0|
-    |5732|       0|       0|       0|       0|       0|       0|       0|       0|       0|     0.5|       0|    0.25|       0|       0|       0|       0|       0|       0|    0|  0|   0|   0|   0|   0|0.20|  0|    0|    0|    0|    0|    0|    0|
-    |5812|       0|       0|       0|       0|       0|       0|       0|       0|       0|       0|       0|       0|       0|       0|       0|       0|       0|       0|    0|  0|   0|   0|   0|   0|   0|  1|    0|    0|    0|    0|    0|    0|
-
-  Scenario Outline: Sector shares committee from industry
-    Given a purchase emitter 
-    And a characteristic "industry.naics_code" of "<naics>"
-    When the "sector_shares" committee is calculated
-    Then the conclusion of the committee should be a vector with value "<share>" and position for key "<io_code>"
-    Examples:
-      | naics  | io_code | share |
-      | 32411  | 20      | 1     | 
-      | 324121 | 21      | 1     | 
-      | 324122 | 22      | 1     |
-      | 324191 | 23      | 1     |
-      | 324199 | 24      | 1     |
-      | 72111  | 19      | 1     |
-      | 72211  | 26      | 1     |
+      |mcc | 26    | A     | B     | C     | D     |
+      |5218| 1.0   | 0     | 0     | 0     | 0     |
+      |9999| 0     | 0.5625| 0.3125| 0.0625| 0.0625|
 
   Scenario: Sector direct requirements
     Given a purchase emitter 
