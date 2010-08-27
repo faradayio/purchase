@@ -81,21 +81,6 @@ Feature: Purchase Committee Calculations
       | 9999 | 999991 | 0.5   |
       | 9999 | 999992 | 0.5   |
 
-  Scenario Outline: Industry shares committee from industry
-    Given a purchase emitter 
-    And a characteristic "industry.naics_code" of "<naics>"
-    When the "industry_shares" committee is calculated
-    Then the committee should have used quorum "from industry"
-    And the conclusion of the committee should have a record identified with "naics_code" of "<naics>" and having "ratio" of "<share>"
-    Examples:
-      | naics   | share |
-      | 45321   | 1.0   |
-      | 32411   | 1.0   |
-      | 324121  | 1.0   |
-      | 324122  | 1.0   |
-      | 324191  | 1.0   |
-      | 324199  | 1.0   |
-
   Scenario Outline: Product line shares committee from merchant category
     Given a purchase emitter 
     And a characteristic "merchant_category.mcc" of "<mcc>"
