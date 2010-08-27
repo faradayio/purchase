@@ -31,7 +31,7 @@ module BrighterPlanet
           end
 
           committee :economic_flows do
-            quorum 'from sector shares, a', :needs => [:sector_shares, :adjusted_cost, :sector_direct_requirements] do |characteristics|
+            quorum 'from sector shares, a', :needs => [:sector_shares, :sector_direct_requirements] do |characteristics|
               y = characteristics[:sector_shares]
               i = Matrix.identity(y.size)
               a = characteristics[:sector_direct_requirements]
@@ -47,12 +47,13 @@ module BrighterPlanet
           end
           
           committee :sector_shares do
-            quorum 'from industries sectors and product line shares', :needs => [:industries_sectors, :product_line_shares] do |characteristics|
+            quorum 'from industries sectors and product line shares', :needs => [:industries_sectors, :product_line_shares, :adjusted_cost] do |characteristics|
               industry_sector_shares = {}
               characteristics[:industries_sectors].each do |industry_sector|
                 unless ['420000','4A0000'].include?(industry_sector.io_code)
                   industry_sector_shares[industry_sector.io_code] ||= 0
-                  industry_sector_shares[industry_sector.io_code] += industry_sector.ratio
+                  industry_sector_shares[industry_sector.io_code] += 
+                    industry_sector.ratio * characteristics[:adjusted_cost]
                 end
               end
 
@@ -62,7 +63,7 @@ module BrighterPlanet
                   io_code = product_line_sector.io_code
                   product_line_sector_shares[io_code] ||= 0
                   product_line_sector_shares[io_code] += 
-                    product_line_sector.ratio * product_line_share.ratio
+                    product_line_sector.ratio * product_line_share.ratio * characteristics[:adjusted_cost]
                 end
               end
               sector_shares = industry_sector_shares.merge product_line_sector_shares
@@ -74,12 +75,13 @@ module BrighterPlanet
             end
 
             # need this because if no industries mapped to product lines then :product_line_shares is nil
-            quorum 'from industries sectors', :needs => :industries_sectors do |characteristics|
+            quorum 'from industries sectors', :needs => [:industries_sectors, :adjusted_cost] do |characteristics|
               industry_sector_shares = {}
               characteristics[:industries_sectors].each do |industry_sector|
                 unless ['420000','4A0000'].include?(industry_sector.io_code)
                   industry_sector_shares[industry_sector.io_code] ||= 0
-                  industry_sector_shares[industry_sector.io_code] += industry_sector.ratio
+                  industry_sector_shares[industry_sector.io_code] += 
+                    industry_sector.ratio * characteristics[:adjusted_cost]
                 end
               end
 
@@ -221,16 +223,6 @@ module BrighterPlanet
           ProductLinesSectors.find_all_by_ps_code ps_code
         end
       end
-
-      class SectorShare < Struct.new(:io_code, :share, :emission_factor)
-        def initialize(sector, share)
-          self.io_code = sector.io_code
-          self.share = share
-          self.emission_factor = sector.emission_factor
-        end
-      end
-
-      class EmissionFactor < Struct.new(:io_code, :factor); end
     end
 
     KEY_MAP = (1..26).to_a.map(&:to_s) + %w{44100 44101 44102 44103 44104 44105}

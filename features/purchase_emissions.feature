@@ -51,12 +51,13 @@ Feature: Purchase Emissions Calculations
     When emissions are calculated
     Then the emission value should be within 0.1 kgs of <emission>
     Examples:
-      | mcc  | cost   | date       | emission |
-      | 5111 | 100.00 | 2010-07-28 |  48.29   |
-      | 5732 | 100.00 | 2010-07-28 |  52.88   |
-      | 5812 | 100.00 | 2010-07-28 |  66.28   |
-      | 3504 | 100.00 | 2010-07-28 |  46.31   |
-      | 5172 | 100.00 | 2010-07-28 | 147.47   |
+      | mcc  | cost   | date       | emission       |
+      | 5111 | 100.00 | 2010-07-28 |1456.78521506812|
+      | 5111 | 12.00  | 2010-07-28 |1456.78521506812|
+      | 5732 | 100.00 | 2010-07-28 |1329.54473157509|
+      | 5812 | 100.00 | 2010-07-28 |1429.40306404701|
+      | 3504 | 100.00 | 2010-07-28 |1389.14666986717|
+      | 5172 | 100.00 | 2010-07-28 | 1331.8815513524|
 
   Scenario Outline: Calculations starting from industry
     Given a purchase has "naics_code" of "<naics>"
