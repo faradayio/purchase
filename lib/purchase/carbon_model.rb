@@ -95,6 +95,14 @@ module BrighterPlanet
           end
 
           committee :industries_sectors do
+            quorum 'from industry', :needs => :industry do |characteristics|
+              industries_sectors = IndustriesSectors.
+                find_all_by_naics_code characteristics[:industry].naics_code
+              industries_sectors.map do |industry_sector|
+                IndustrySectorShare.new industry_sector.io_code, industry_sector.ratio
+              end
+            end
+            
             quorum 'from industry shares', :needs => :industry_shares do |characteristics|
               characteristics[:industry_shares].inject([]) do |list, industry_share|
                 sectors = IndustriesSectors.
@@ -106,17 +114,18 @@ module BrighterPlanet
                 list
               end
             end
-
-            quorum 'from industry', :needs => :naics_code do |characteristics|
-              industries_sectors = IndustriesSectors.
-                find_all_by_naics_code characteristics[:naics_code]
-              industries_sectors.map do |industry_sector|
-                IndustrySectorShare.new industry_sector.io_code, industry_sector.ratio
-              end
-            end
           end
 
           committee :product_line_shares do
+            quorum 'from industry', :needs => :industry do |characteristics|
+              IndustriesProductLines.
+                find_all_by_naics_code(characteristics[:industry].naics_code).
+                map do |industry_product_line|
+                  ProductLineShare.new industry_product_line.ps_code, 
+                                       industry_product_line.ratio
+                end
+            end
+
             quorum 'from industry shares', :needs => :industry_shares do |characteristics|
               industry_shares = characteristics[:industry_shares]
               industry_shares.inject([]) do |list, industry_share|
@@ -129,15 +138,6 @@ module BrighterPlanet
                 end
                 list
               end
-            end
-
-            quorum 'from industry', :needs => :naics_code do |characteristics|
-              IndustriesProductLines.
-                find_all_by_naics_code(characteristics[:naics_code]).
-                map do |industry_product_line|
-                  ProductLineShare.new industry_product_line.ps_code, 
-                                       industry_product_line.ratio
-                end
             end
           end
           
