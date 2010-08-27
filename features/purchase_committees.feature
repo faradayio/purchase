@@ -155,8 +155,8 @@ Feature: Purchase Committee Calculations
         | 5172 | 24       | 0.05  |
         | 5732 | 4A0000   | 1.0   |
         | 5812 | 26       | 1.0   |
-        | 9999 | 999991   | 0.5   |
-        | 9999 | 999992   | 0.5   |
+        | 9999 | 99999A   | 0.375 |
+        | 9999 | 99999B   | 0.125 |
 
   Scenario Outline: Sector shares committee from industry and product line shares
     Given a purchase emitter 
@@ -177,7 +177,7 @@ Feature: Purchase Committee Calculations
 
   Scenario Outline: Sector shares committee from industry
     Given a purchase emitter 
-    And a characteristic "naics_code" of "<naics>"
+    And a characteristic "industry.naics_code" of "<naics>"
     When the "sector_shares" committee is calculated
     Then the conclusion of the committee should be a vector with value "<share>" and position for key "<io_code>"
     Examples:
