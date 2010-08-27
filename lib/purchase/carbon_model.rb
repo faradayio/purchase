@@ -13,15 +13,13 @@ module BrighterPlanet
         base.decide :emission, :with => :characteristics do
           committee :emission do
             quorum 'from impacts', :needs => :impacts do |characteristics|
-              characteristics[:impacts].sum
+              characteristics[:impacts].to_a.sum
             end
           end
 
           committee :impacts do
             quorum 'from economic flows and impact vectors', :needs => [:economic_flows, :impact_vectors] do |characteristics|
-              result = characteristics[:impact_vectors] * characteristics[:economic_flows]
-              puts result.inspect
-              result
+              characteristics[:impact_vectors] * characteristics[:economic_flows]
             end
           end
 
