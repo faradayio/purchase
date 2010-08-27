@@ -130,33 +130,33 @@ Feature: Purchase Committee Calculations
     And the conclusion of the committee should have a record identified with "io_code" of "<io_code>" and having "ratio" of "<share>"
     Examples:
       | naics  | io_code | share |
-      | 45321  | 4A0000  | 1.0   |
-      | 443112 | 4A0000  | 1.0   |
+      | 45321  |         |       |
+      | 443112 |         |       |
       | 999991 | 99999A  | 0.75  |
       | 999991 | 99999B  | 0.25  |
-      | 999992 | 4A0000  | 1.00  |
+      | 999992 |         |       |
 
-    Scenario Outline: Industries sectors committee from merchant category
-      Given a purchase emitter 
-      And a characteristic "merchant_category.mcc" of "<mcc>"
-      When the "merchant_categories_industries" committee is calculated
-      And the "industry_shares" committee is calculated
-      And the "industries_sectors" committee is calculated
-      Then the committee should have used quorum "from industry shares"
-      And the conclusion of the committee should have a record identified with "io_code" of "<io_code>" and having "ratio" of "<share>"
-      Examples:
-        | mcc  | io_code  | share |
-        | 3504 | 19       | 1.0   |
-        | 5111 | 4A0000   | 1.0   |
-        | 5172 | 20       | 0.8   |
-        | 5172 | 21       | 0.05  |
-        | 5172 | 22       | 0.05  |
-        | 5172 | 23       | 0.05  |
-        | 5172 | 24       | 0.05  |
-        | 5732 | 4A0000   | 1.0   |
-        | 5812 | 26       | 1.0   |
-        | 9999 | 99999A   | 0.375 |
-        | 9999 | 99999B   | 0.125 |
+  Scenario Outline: Industries sectors committee from merchant category
+    Given a purchase emitter 
+    And a characteristic "merchant_category.mcc" of "<mcc>"
+    When the "merchant_categories_industries" committee is calculated
+    And the "industry_shares" committee is calculated
+    And the "industries_sectors" committee is calculated
+    Then the committee should have used quorum "from industry shares"
+    And the conclusion of the committee should have a record identified with "io_code" of "<io_code>" and having "ratio" of "<share>"
+    Examples:
+      | mcc  | io_code  | share |
+      | 3504 | 19       | 1.0   |
+      | 5111 |          |       |
+      | 5172 | 20       | 0.8   |
+      | 5172 | 21       | 0.05  |
+      | 5172 | 22       | 0.05  |
+      | 5172 | 23       | 0.05  |
+      | 5172 | 24       | 0.05  |
+      | 5732 |          |       |
+      | 5812 | 26       | 1.0   |
+      | 9999 | 99999A   | 0.375 |
+      | 9999 | 99999B   | 0.125 |
 
   Scenario Outline: Sector shares committee from industry and product line shares
     Given a purchase emitter 
