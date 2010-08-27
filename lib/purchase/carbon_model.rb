@@ -78,6 +78,8 @@ module BrighterPlanet
               Vector[*shares]
             end
 
+            # need this because if no industries mapped to product lines then :product_line_shares is nil
+            quorum 'from industries sectors', :needs => :industries_sectors do |characteristics|
               industry_sector_shares = {}
               characteristics[:industries_sectors].each do |industry_sector|
                 unless ['420000','4A0000'].include?(industry_sector.io_code)
@@ -113,6 +115,9 @@ module BrighterPlanet
             end
           end
 
+          # only used for purchases from the wholesale and retail trade industries
+          # product lines = the product lines sold by particular types of stores
+          # ratios = the portion of the purchase amount that goes to each product line
           committee :product_line_shares do
             quorum 'from industry', :needs => :industry do |characteristics|
               IndustriesProductLines.
@@ -138,6 +143,8 @@ module BrighterPlanet
             end
           end
           
+          # industries = the industries needed to produce the purchased item
+          # ratios = the portion of the purchase amount that goes to each industry
           committee :industry_shares do
             quorum 'from merchant categories industries', :needs => :merchant_categories_industries do |characteristics|
               characteristics[:merchant_categories_industries].map do |mci|
@@ -146,6 +153,7 @@ module BrighterPlanet
             end
           end
 
+          # a dictionary to go from merchant categories to industries
           committee :merchant_categories_industries do
             quorum 'from merchant category', :needs => :merchant_category do |characteristics|
               characteristics[:merchant_category].merchant_categories_industries
