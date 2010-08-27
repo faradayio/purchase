@@ -50,7 +50,7 @@ module BrighterPlanet
           end
           
           committee :sector_shares do
-            quorum 'from industry shares and product line shares', :needs => [:industries_sectors, :product_line_shares] do |characteristics|
+            quorum 'from industries sectors and product line shares', :needs => [:industries_sectors, :product_line_shares] do |characteristics|
               industry_sector_shares = {}
               characteristics[:industries_sectors].each do |industry_sector|
                 unless ['420000','4A0000'].include?(industry_sector.io_code)
@@ -78,11 +78,8 @@ module BrighterPlanet
               Vector[*shares]
             end
 
-            quorum 'from industry', :needs => :naics_code do |characteristics|
-              industries_sectors = IndustriesSectors.
-                find_all_by_naics_code characteristics[:naics_code]
               industry_sector_shares = {}
-              industries_sectors.each do |industry_sector|
+              characteristics[:industries_sectors].each do |industry_sector|
                 unless ['420000','4A0000'].include?(industry_sector.io_code)
                   sector = Sector.find_by_io_code industry_sector.io_code
                   industry_sector_shares[sector.io_code] ||= 0
@@ -142,7 +139,7 @@ module BrighterPlanet
           end
           
           committee :industry_shares do
-            quorum 'from merchant_categories_industries', :needs => :merchant_categories_industries do |characteristics|
+            quorum 'from merchant categories industries', :needs => :merchant_categories_industries do |characteristics|
               characteristics[:merchant_categories_industries].map do |mci|
                 IndustryShare.new mci.naics_code, mci.ratio
               end
