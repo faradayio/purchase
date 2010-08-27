@@ -50,8 +50,11 @@ module BrighterPlanet
             quorum 'from industries sectors and product line shares', :needs => [:industries_sectors, :product_line_shares, :adjusted_cost] do |characteristics|
               industry_sector_shares = {}
               characteristics[:industries_sectors].each do |industry_sector|
-                industry_sector_shares[industry_sector.io_code] ||= 0
-                industry_sector_shares[industry_sector.io_code] += industry_sector.ratio * characteristics[:adjusted_cost]
+                unless ['420000','4A0000'].include?(industry_sector.io_code)
+                  industry_sector_shares[industry_sector.io_code] ||= 0
+                  industry_sector_shares[industry_sector.io_code] += 
+                    industry_sector.ratio * characteristics[:adjusted_cost]
+                end
               end
 
               product_line_sector_shares = {}
@@ -59,7 +62,8 @@ module BrighterPlanet
                 product_line_share.product_lines_sectors.each do |product_line_sector|
                   io_code = product_line_sector.io_code
                   product_line_sector_shares[io_code] ||= 0
-                  product_line_sector_shares[io_code] += product_line_sector.ratio * product_line_share.ratio * characteristics[:adjusted_cost]
+                  product_line_sector_shares[io_code] += 
+                    product_line_sector.ratio * product_line_share.ratio * characteristics[:adjusted_cost]
                 end
               end
               sector_shares = industry_sector_shares.merge product_line_sector_shares
@@ -74,8 +78,11 @@ module BrighterPlanet
             quorum 'from industries sectors', :needs => [:industries_sectors, :adjusted_cost] do |characteristics|
               industry_sector_shares = {}
               characteristics[:industries_sectors].each do |industry_sector|
-                industry_sector_shares[industry_sector.io_code] ||= 0
-                industry_sector_shares[industry_sector.io_code] += industry_sector.ratio * characteristics[:adjusted_cost]
+                unless ['420000','4A0000'].include?(industry_sector.io_code)
+                  industry_sector_shares[industry_sector.io_code] ||= 0
+                  industry_sector_shares[industry_sector.io_code] += 
+                    industry_sector.ratio * characteristics[:adjusted_cost]
+                end
               end
 
               shares = BrighterPlanet::Purchase::KEY_MAP.map do |key|
@@ -90,9 +97,7 @@ module BrighterPlanet
               industries_sectors = IndustriesSectors.
                 find_all_by_naics_code characteristics[:industry].naics_code
               industries_sectors.map do |industry_sector|
-                unless ['420000','4A0000'].include?(industry_sector.io_code)
-                  IndustrySectorShare.new industry_sector.io_code, industry_sector.ratio
-                end
+                IndustrySectorShare.new industry_sector.io_code, industry_sector.ratio
               end
             end
             
@@ -101,10 +106,8 @@ module BrighterPlanet
                 sectors = IndustriesSectors.
                   find_all_by_naics_code industry_share.naics_code
                 sectors.each do |sector|
-                  unless ['420000','4A0000'].include?(sector.io_code)
-                    ratio = industry_share.ratio * sector.ratio
-                    list << IndustrySectorShare.new(sector.io_code, ratio)
-                  end
+                  ratio = industry_share.ratio * sector.ratio
+                  list << IndustrySectorShare.new(sector.io_code, ratio)
                 end
                 list
               end
