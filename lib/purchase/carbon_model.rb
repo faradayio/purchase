@@ -74,30 +74,27 @@ module BrighterPlanet
               Vector[*shares]
             end
 
-            # [Ian] I thought we needed this because if no industries mapped to product lines then :product_line_shares is nil
-            # BUT if you run tests and calculate the product_line_shares committee then this quorom doesn't get used,
-            #   even if you use a merchant category or industry that doesn't translate to product lines
-            # quorum 'from industries sectors', :needs => [:industries_sectors, :adjusted_cost] do |characteristics|
-            #   industry_sector_shares = {}
-            #   characteristics[:industries_sectors].each do |industry_sector|
-            #     unless ['420000','4A0000'].include?(industry_sector.io_code)
-            #       industry_sector_shares[industry_sector.io_code] ||= 0
-            #       industry_sector_shares[industry_sector.io_code] += 
-            #         industry_sector.ratio * characteristics[:adjusted_cost]
-            #     end
-            #   end
-            # 
-            #   shares = BrighterPlanet::Purchase::KEY_MAP.map do |key|
-            #     industry_sector_shares[key] || 0
-            #   end
-            #   Vector[*shares]
-            # end
+            quorum 'from industries sectors', :needs => [:industries_sectors, :adjusted_cost] do |characteristics|
+              industry_sector_shares = {}
+              characteristics[:industries_sectors].each do |industry_sector|
+                unless ['420000','4A0000'].include?(industry_sector.io_code)
+                  industry_sector_shares[industry_sector.io_code] ||= 0
+                  industry_sector_shares[industry_sector.io_code] += 
+                    industry_sector.ratio * characteristics[:adjusted_cost]
+                end
+              end
+            
+              shares = BrighterPlanet::Purchase::KEY_MAP.map do |key|
+                industry_sector_shares[key] || 0
+              end
+              Vector[*shares]
+            end
           end
 
           committee :industries_sectors do
-            quorum 'from industry', :needs => :industry do |characteristics|
+            quorum 'from industry', :needs => :naics_code do |characteristics|
               industries_sectors = IndustriesSectors.
-                find_all_by_naics_code characteristics[:industry].naics_code
+                find_all_by_naics_code characteristics[:naics_code]
               industries_sectors.map do |industry_sector|
                 IndustrySectorShare.new industry_sector.io_code, industry_sector.ratio
               end
@@ -120,9 +117,9 @@ module BrighterPlanet
           # product lines = the product lines sold by particular types of stores
           # ratios = the portion of the purchase amount that goes to each product line
           committee :product_line_shares do
-            quorum 'from industry', :needs => :industry do |characteristics|
+            quorum 'from industry', :needs => :naics_code do |characteristics|
               IndustriesProductLines.
-                find_all_by_naics_code(characteristics[:industry].naics_code).
+                find_all_by_naics_code(characteristics[:naics_code]).
                 map do |industry_product_line|
                   ProductLineShare.new industry_product_line.ps_code, 
                                        industry_product_line.ratio
@@ -158,6 +155,9 @@ module BrighterPlanet
           committee :merchant_categories_industries do
             quorum 'from merchant category', :needs => :merchant_category do |characteristics|
               characteristics[:merchant_category].merchant_categories_industries
+            end
+            quorum 'from industry', :needs => :naics_code do |characteristics|
+              MerchantCategoriesIndustries.find_all_by_naics_code characteristics[:naics_code]
             end
           end
 
