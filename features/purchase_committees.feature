@@ -108,7 +108,10 @@ Feature: Purchase Committee Calculations
   Scenario Outline: Industries sectors committee from merchant category
     Given a purchase emitter 
     And a characteristic "merchant_category.mcc" of "<mcc>"
-    When the "merchant_categories_industries" committee is calculated
+    And a characteristic "cost" of "100"
+    And a characteristic "date" of "2010-08-01"
+    When the "adjusted_cost" committee is calculated
+    And the "merchant_categories_industries" committee is calculated
     And the "industry_shares" committee is calculated
     And the "industries_sectors" committee is calculated
     Then the committee should have used quorum "from industry shares"
@@ -121,7 +124,7 @@ Feature: Purchase Committee Calculations
 
   Scenario Outline: Sector shares committee from industry
     Given a purchase emitter
-    And a characteristic "adjusted_cost" of "1"
+    And a characteristic "cost" of "100"
     And a characteristic "industry.naics_code" of "<naics>"
     When the "product_line_shares" committee is calculated
     And the "industries_sectors" committee is calculated
