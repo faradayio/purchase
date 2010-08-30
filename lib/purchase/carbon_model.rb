@@ -192,8 +192,8 @@ module BrighterPlanet
             end
             
             quorum 'from purchase amount', :needs => :purchase_amount do |characteristics|
-              # FIXME TODO take out tax
-              characteristics[:purchase_amount].to_f * 0.9
+              # tax based on http://www.thestc.com/STrates.stm weighted by 2009 state population (exclude samoa, guam, pr)
+              characteristics[:purchase_amount].to_f / 1.0725
             end
             
             quorum 'default' do
