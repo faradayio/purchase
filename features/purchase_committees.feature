@@ -2,7 +2,7 @@ Feature: Purchase Committee Calculations
   The purchase model should generate correct committee calculations
 
   Scenario Outline: Cost committee from purchase amount
-    Given a purchase emitter 
+    Given a purchase emitter
     And a characteristic "purchase_amount" of "<amount>"
     When the "cost" committee is calculated
     Then the committee should have used quorum "from purchase amount"
@@ -24,7 +24,7 @@ Feature: Purchase Committee Calculations
       | 10.00  | 1.00 | 9.00 |
 
   Scenario Outline: Adjusted cost committee
-    Given a purchase emitter 
+    Given a purchase emitter
     And a characteristic "cost" of "<cost>"
     And characteristic "date" of "<date>"
     When the "adjusted_cost" committee is calculated
@@ -35,7 +35,7 @@ Feature: Purchase Committee Calculations
       |  11.00 | 2005-07-14 |       9.11350 |
 
   Scenario Outline: Merchant category committee
-    Given a purchase emitter 
+    Given a purchase emitter
     And a characteristic "merchant.id" of "<id>"
     When the "merchant_category" committee is calculated
     Then the conclusion of the committee should have "mcc" of "<mcc>"
@@ -45,7 +45,7 @@ Feature: Purchase Committee Calculations
       | 9  | 9999 |
 
   Scenario Outline: Merchant categories industries committee
-    Given a purchase emitter 
+    Given a purchase emitter
     And a characteristic "merchant_category.mcc" of "<mcc>"
     When the "merchant_categories_industries" committee is calculated
     Then the conclusion of the committee should have a record identified with "naics_code" of "<naics>" and having "ratio" of "<ratio>"
@@ -56,7 +56,7 @@ Feature: Purchase Committee Calculations
       | 9999 | 999992 | 0.5   |
 
   Scenario Outline: Industry shares committee
-    Given a purchase emitter 
+    Given a purchase emitter
     And a characteristic "merchant_category.mcc" of "<mcc>"
     When the "merchant_categories_industries" committee is calculated
     And the "industry_shares" committee is calculated
@@ -68,7 +68,7 @@ Feature: Purchase Committee Calculations
       | 9999 | 999992 | 0.5   |
 
   Scenario Outline: Product line shares committee from industry
-    Given a purchase emitter 
+    Given a purchase emitter
     And a characteristic "naics_code" of "<naics>"
     When the "product_line_shares" committee is calculated
     Then the committee should have used quorum "from industry"
@@ -80,7 +80,7 @@ Feature: Purchase Committee Calculations
       | 999992 | 99993   | 0.25  |
 
   Scenario Outline: Product line shares committee from merchant category
-    Given a purchase emitter 
+    Given a purchase emitter
     And a characteristic "merchant_category.mcc" of "<mcc>"
     When the "merchant_categories_industries" committee is calculated
     And the "industry_shares" committee is calculated
@@ -93,13 +93,15 @@ Feature: Purchase Committee Calculations
       | 9999 | 99993   | 0.125 |
 
   Scenario Outline: Industries sectors committee from industry
-    Given a purchase emitter 
+    Given a purchase emitter
     And a characteristic "naics_code" of "<naics>"
     When the "industries_sectors" committee is calculated
     Then the committee should have used quorum "from industry"
     And the conclusion of the committee should have a record identified with "io_code" of "<io_code>" and having "ratio" of "<share>"
     Examples:
       | naics  | io_code | share |
+      | 45321  | 4A0000  | 1.0   |
+      | 443112 | 4A0000  | 1.0   |
       | 72211  | 26      | 1.0   |
       | 999991 | A       | 0.75  |
       | 999991 | B       | 0.25  |
@@ -122,23 +124,8 @@ Feature: Purchase Committee Calculations
       | 9999 | A        | 0.375 |
       | 9999 | B        | 0.125 |
 
-  Scenario Outline: Sector shares committee from industry
+  Scenario Outline: Sector shares committee from industry and product line shares
     Given a purchase emitter
-    And a characteristic "cost" of "100"
-    And a characteristic "industry.naics_code" of "<naics>"
-    When the "product_line_shares" committee is calculated
-    And the "industries_sectors" committee is calculated
-    And the "sector_shares" committee is calculated
-    Then the conclusion of the committee should be a vector with values "<26>,<A>,<B>,<C>,<D>"
-    Examples:
-      |naics | 26   | A    | B    | C    | D    |
-      |72211 | 1.0  | 0    | 0    | 0    | 0    |
-      |999991| 0    | 0.75 | 0.25 | 0    | 0    |
-      |999992| 0    | 0.375| 0.375| 0.125| 0.125|
-
-  Scenario Outline: Sector shares committee from merchant category
-    Given a purchase emitter 
-    And a characteristic "adjusted_cost" of "1"
     And a characteristic "merchant_category.mcc" of "<mcc>"
     When the "merchant_categories_industries" committee is calculated
     And the "industry_shares" committee is calculated
@@ -152,12 +139,12 @@ Feature: Purchase Committee Calculations
       |9999| 0     | 0.5625| 0.3125| 0.0625| 0.0625|
 
   Scenario: Sector direct requirements
-    Given a purchase emitter 
+    Given a purchase emitter
     When the "sector_direct_requirements" committee is calculated
     Then the conclusion of the committee should be a square matrix with "32" rows and columns
 
   Scenario Outline: Economic flows from merchant category
-    Given a purchase emitter 
+    Given a purchase emitter
     And a characteristic "merchant_category.mcc" of "<mcc>"
     And a characteristic "date" of "2010-08-01"
     And a characteristic "cost" of "100"
@@ -179,7 +166,7 @@ Feature: Purchase Committee Calculations
       |5812|171.55784|169.87590|218.54218|216.44081|263.51360|261.02763|309.15838|360.69762|357.38846|414.47227|471.13666|429.92363|416.23221|419.67110|442.44048|419.01368|379.60402|362.16497|413.97706|402.64335|419.92739|407.41210|332.40488|496.30587|413.33528|951.16340|982.78937|943.83794|734.26687|733.53553|64092.82756|66054.79463|
 
   Scenario Outline: Impacts committee from economic flows
-    Given a purchase emitter 
+    Given a purchase emitter
     And a characteristic "merchant_category.mcc" of "<mcc>"
     And a characteristic "date" of "2010-08-01"
     And a characteristic "cost" of "100"
