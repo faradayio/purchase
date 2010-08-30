@@ -69,7 +69,7 @@ Feature: Purchase Committee Calculations
 
   Scenario Outline: Product line shares committee from industry
     Given a purchase emitter 
-    And a characteristic "industry.naics_code" of "<naics>"
+    And a characteristic "naics_code" of "<naics>"
     When the "product_line_shares" committee is calculated
     Then the committee should have used quorum "from industry"
     And the conclusion of the committee should have a record identified with "ps_code" of "<ps_code>" and having "ratio" of "<share>"
@@ -94,7 +94,7 @@ Feature: Purchase Committee Calculations
 
   Scenario Outline: Industries sectors committee from industry
     Given a purchase emitter 
-    And a characteristic "industry.naics_code" of "<naics>"
+    And a characteristic "naics_code" of "<naics>"
     When the "industries_sectors" committee is calculated
     Then the committee should have used quorum "from industry"
     And the conclusion of the committee should have a record identified with "io_code" of "<io_code>" and having "ratio" of "<share>"
