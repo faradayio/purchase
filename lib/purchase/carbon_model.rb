@@ -192,8 +192,8 @@ module BrighterPlanet
             end
             
             quorum 'from purchase amount', :needs => :purchase_amount do |characteristics|
-              # tax based on http://www.thestc.com/STrates.stm weighted by 2009 state population (exclude samoa, guam, pr)
-              characteristics[:purchase_amount].to_f / 1.0725
+              # tax based on http://www.thestc.com/STrates.stm weighted by US Census 2010 projected state population (exclude samoa, guam, pr)
+              characteristics[:purchase_amount].to_f / 1.0711
             end
             
             quorum 'default' do
