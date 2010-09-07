@@ -167,6 +167,7 @@ module BrighterPlanet
             end
             
             quorum 'default' do
+              # FIXME TODO figure out a better merchant category or fallback sectors to use
               MerchantCategory.find_by_mcc 5111
             end
           end
@@ -196,7 +197,8 @@ module BrighterPlanet
               characteristics[:purchase_amount].to_f / 1.0711
             end
             
-            quorum 'default' do
+            quorum 'from default' do
+              # FIXME TODO research real average purchase amount
               100
             end
           end
@@ -207,7 +209,6 @@ module BrighterPlanet
             end
           end
         end
-        # FIXME TODO make other committees to report emissions by gas, by io sector, etc.
       end
 
       class IndustryShare < Struct.new(:naics_code, :ratio); end

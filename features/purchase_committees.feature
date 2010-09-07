@@ -1,16 +1,12 @@
 Feature: Purchase Committee Calculations
   The purchase model should generate correct committee calculations
 
-  Scenario Outline: Cost committee from purchase amount
+  Scenario: Cost committee from purchase amount
     Given a purchase emitter
-    And a characteristic "purchase_amount" of "<amount>"
+    And a characteristic "purchase_amount" of "107.11"
     When the "cost" committee is calculated
     Then the committee should have used quorum "from purchase amount"
-    And the conclusion of the committee should be "<cost>"
-    Examples:
-      | amount | cost    |
-      | 831.23 | 748.107 |
-      |  11.00 |   9.9   |
+    And the conclusion of the committee should be "100"
 
   Scenario Outline: Cost committee from purchase amount and tax
     Given a purchase emitter
@@ -22,6 +18,11 @@ Feature: Purchase Committee Calculations
     Examples:
       | amount | tax  | cost |
       | 10.00  | 1.00 | 9.00 |
+
+  Scenario: Cost committee from default
+    Given a purchase emitter
+    When the "cost" committee is calculated
+    Then the conclusion of the committee should be "100"
 
   Scenario Outline: Adjusted cost committee
     Given a purchase emitter
@@ -43,6 +44,11 @@ Feature: Purchase Committee Calculations
       | id | mcc  |
       | 3  | 5812 |
       | 9  | 9999 |
+
+  Scenario: Merchant category committee from default
+    Given a purchase emitter
+    When the "merchant_category" committee is calculated
+    Then the conclusion of the committee should have "mcc" of "5111"
 
   Scenario Outline: Merchant categories industries committee
     Given a purchase emitter
