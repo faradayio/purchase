@@ -1,7 +1,11 @@
 PATH
+  remote: /Users/dkastner/earth
+  specs:
+
+PATH
   remote: .
   specs:
-    purchase (0.1.5)
+    purchase (0.1.6)
       emitter (>= 0.0.1)
 
 GEM
@@ -176,6 +180,7 @@ DEPENDENCIES
   activerecord (= 3.0.0.beta4)
   bundler (>= 1.0.0.beta.2)
   cucumber (= 0.8.3)
+  earth!
   emitter (>= 0.0.1)
   jeweler (= 1.4.0)
   purchase!
