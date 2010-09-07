@@ -1,6 +1,10 @@
 module BrighterPlanet
   module Purchase
     class TestSectorDirectRequirementsAdapter
+      def self.matrix
+        Matrix[*data]
+      end
+
       def self.data
         # read as: industry in column X NEEDS input from industry in rows y1,y2,... (percentages of total funds spend)
         matrix_text = <<-MATRIX

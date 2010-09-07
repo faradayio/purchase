@@ -26,7 +26,7 @@ module BrighterPlanet
           committee :impact_vectors do
             quorum 'from database' do
               adapter = BrighterPlanet::Purchase.impact_vectors_adapter
-              Matrix[*adapter.data]
+              adapter.matrix
             end
           end
 
@@ -42,7 +42,7 @@ module BrighterPlanet
           committee :sector_direct_requirements do
             quorum 'from database' do
               adapter = BrighterPlanet::Purchase.sector_direct_requirements_adapter
-              Matrix[*adapter.data]
+              adapter.matrix
             end
           end
           
@@ -68,7 +68,7 @@ module BrighterPlanet
               end
               sector_shares = industry_sector_shares.merge product_line_sector_shares
 
-              shares = BrighterPlanet::Purchase::KEY_MAP.map do |key|
+              shares = BrighterPlanet::Purchase.key_map.map do |key|
                 sector_shares[key] || 0
               end
               Vector[*shares]
@@ -227,7 +227,5 @@ module BrighterPlanet
         end
       end
     end
-
-    KEY_MAP = (1..26).to_a.map(&:to_s) + %w{44100 44101 44102 44103 44104 44105}
   end
 end
