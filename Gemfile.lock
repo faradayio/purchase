@@ -1,6 +1,13 @@
 PATH
   remote: /Users/dkastner/earth
   specs:
+    earth (0.0.32)
+      activerecord (>= 3.0.0.beta4)
+      cohort_scope (>= 0.0.6)
+      conversions (>= 1.4.5)
+      data_miner (>= 0.5.2)
+      falls_back_on (>= 0.0.2)
+      geokit (>= 1.5.0)
 
 PATH
   remote: .
