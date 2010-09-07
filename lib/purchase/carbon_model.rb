@@ -122,6 +122,10 @@ module BrighterPlanet
             quorum 'from merchant', :needs => [:merchant] do |characteristics|
               characteristics[:merchant].merchant_category
             end
+            
+            quorum 'default' do
+              MerchantCategory.find_by_mcc 5111
+            end
           end
           
           committee :adjusted_cost do
@@ -147,6 +151,10 @@ module BrighterPlanet
             quorum 'from purchase amount', :needs => :purchase_amount do |characteristics|
               # FIXME TODO take out tax
               characteristics[:purchase_amount].to_f * 0.9
+            end
+            
+            quorum 'default' do
+              100
             end
           end
 
