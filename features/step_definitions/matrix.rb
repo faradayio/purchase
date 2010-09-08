@@ -1,6 +1,6 @@
 Then /^the conclusion of the committee should be a vector with value "(.*)" and position for key "(.*)"$/ do |value, key|
   vector = @report.conclusion
-  position = BrighterPlanet::Purchase::KEY_MAP.index key
+  position = BrighterPlanet::Purchase.key_map.index key
   compare_values vector[position], value
 end
 
@@ -15,7 +15,7 @@ Then /^the conclusion of the committee should be a vector with values "(.*)"$/ d
   vector = @report.conclusion
   vector = vector.row(0) if vector.is_a? Matrix  #some vectors are single-row matrices
 
-  BrighterPlanet::Purchase::KEY_MAP.each_with_index do |key, index|
+  BrighterPlanet::Purchase.key_map.each_with_index do |key, index|
     vector[index].should be_close(column_values[index].to_f, 0.00001)
   end
 end

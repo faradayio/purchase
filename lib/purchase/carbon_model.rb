@@ -84,7 +84,7 @@ module BrighterPlanet
                 end
               end
             
-              shares = BrighterPlanet::Purchase::KEY_MAP.map do |key|
+              shares = BrighterPlanet::Purchase.key_map.map do |key|
                 industry_sector_shares[key] || 0
               end
               Vector[*shares]

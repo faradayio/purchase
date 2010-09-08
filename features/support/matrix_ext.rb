@@ -6,7 +6,7 @@ end
 
 class Matrix
   def inspect
-    keys = BrighterPlanet::Purchase::KEY_MAP
+    keys = BrighterPlanet::Purchase.key_map
     paddings = {}
     keys.each_with_index do |key, i|
       paddings[key] = MatrixVectorHelper.column_width(column(i).to_a + [key])
@@ -23,7 +23,7 @@ class Matrix
 end
 class Vector
   def inspect
-    keys = BrighterPlanet::Purchase::KEY_MAP
+    keys = BrighterPlanet::Purchase.key_map
     paddings = {}
     keys.each_with_index do |key, i|
       paddings[key] = MatrixVectorHelper.column_width([to_a[i],key])

@@ -28,10 +28,7 @@ module BrighterPlanet
       end
 
       def key_map
-        @key_map ||= (1..26).to_a.map(&:to_s) + %w{44100 44101 44102 44103 44104 44105}
-      end
-      def key_map=(val)
-        @key_map = val
+        impact_vectors_adapter.key_map
       end
     end
   end
