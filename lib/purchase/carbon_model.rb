@@ -33,9 +33,8 @@ module BrighterPlanet
           committee :economic_flows do
             quorum 'from sector shares, a', :needs => [:sector_shares, :sector_direct_requirements] do |characteristics|
               y = characteristics[:sector_shares]
-              i = Matrix.identity(y.size)
-              a = characteristics[:sector_direct_requirements]
-              (i - a).inverse * y
+              leonteif_inverse = characteristics[:sector_direct_requirements]
+              leonteif_inverse * y
             end
           end
 
