@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    purchase (0.1.8)
+    purchase (1.0.0)
       emitter (~> 0.0.6)
 
 GEM
@@ -53,7 +53,7 @@ GEM
       remote_table (>= 0.2.27)
       taps (= 0.3.11)
     diff-lcs (1.1.2)
-    earth (0.0.34)
+    earth (0.0.37)
       activerecord (>= 3.0.0.beta4)
       cohort_scope (>= 0.0.6)
       conversions (>= 1.4.5)
