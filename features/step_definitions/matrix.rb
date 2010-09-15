@@ -1,3 +1,8 @@
+Then /^the conclusion of the committee should be a vector with "(.*)" items$/ do |count|
+  vector = @report.conclusion
+  vector.size.should == count.to_i
+end
+
 Then /^the conclusion of the committee should be a vector with value "(.*)" and position for key "(.*)"$/ do |value, key|
   vector = @report.conclusion
   position = BrighterPlanet::Purchase.key_map.index key
