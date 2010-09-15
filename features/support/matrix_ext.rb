@@ -36,3 +36,31 @@ class Vector
     str
   end
 end
+
+RSpec::Matchers.define :have_column_values do |_expected_|
+  match do |actual|
+    ok = true
+    BrighterPlanet::Purchase.key_map.each_with_index do |key, index|
+      ok = ok && (actual[index] - _expected_[index].to_f).abs < 0.00001
+    end
+    ok
+  end
+
+  failure_message_for_should do |actual|
+    message = nil
+    BrighterPlanet::Purchase.key_map.each_with_index do |key, index|
+      unless (actual[index] - _expected_[index].to_f).abs < 0.00001
+        message = "expected vector at position #{key} to be #{_expected_[index]} +/- (< 0.00001), got #{actual[index]}:"
+      end
+    end
+    message
+  end
+
+  failure_message_for_should_not do |actual|
+    "expected #{_expected_} +/- (< #{_delta_}), got #{actual}"
+  end
+
+  description do
+    "be close to #{_expected_} (within +- #{_delta_})"
+  end
+end
