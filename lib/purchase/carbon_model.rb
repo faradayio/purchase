@@ -46,9 +46,9 @@ module BrighterPlanet
           end
           
           committee :sector_shares do
-            quorum 'from industries sectors and product line shares', :needs => [:industries_sectors, :product_line_shares, :adjusted_cost] do |characteristics|
+            quorum 'from industry sectors and product line shares', :needs => [:industry_sectors, :product_line_shares, :adjusted_cost] do |characteristics|
               industry_sector_shares = {}
-              characteristics[:industries_sectors].each do |industry_sector|
+              characteristics[:industry_sectors].each do |industry_sector|
                 unless ['420000','4A0000'].include?(industry_sector.io_code)
                   industry_sector_shares[industry_sector.io_code] ||= 0
                   industry_sector_shares[industry_sector.io_code] += 
@@ -58,7 +58,7 @@ module BrighterPlanet
 
               product_line_sector_shares = {}
               characteristics[:product_line_shares].each do |product_line_share|
-                product_line_share.product_lines_sectors.each do |product_line_sector|
+                product_line_share.product_line_sectors.each do |product_line_sector|
                   io_code = product_line_sector.io_code
                   product_line_sector_shares[io_code] ||= 0
                   product_line_sector_shares[io_code] += 
@@ -73,9 +73,9 @@ module BrighterPlanet
               Vector[*shares]
             end
 
-            quorum 'from industries sectors', :needs => [:industries_sectors, :adjusted_cost] do |characteristics|
+            quorum 'from industry sectors', :needs => [:industry_sectors, :adjusted_cost] do |characteristics|
               industry_sector_shares = {}
-              characteristics[:industries_sectors].each do |industry_sector|
+              characteristics[:industry_sectors].each do |industry_sector|
                 unless ['420000','4A0000'].include?(industry_sector.io_code)
                   industry_sector_shares[industry_sector.io_code] ||= 0
                   industry_sector_shares[industry_sector.io_code] += 
@@ -90,18 +90,18 @@ module BrighterPlanet
             end
           end
 
-          committee :industries_sectors do
+          committee :industry_sectors do
             quorum 'from industry', :needs => :naics_code do |characteristics|
-              industries_sectors = IndustriesSectors.
+              industry_sectors = IndustrySector.
                 find_all_by_naics_code characteristics[:naics_code]
-              industries_sectors.map do |industry_sector|
+              industry_sectors.map do |industry_sector|
                 IndustrySectorShare.new industry_sector.io_code, industry_sector.ratio
               end
             end
             
             quorum 'from industry shares', :needs => :industry_shares do |characteristics|
               characteristics[:industry_shares].inject([]) do |list, industry_share|
-                sectors = IndustriesSectors.
+                sectors = IndustrySector.
                   find_all_by_naics_code industry_share.naics_code
                 sectors.each do |sector|
                   ratio = industry_share.ratio * sector.ratio
@@ -117,7 +117,7 @@ module BrighterPlanet
           # ratios = the portion of the purchase amount that goes to each product line
           committee :product_line_shares do
             quorum 'from industry', :needs => :naics_code do |characteristics|
-              IndustriesProductLines.
+              IndustryProductLine.
                 find_all_by_naics_code(characteristics[:naics_code]).
                 map do |industry_product_line|
                   ProductLineShare.new industry_product_line.ps_code, 
@@ -128,9 +128,9 @@ module BrighterPlanet
             quorum 'from industry shares', :needs => :industry_shares do |characteristics|
               industry_shares = characteristics[:industry_shares]
               industry_shares.inject([]) do |list, industry_share|
-                industries_product_lines = IndustriesProductLines.
+                industry_product_lines = IndustryProductLine.
                   find_all_by_naics_code industry_share.naics_code
-                industries_product_lines.each do |industry_product_line|
+                industry_product_lines.each do |industry_product_line|
                   ratio = industry_product_line.ratio * industry_share.ratio
                   list << ProductLineShare.new(industry_product_line.ps_code, 
                                                ratio)
@@ -143,20 +143,21 @@ module BrighterPlanet
           # industries = the industries needed to produce the purchased item
           # ratios = the portion of the purchase amount that goes to each industry
           committee :industry_shares do
-            quorum 'from merchant categories industries', :needs => :merchant_categories_industries do |characteristics|
-              characteristics[:merchant_categories_industries].map do |mci|
+            quorum 'from merchant category industries', :needs => :merchant_category_industries do |characteristics|
+              characteristics[:merchant_category_industries].map do |mci|
                 IndustryShare.new mci.naics_code, mci.ratio
               end
             end
           end
 
           # a dictionary to go from merchant categories to industries
-          committee :merchant_categories_industries do
+          committee :merchant_category_industries do
             quorum 'from merchant category', :needs => :merchant_category do |characteristics|
-              characteristics[:merchant_category].merchant_categories_industries
+              puts 'here'
+              characteristics[:merchant_category].merchant_category_industries
             end
             quorum 'from industry', :needs => :naics_code do |characteristics|
-              MerchantCategoriesIndustries.find_all_by_naics_code characteristics[:naics_code]
+              MerchantCategoryIndustry.find_all_by_naics_code characteristics[:naics_code]
             end
           end
 
@@ -221,8 +222,8 @@ module BrighterPlanet
           self.ratio = ratio
         end
 
-        def product_lines_sectors
-          ProductLinesSectors.find_all_by_ps_code ps_code
+        def product_line_sectors
+          ProductLineSector.find_all_by_ps_code ps_code
         end
       end
     end

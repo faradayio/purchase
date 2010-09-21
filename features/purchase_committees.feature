@@ -50,10 +50,10 @@ Feature: Purchase Committee Calculations
     When the "merchant_category" committee is calculated
     Then the conclusion of the committee should have "mcc" of "5111"
 
-  Scenario Outline: Merchant categories industries committee
+  Scenario Outline: Merchant category industries committee from merchant category
     Given a purchase emitter
     And a characteristic "merchant_category.mcc" of "<mcc>"
-    When the "merchant_categories_industries" committee is calculated
+    When the "merchant_category_industries" committee is calculated
     Then the conclusion of the committee should have a record identified with "naics_code" of "<naics>" and having "ratio" of "<ratio>"
     Examples:
       | mcc  | naics  | ratio |
@@ -64,7 +64,7 @@ Feature: Purchase Committee Calculations
   Scenario Outline: Industry shares committee
     Given a purchase emitter
     And a characteristic "merchant_category.mcc" of "<mcc>"
-    When the "merchant_categories_industries" committee is calculated
+    When the "merchant_category_industries" committee is calculated
     And the "industry_shares" committee is calculated
     Then the conclusion of the committee should have a record identified with "naics_code" of "<naics>" and having "ratio" of "<share>"
     Examples:
@@ -88,7 +88,7 @@ Feature: Purchase Committee Calculations
   Scenario Outline: Product line shares committee from merchant category
     Given a purchase emitter
     And a characteristic "merchant_category.mcc" of "<mcc>"
-    When the "merchant_categories_industries" committee is calculated
+    When the "merchant_category_industries" committee is calculated
     And the "industry_shares" committee is calculated
     And the "product_line_shares" committee is calculated
     Then the conclusion of the committee should have a record identified with "ps_code" of "<ps_code>" and having "ratio" of "<share>"
@@ -101,7 +101,7 @@ Feature: Purchase Committee Calculations
   Scenario Outline: Industries sectors committee from industry
     Given a purchase emitter
     And a characteristic "naics_code" of "<naics>"
-    When the "industries_sectors" committee is calculated
+    When the "industry_sectors" committee is calculated
     Then the committee should have used quorum "from industry"
     And the conclusion of the committee should have a record identified with "io_code" of "<io_code>" and having "ratio" of "<share>"
     Examples:
@@ -119,9 +119,9 @@ Feature: Purchase Committee Calculations
     And a characteristic "cost" of "100"
     And a characteristic "date" of "2010-08-01"
     When the "adjusted_cost" committee is calculated
-    And the "merchant_categories_industries" committee is calculated
+    And the "merchant_category_industries" committee is calculated
     And the "industry_shares" committee is calculated
-    And the "industries_sectors" committee is calculated
+    And the "industry_sectors" committee is calculated
     Then the committee should have used quorum "from industry shares"
     And the conclusion of the committee should have a record identified with "io_code" of "<io_code>" and having "ratio" of "<share>"
     Examples:
@@ -134,10 +134,10 @@ Feature: Purchase Committee Calculations
     Given a purchase emitter
     And a characteristic "merchant_category.mcc" of "<mcc>"
     And a characteristic "adjusted_cost" of "1"
-    When the "merchant_categories_industries" committee is calculated
+    When the "merchant_category_industries" committee is calculated
     And the "industry_shares" committee is calculated
     And the "product_line_shares" committee is calculated
-    And the "industries_sectors" committee is calculated
+    And the "industry_sectors" committee is calculated
     And the "sector_shares" committee is calculated
     Then the conclusion of the committee should be a vector with values "<1>,<10>,<11>,<12>,<13>,<14>,<15>,<16>,<17>,<18>,<19>,<2>,<20>,<21>,<22>,<23>,<24>,<25>,<26>,<3>,<4>,<44100>,<44102>,<44103>,<44104>,<44105>,<5>,<6>,<7>,<8>,<9>,<A>,<B>,<C>,<D>"
     Examples:
@@ -156,10 +156,10 @@ Feature: Purchase Committee Calculations
     And a characteristic "date" of "2010-08-01"
     And a characteristic "cost" of "100"
     When the "adjusted_cost" committee is calculated
-    And the "merchant_categories_industries" committee is calculated
+    And the "merchant_category_industries" committee is calculated
     And the "industry_shares" committee is calculated
     And the "product_line_shares" committee is calculated
-    And the "industries_sectors" committee is calculated
+    And the "industry_sectors" committee is calculated
     And the "sector_shares" committee is calculated
     And the "sector_direct_requirements" committee is calculated
     And the "economic_flows" committee is calculated
@@ -171,10 +171,10 @@ Feature: Purchase Committee Calculations
     And a characteristic "date" of "2010-08-01"
     And a characteristic "cost" of "100"
     When the "adjusted_cost" committee is calculated
-    And the "merchant_categories_industries" committee is calculated
+    And the "merchant_category_industries" committee is calculated
     And the "industry_shares" committee is calculated
     And the "product_line_shares" committee is calculated
-    And the "industries_sectors" committee is calculated
+    And the "industry_sectors" committee is calculated
     And the "sector_shares" committee is calculated
     And the "sector_direct_requirements" committee is calculated
     And the "economic_flows" committee is calculated
