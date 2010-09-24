@@ -153,7 +153,6 @@ module BrighterPlanet
           # a dictionary to go from merchant categories to industries
           committee :merchant_category_industries do
             quorum 'from merchant category', :needs => :merchant_category do |characteristics|
-              puts 'here'
               characteristics[:merchant_category].merchant_category_industries
             end
             quorum 'from industry', :needs => :naics_code do |characteristics|
