@@ -1,36 +1,7 @@
 io_code,description
-1,Staples
-2,Example
-3,Pencils
-4,Pens
-5,Rulers
-6,Printers
-7,Computers
-8,Ink
-9,Paper
-10,Furniture
-11,Trucking
-12,Sales
-13,Strip Malls
-14,Displays
-15,Cameras
-16,Scanners
-17,Disks
-18,Media
-19,Hotel Industry
-20,Example
-21,Example
-22,Example
-23,Example
-24,Example
-25,Example
-26,Example
-44100,Example
-44102,Example
-44103,Example
-44104,Example
-44105,Example
-A,Young fantasy creature processing
-B,Adult fantasy creature processing
-C,Young fantasy creature freezing
-D,Adult fantasy creature freezing
+111111,A simple industry
+3991A0,Young fantasy creature raising
+3991B0,Fantasy creature retirement homes
+399200,Fantasy creature slaughtering
+399900,Fantasy creature processing
+4A0000,Retail trade

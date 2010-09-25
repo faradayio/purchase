@@ -1,12 +1,6 @@
 naics_code,description
-32411,Petroleum Refineries
-324121,Asphalt Paving Mixture and Block Manufacturing
-324122,Asphalt Shingle and Coating Materials Manufacturing
-324191,Petroleum Lubricating Oil and Grease Manufacturing
-324199,All Other Petroleum and Coal Products Manufacturing
-443112,"Radio, Television, and Other Electronics Stores"
-45321,Office Supplies and Stationery Stores
-72111,Hotels (except Casino Hotels) and Motels
-72211,Full-Service Restaurants
-999991,Fantasy creature processing
-999992,Fantasy creature stores
+111111,A simple industry
+399100,Fantasy creature raising
+399200,Fantasy creature slaughtering
+399900,Fantasy creature processing
+459000,Retail stores specializing in fantasy creature products
