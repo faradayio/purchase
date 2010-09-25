@@ -8,23 +8,20 @@ Feature: Purchase Committee Calculations
     Then the committee should have used quorum "from purchase amount"
     And the conclusion of the committee should be "100"
 
-  Scenario Outline: Cost committee from purchase amount and tax
+  Scenario: Cost committee from purchase amount and tax
     Given a purchase emitter
-    And a characteristic "purchase_amount" of "<amount>"
-    And a characteristic "tax" of "<tax>"
+    And a characteristic "purchase_amount" of "10.00"
+    And a characteristic "tax" of "1.00"
     When the "cost" committee is calculated
     Then the committee should have used quorum "from purchase amount and tax"
-    And the conclusion of the committee should be "<cost>"
-    Examples:
-      | amount | tax  | cost |
-      | 10.00  | 1.00 | 9.00 |
+    And the conclusion of the committee should be "9.00"
 
   Scenario: Cost committee from default
     Given a purchase emitter
     When the "cost" committee is calculated
     Then the conclusion of the committee should be "100"
 
-  Scenario Outline: Adjusted cost committee
+  Scenario Outline: Adjusted cost committee from cost and date
     Given a purchase emitter
     And a characteristic "cost" of "<cost>"
     And characteristic "date" of "<date>"
@@ -35,15 +32,15 @@ Feature: Purchase Committee Calculations
       | 831.23 | 2010-08-01 |     688.67439 |
       |  11.00 | 2005-07-14 |       9.11350 |
 
-  Scenario Outline: Merchant category committee
+  Scenario Outline: Merchant category committee from merchant
     Given a purchase emitter
     And a characteristic "merchant.id" of "<id>"
     When the "merchant_category" committee is calculated
     Then the conclusion of the committee should have "mcc" of "<mcc>"
     Examples:
       | id | mcc  |
-      | 3  | 5812 |
-      | 9  | 9999 |
+      | 1  | 1111 |
+      | 2  | 2222 |
 
   Scenario: Merchant category committee from default
     Given a purchase emitter
@@ -57,9 +54,9 @@ Feature: Purchase Committee Calculations
     Then the conclusion of the committee should have a record identified with "naics_code" of "<naics>" and having "ratio" of "<ratio>"
     Examples:
       | mcc  | naics  | ratio |
-      | 5812 | 72211  | 1     |
-      | 9999 | 999991 | 0.5   |
-      | 9999 | 999992 | 0.5   |
+      | 1111 | 111111 | 1     |
+      | 2222 | 399900 | 0.5   |
+      | 2222 | 459000 | 0.5   |
 
   Scenario Outline: Industry shares committee
     Given a purchase emitter
@@ -69,9 +66,9 @@ Feature: Purchase Committee Calculations
     Then the conclusion of the committee should have a record identified with "naics_code" of "<naics>" and having "ratio" of "<share>"
     Examples:
       | mcc  | naics  | share |
-      | 5812 | 72211  | 1.0   |
-      | 9999 | 999991 | 0.5   |
-      | 9999 | 999992 | 0.5   |
+      | 1111 | 111111 | 1.0   |
+      | 2222 | 399900 | 0.5   |
+      | 2222 | 459000 | 0.5   |
 
   Scenario Outline: Product line shares committee from industry
     Given a purchase emitter
@@ -81,9 +78,9 @@ Feature: Purchase Committee Calculations
     And the conclusion of the committee should have a record identified with "ps_code" of "<ps_code>" and having "ratio" of "<share>"
     Examples:
       | naics  | ps_code | share |
-      | 72211  |         |       |
-      | 999992 | 99992   | 0.75  |
-      | 999992 | 99993   | 0.25  |
+      | 111111 |         |       |
+      | 459000 | 45911   | 0.75  |
+      | 459000 | 45912   | 0.25  |
 
   Scenario Outline: Product line shares committee from merchant category
     Given a purchase emitter
@@ -94,11 +91,11 @@ Feature: Purchase Committee Calculations
     Then the conclusion of the committee should have a record identified with "ps_code" of "<ps_code>" and having "ratio" of "<share>"
     Examples:
       | mcc  | ps_code | share |
-      | 5812 |         |       |
-      | 9999 | 99992   | 0.375 |
-      | 9999 | 99993   | 0.125 |
+      | 1111 |         |       |
+      | 2222 | 45911   | 0.375 |
+      | 2222 | 45912   | 0.125 |
 
-  Scenario Outline: Industries sectors committee from industry
+  Scenario Outline: Industry sectors committee from industry
     Given a purchase emitter
     And a characteristic "naics_code" of "<naics>"
     When the "industry_sectors" committee is calculated
@@ -106,12 +103,12 @@ Feature: Purchase Committee Calculations
     And the conclusion of the committee should have a record identified with "io_code" of "<io_code>" and having "ratio" of "<share>"
     Examples:
       | naics  | io_code | share |
-      | 45321  | 4A0000  | 1.0   |
-      | 443112 | 4A0000  | 1.0   |
-      | 72211  | 26      | 1.0   |
-      | 999991 | A       | 0.75  |
-      | 999991 | B       | 0.25  |
-      | 999992 | 4A0000  | 1.0   |
+      | 111111 | 111000  | 1.0   |
+      | 399100 | 3991A0  | 0.75  |
+      | 399100 | 3991B0  | 0.25  |
+      | 399200 | 399200  | 1.0   |
+      | 399900 | 399900  | 1.0   |
+      | 459000 | 4A0000  | 1.0   |
 
   Scenario Outline: Industries sectors committee from merchant category
     Given a purchase emitter 
@@ -126,9 +123,9 @@ Feature: Purchase Committee Calculations
     And the conclusion of the committee should have a record identified with "io_code" of "<io_code>" and having "ratio" of "<share>"
     Examples:
       | mcc  | io_code  | share |
-      | 5812 | 26       | 1.0   |
-      | 9999 | A        | 0.375 |
-      | 9999 | B        | 0.125 |
+      | 1111 | 111000   | 1.0   |
+      | 2222 | 399900   | 0.5   |
+      | 2222 | 4A0000   | 0.5   |
 
   Scenario Outline: Sector shares committee from industry and product line shares
     Given a purchase emitter
