@@ -6,25 +6,16 @@ module BrighterPlanet
       def self.included(base)
         base.data_miner do
           schema do
-            string  'merchant_id'
-            string  'mcc'
-            string  'naics_code'
-            string  'ps_code'
-            string  'io_code'
+            float   'cost'
+            string  'cost_units'
             float   'purchase_amount'
             string  'purchase_amount_units'
             float   'tax'
             string  'tax_units'
-            float   'cost'
-            string  'cost_units'
-            string  'line_item'
-            string  'customer_code'
-            string  'zip_code_name'
             date    'date'
-            float   'adjusted_cost'
-            string  'adjusted_cost_units'
-            float   'emission_factor'
-            string  'emission_factor_units'
+            string  'merchant_id'
+            string  'mcc'
+            string  'naics_code'
           end
           
           process :run_data_miner_on_belongs_to_associations

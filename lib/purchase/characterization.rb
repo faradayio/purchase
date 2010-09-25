@@ -6,14 +6,13 @@ module BrighterPlanet
       def self.included(base)
         base.send :include, Characterizable
         base.characterize do
-          has :purchase_amount
+          has :cost            # cost before tax
+          has :purchase_amount # full purchase amount, including tax
+          has :tax             # tax portion of purchase
+          has :date
           has :merchant
           has :merchant_category
-          has :naics_code
-          has :total           # full purchase amount
-          has :tax             # tax portion of purchase
-          has :cost            # cost before tax
-          has :date
+          has :industry
         end
         base.add_implicit_characteristics
       end
