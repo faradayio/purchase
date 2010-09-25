@@ -45,6 +45,7 @@ require_or_fail('jeweler', 'Jeweler (or a dependency) not available. Install it 
     gem.add_development_dependency 'rspec', '~>2.0.0.beta.17'
     gem.add_development_dependency 'sniff', '~>0.1.16' unless ENV['LOCAL_SNIFF']
     gem.add_dependency 'emitter', '~>0.1.4' unless ENV['LOCAL_EMITTER']
+    gem.add_runtime_dependency 'earth', '~>0.2.3' unless ENV['LOCAL_EARTH']
   end
   Jeweler::GemcutterTasks.new
 end
@@ -52,7 +53,7 @@ end
 require_or_fail('sniff', 'Sniff gem not found, sniff tasks unavailable') do
   require 'sniff/rake_task'
   Sniff::RakeTask.new(:console) do |t|
-    t.earth_domains = :hospitality
+    t.earth_domains = :industry
   end
 end
 
