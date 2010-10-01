@@ -218,22 +218,48 @@ Feature: Purchase Committee Calculations
       | 399200 | 399200  | 1.0   |
       | 399900 | 399900  | 1.0   |
 
+  Scenario Outline: Industry sector shares committee from merchant category
+    Given a purchase emitter 
+    And a characteristic "merchant_category.mcc" of "<mcc>"
+    And a characteristic "adjusted_cost" of "100.00"
+    When the "merchant_category_industries" committee is calculated
+    And the "non_trade_industry_ratios" committee is calculated
+    And the "trade_industry_ratios" committee is calculated
+    And the "product_line_ratios" committee is calculated
+    And the "product_line_industry_product_ratios" committee is calculated
+    And the "industry_product_ratios" committee is calculated
+    And the "industry_ratios" committee is calculated
+    And the "industry_sector_ratios" committee is calculated
+    And the "industry_sector_shares" committee is calculated
+    Then the conclusion of the committee should include a key of "<io_code>" and value "<share>"
+    Examples:
+      | mcc  | io_code | share   |
+      | 1111 | 111000  | 100.0   |
+      | 2222 | 3991A0  | 14.0625 |
+      | 2222 | 3991B0  | 4.6875  |
+      | 2222 | 399200  | 6.25    |
+      | 2222 | 399900  | 50.0    |
+
   @wip
   Scenario Outline: Sector shares committee from industry and product line shares
     Given a purchase emitter
     And a characteristic "merchant_category.mcc" of "<mcc>"
-    And a characteristic "adjusted_cost" of "1"
+    And a characteristic "adjusted_cost" of "100.00"
     When the "merchant_category_industries" committee is calculated
-    And the "industry_shares" committee is calculated
-    And the "product_line_shares" committee is calculated
-    And the "industry_sectors" committee is calculated
+    And the "non_trade_industry_ratios" committee is calculated
+    And the "trade_industry_ratios" committee is calculated
+    And the "product_line_ratios" committee is calculated
+    And the "product_line_industry_product_ratios" committee is calculated
+    And the "industry_product_ratios" committee is calculated
+    And the "industry_ratios" committee is calculated
+    And the "industry_sector_ratios" committee is calculated
+    And the "industry_sector_shares" committee is calculated
     And the "sector_shares" committee is calculated
-    Then the conclusion of the committee should be a vector with values "<1>,<10>,<11>,<12>,<13>,<14>,<15>,<16>,<17>,<18>,<19>,<2>,<20>,<21>,<22>,<23>,<24>,<25>,<26>,<3>,<4>,<44100>,<44102>,<44103>,<44104>,<44105>,<5>,<6>,<7>,<8>,<9>,<A>,<B>,<C>,<D>"
+    Then the conclusion of the committee should be a vector with values "<111000>,<3991A0>,<3991B0>,<399200>,<399900>,<4A0000>"
     Examples:
-      | mcc|1|10|11|12|13|14|15|16|17|18|19|2|20|21|22|23|24|25| 26|3|4|44100|44102|44103|44104|44105|5|6|7|8|9|     A|     B|     C|     D|
-      |1111|0| 0| 0| 0| 0| 0| 0| 0| 0| 0| 0|0| 0| 0| 0| 0| 0| 0|1.0|0|0|    0|    0|    0|    0|    0|0|0|0|0|0|     0|     0|     0|     0|
-      |2222|0| 0| 0| 0| 0| 0| 0| 0| 0| 0| 0|0| 0| 0| 0| 0| 0| 0|  0|0|0|    0|    0|    0|    0|    0|0|0|0|0|0|0.1875|0.1875|0.0625|0.0625|
-      |5111|0| 0| 0| 0| 0| 0| 0| 0| 0| 0| 0|0| 0| 0| 0| 0| 0| 0|  0|0|0|    0|    0|    0|    0|    0|0|0|0|0|0|0.1875|0.1875|0.0625|0.0625|
+      | mcc|111000|3991A0 |3991B0|399200|399900|4A0000|
+      |1111|100.00|      0|     0|     0|     0|     0|
+      |2222|     0|14.0625|4.6875|  6.25|  50.0|     0|
 
   Scenario: Sector direct requirements
     Given a purchase emitter

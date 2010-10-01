@@ -46,47 +46,20 @@ module BrighterPlanet
           end
           
           committee :sector_shares do
-            quorum 'from industry sectors and product line shares', :needs => [:industry_sectors, :product_line_shares, :adjusted_cost] do |characteristics|
-              industry_sector_shares = {}
-              characteristics[:industry_sectors].each do |industry_sector|
-                unless ['420000','4A0000'].include?(industry_sector.io_code)
-                  industry_sector_shares[industry_sector.io_code] ||= 0
-                  industry_sector_shares[industry_sector.io_code] += 
-                    industry_sector.ratio * characteristics[:adjusted_cost]
-                end
-              end
-
-              product_line_sector_shares = {}
-              characteristics[:product_line_shares].each do |product_line_share|
-                product_line_share.product_line_sectors.each do |product_line_sector|
-                  io_code = product_line_sector.io_code
-                  product_line_sector_shares[io_code] ||= 0
-                  product_line_sector_shares[io_code] += 
-                    product_line_sector.ratio * product_line_share.ratio * characteristics[:adjusted_cost]
-                end
-              end
-              sector_shares = industry_sector_shares.merge product_line_sector_shares
-
+            quorum 'from industry sector shares', :needs => :industry_sector_shares do |characteristics|
               shares = BrighterPlanet::Purchase.key_map.map do |key|
-                sector_shares[key] || 0
+                characteristics[:industry_sector_shares][key] || 0
               end
               Vector[*shares]
             end
+          end
 
-            quorum 'from industry sectors', :needs => [:industry_sectors, :adjusted_cost] do |characteristics|
-              industry_sector_shares = {}
-              characteristics[:industry_sectors].each do |industry_sector|
-                unless ['420000','4A0000'].include?(industry_sector.io_code)
-                  industry_sector_shares[industry_sector.io_code] ||= 0
-                  industry_sector_shares[industry_sector.io_code] += 
-                    industry_sector.ratio * characteristics[:adjusted_cost]
-                end
+          committee :industry_sector_shares do
+            quorum 'from industry sector ratios', :needs => [:industry_sector_ratios, :adjusted_cost] do |characteristics|
+              characteristics[:industry_sector_ratios].inject({}) do |new_ratios, (io_code, ratio)|
+                new_ratios[io_code] = ratio * characteristics[:adjusted_cost]
+                new_ratios
               end
-            
-              shares = BrighterPlanet::Purchase.key_map.map do |key|
-                industry_sector_shares[key] || 0
-              end
-              Vector[*shares]
             end
           end
 
@@ -243,8 +216,6 @@ module BrighterPlanet
           end
         end
       end
-
-      class IndustrySectorShare < Struct.new(:io_code, :ratio); end
     end
   end
 end
