@@ -143,9 +143,8 @@ module BrighterPlanet
           # ratios = the portion of the purchase amount that goes to each industry
           committee :industry_ratios do
             quorum 'from non trade industry and industry product ratios', :needs => [:non_trade_industry_ratios, :industry_product_ratios] do |characteristics|
-              characteristics[:merchant_category_industries].map do |mci|
-                IndustryShare.new mci.naics_code, mci.ratio
-              end
+              combined_ratios = characteristics[:non_trade_industry_ratios].
+                merge characteristics[:industry_product_ratios]
             end
           end
 

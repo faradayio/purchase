@@ -154,23 +154,29 @@ Feature: Purchase Committee Calculations
     And the "industry_ratios" committee is calculated
     Then the conclusion of the committee should include a key of "<naics>" and value "<ratio>"
     Examples:
-      | mcc  | naics  | ratio |
-      | 1111 | 111111 | 1.0   |
-      | 2222 | 399100 | 375   |
-      | 2222 | 399200 | 62.5  |
-      | 2222 | 399900 | 0.5   |
+      | mcc  | naics  | ratio  |
+      | 1111 | 111111 | 1.0    |
+      | 2222 | 399100 | 0.1875 |
+      | 2222 | 399200 | 0.0625 |
+      | 2222 | 399900 | 0.5    |
 
+  @wip
   Scenario Outline: Industry ratios committee from naics code
     Given a purchase emitter
     And a characteristic "naics_code" of "<naics>"
-    When the "industry_ratios" committee is calculated
+    When the "non_trade_industry_ratios" committee is calculated
+    And the "trade_industry_ratios" committee is calculated
+    And the "product_line_ratios" committee is calculated
+    And the "product_line_industry_product_ratios" committee is calculated
+    And the "industry_product_ratios" committee is calculated
+    And the "industry_ratios" committee is calculated
     Then the conclusion of the committee should include a key of "<new_naics>" and value "<ratio>"
     Examples:
       | naics  | new_naics | ratio |
       | 111111 | 111111    | 1.0   |
-      | 459000 | 399100    | 375   |
-      | 459000 | 399200    | 62.5  |
-      | 399900 | 399900    | 0.5   |
+      | 459000 | 399100    | 0.375 |
+      | 459000 | 399200    | 0.125 |
+      | 399900 | 399900    | 1.0   |
 
   Scenario Outline: Industry sectors committee from industry
     Given a purchase emitter
