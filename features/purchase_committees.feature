@@ -58,42 +58,119 @@ Feature: Purchase Committee Calculations
       | 2222 | 399900 | 0.5   |
       | 2222 | 459000 | 0.5   |
 
-  Scenario Outline: Industry shares committee
+  Scenario Outline: Trade industry ratios from merchant category industries
     Given a purchase emitter
     And a characteristic "merchant_category.mcc" of "<mcc>"
     When the "merchant_category_industries" committee is calculated
-    And the "industry_shares" committee is calculated
-    Then the conclusion of the committee should have a record identified with "naics_code" of "<naics>" and having "ratio" of "<share>"
+    And the "trade_industry_ratios" committee is calculated
+    Then the committee should have used quorum "from merchant category industries"
+    And the conclusion of the committee should include a key of "<naics>" and value "<ratio>"
     Examples:
-      | mcc  | naics  | share |
-      | 1111 | 111111 | 1.0   |
-      | 2222 | 399900 | 0.5   |
+      | mcc  | naics  | ratio |
       | 2222 | 459000 | 0.5   |
 
-  Scenario Outline: Product line shares committee from industry
+  Scenario Outline: Trade industry ratios from naics code
     Given a purchase emitter
     And a characteristic "naics_code" of "<naics>"
-    When the "product_line_shares" committee is calculated
-    Then the committee should have used quorum "from industry"
-    And the conclusion of the committee should have a record identified with "ps_code" of "<ps_code>" and having "ratio" of "<share>"
+    When the "trade_industry_ratios" committee is calculated
+    Then the committee should have used quorum "from naics code"
+    And the conclusion of the committee should include a key of "<naics>" and value "1"
     Examples:
-      | naics  | ps_code | share |
-      | 111111 |         |       |
-      | 459000 | 45911   | 0.75  |
-      | 459000 | 45912   | 0.25  |
+      | naics  |
+      | 459000 |
 
-  Scenario Outline: Product line shares committee from merchant category
+  Scenario Outline: Non-trade industry ratios from merchant category industries
     Given a purchase emitter
     And a characteristic "merchant_category.mcc" of "<mcc>"
     When the "merchant_category_industries" committee is calculated
-    And the "industry_shares" committee is calculated
-    And the "product_line_shares" committee is calculated
-    Then the conclusion of the committee should have a record identified with "ps_code" of "<ps_code>" and having "ratio" of "<share>"
+    And the "non_trade_industry_ratios" committee is calculated
+    Then the committee should have used quorum "from merchant category industries"
+    And the conclusion of the committee should include a key of "<naics>" and value "<ratio>"
     Examples:
-      | mcc  | ps_code | share |
-      | 1111 |         |       |
+      | mcc  | naics  | ratio |
+      | 1111 | 111111 | 1     |
+      | 2222 | 399900 | 0.5   |
+
+  Scenario Outline: Non-trade industry ratios from naics code
+    Given a purchase emitter
+    And a characteristic "naics_code" of "<naics>"
+    When the "non_trade_industry_ratios" committee is calculated
+    Then the conclusion of the committee should include a key of "<naics>" and value "1"
+    Examples:
+      | naics  |
+      | 111111 |
+      | 399900 |
+
+  Scenario Outline: Product line ratios from trade industry ratios
+    Given a purchase emitter
+    And a characteristic "merchant_category.mcc" of "<mcc>"
+    When the "merchant_category_industries" committee is calculated
+    And the "trade_industry_ratios" committee is calculated
+    And the "product_line_ratios" committee is calculated
+    Then the conclusion of the committee should include a key of "<ps_code>" and value "<ratio>"
+    Examples:
+      | mcc  | ps_code | ratio |
       | 2222 | 45911   | 0.375 |
       | 2222 | 45912   | 0.125 |
+
+  Scenario Outline: Product line industry product ratios from product line ratios
+    Given a purchase emitter
+    And a characteristic "merchant_category.mcc" of "<mcc>"
+    When the "merchant_category_industries" committee is calculated
+    And the "trade_industry_ratios" committee is calculated
+    And the "product_line_ratios" committee is calculated
+    And the "product_line_industry_product_ratios" committee is calculated
+    Then the conclusion of the committee should include a key of "<naics_product_code>" and value "<ratio>"
+    Examples:
+      | mcc  | naics_product_code  | ratio  |
+      | 2222 | 399100A             | 0.1875 |
+      | 2222 | 399100B             | 0.1875 |
+      | 2222 | 399200A             | 0.0625 |
+      | 2222 | 399200B             | 0.0625 |
+
+  Scenario Outline: Industry product ratios from product line industry product ratios
+    Given a purchase emitter
+    And a characteristic "merchant_category.mcc" of "<mcc>"
+    When the "merchant_category_industries" committee is calculated
+    And the "trade_industry_ratios" committee is calculated
+    And the "product_line_ratios" committee is calculated
+    And the "product_line_industry_product_ratios" committee is calculated
+    And the "industry_product_ratios" committee is calculated
+    Then the conclusion of the committee should include a key of "<naics>" and value "<ratio>"
+    Examples:
+      | mcc  | naics  | ratio  |
+      | 2222 | 399100 | 0.1875 |
+      | 2222 | 399200 | 0.0625 |
+
+  Scenario Outline: Industry ratios committee from non trade industry and industry product ratios 
+    Given a purchase emitter
+    And a characteristic "merchant_category.mcc" of "<mcc>"
+    When the "merchant_category_industries" committee is calculated
+    And the "non_trade_industry_ratios" committee is calculated
+    And the "trade_industry_ratios" committee is calculated
+    And the "product_line_ratios" committee is calculated
+    And the "product_line_industry_product_ratios" committee is calculated
+    And the "industry_product_ratios" committee is calculated
+    And the "industry_ratios" committee is calculated
+    Then the conclusion of the committee should include a key of "<naics>" and value "<ratio>"
+    Examples:
+      | mcc  | naics  | ratio |
+      | 1111 | 111111 | 1.0   |
+      | 2222 | 399100 | 375   |
+      | 2222 | 399200 | 62.5  |
+      | 2222 | 399900 | 0.5   |
+
+  Scenario Outline: Industry ratios committee from naics code
+    Given a purchase emitter
+    And a characteristic "naics_code" of "<naics>"
+    When the "industry_ratios" committee is calculated
+    Then the conclusion of the committee should include a key of "<new_naics>" and value "<ratio>"
+    Examples:
+      | naics  | new_naics | ratio |
+      | 111111 | 111111    | 1.0   |
+      | 459000 | 399100    | 375   |
+      | 459000 | 399200    | 62.5  |
+      | 399900 | 399900    | 0.5   |
 
   Scenario Outline: Industry sectors committee from industry
     Given a purchase emitter
@@ -108,7 +185,6 @@ Feature: Purchase Committee Calculations
       | 399100 | 3991B0  | 0.25  |
       | 399200 | 399200  | 1.0   |
       | 399900 | 399900  | 1.0   |
-      | 459000 | 4A0000  | 1.0   |
 
   Scenario Outline: Industries sectors committee from merchant category
     Given a purchase emitter 
@@ -122,10 +198,12 @@ Feature: Purchase Committee Calculations
     Then the committee should have used quorum "from industry shares"
     And the conclusion of the committee should have a record identified with "io_code" of "<io_code>" and having "ratio" of "<share>"
     Examples:
-      | mcc  | io_code  | share |
-      | 1111 | 111000   | 1.0   |
-      | 2222 | 399900   | 0.5   |
-      | 2222 | 4A0000   | 0.5   |
+      | mcc  | io_code | share |
+      | 1111 | 111000  | 1.0   |
+      | 2222 | 3991A0  | 0.75  |
+      | 2222 | 3991B0  | 0.25  |
+      | 2222 | 399200  | 1.0   |
+      | 2222 | 399900  | 1.0   |
 
   Scenario Outline: Sector shares committee from industry and product line shares
     Given a purchase emitter
@@ -139,8 +217,9 @@ Feature: Purchase Committee Calculations
     Then the conclusion of the committee should be a vector with values "<1>,<10>,<11>,<12>,<13>,<14>,<15>,<16>,<17>,<18>,<19>,<2>,<20>,<21>,<22>,<23>,<24>,<25>,<26>,<3>,<4>,<44100>,<44102>,<44103>,<44104>,<44105>,<5>,<6>,<7>,<8>,<9>,<A>,<B>,<C>,<D>"
     Examples:
       | mcc|1|10|11|12|13|14|15|16|17|18|19|2|20|21|22|23|24|25| 26|3|4|44100|44102|44103|44104|44105|5|6|7|8|9|     A|     B|     C|     D|
-      |5812|0| 0| 0| 0| 0| 0| 0| 0| 0| 0| 0|0| 0| 0| 0| 0| 0| 0|1.0|0|0|    0|    0|    0|    0|    0|0|0|0|0|0|     0|     0|     0|     0|
-      |9999|0| 0| 0| 0| 0| 0| 0| 0| 0| 0| 0|0| 0| 0| 0| 0| 0| 0|  0|0|0|    0|    0|    0|    0|    0|0|0|0|0|0|0.1875|0.1875|0.0625|0.0625|
+      |1111|0| 0| 0| 0| 0| 0| 0| 0| 0| 0| 0|0| 0| 0| 0| 0| 0| 0|1.0|0|0|    0|    0|    0|    0|    0|0|0|0|0|0|     0|     0|     0|     0|
+      |2222|0| 0| 0| 0| 0| 0| 0| 0| 0| 0| 0|0| 0| 0| 0| 0| 0| 0|  0|0|0|    0|    0|    0|    0|    0|0|0|0|0|0|0.1875|0.1875|0.0625|0.0625|
+      |5111|0| 0| 0| 0| 0| 0| 0| 0| 0| 0| 0|0| 0| 0| 0| 0| 0| 0|  0|0|0|    0|    0|    0|    0|    0|0|0|0|0|0|0.1875|0.1875|0.0625|0.0625|
 
   Scenario: Sector direct requirements
     Given a purchase emitter

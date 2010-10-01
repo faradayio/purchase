@@ -116,8 +116,7 @@ module BrighterPlanet
           # product lines = the product lines sold by particular types of stores
           # ratios = the portion of the purchase amount that goes to each product line
           committee :product_line_shares do
-            quorum 'from industry', :needs => :naics_code do |characteristics|
-              IndustryProductLine.
+            quorum 'from industry', :needs => :naics_code do |characteristics| IndustryProductLine.
                 find_all_by_naics_code(characteristics[:naics_code]).
                 map do |industry_product_line|
                   ProductLineShare.new industry_product_line.ps_code, 
@@ -139,13 +138,86 @@ module BrighterPlanet
               end
             end
           end
-          
+
           # industries = the industries needed to produce the purchased item
           # ratios = the portion of the purchase amount that goes to each industry
-          committee :industry_shares do
-            quorum 'from merchant category industries', :needs => :merchant_category_industries do |characteristics|
+          committee :industry_ratios do
+            quorum 'from non trade industry and industry product ratios', :needs => [:non_trade_industry_ratios, :industry_product_ratios] do |characteristics|
               characteristics[:merchant_category_industries].map do |mci|
                 IndustryShare.new mci.naics_code, mci.ratio
+              end
+            end
+          end
+
+          committee :industry_product_ratios do
+            quorum 'from product line industry product ratios', :needs => :product_line_industry_product_ratios do |characteristics|
+              characteristics[:product_line_industry_product_ratios].inject({}) do |new_ratios, (naics_product_code, ratio)|
+                IndustryProduct.where(:naics_product_code => naics_product_code).each do |industry_product|
+                  new_ratios[industry_product.naics_code] = ratio
+                end
+                new_ratios
+              end
+            end
+          end
+
+          committee :product_line_industry_product_ratios do
+            quorum 'from product line ratios', :needs => :product_line_ratios do |characteristics|
+              characteristics[:product_line_ratios].inject({}) do |new_ratios, (ps_code, ratio)|
+                ProductLineIndustryProduct.where(:ps_code => ps_code).each do |plip|
+                  new_ratio = ratio * plip.ratio
+                  new_ratios[plip.naics_product_code] = new_ratio
+                end
+                new_ratios
+              end
+            end
+          end
+
+          committee :product_line_ratios do
+            quorum 'from trade industry ratios', :needs => :trade_industry_ratios do |characteristics|
+              characteristics[:trade_industry_ratios].inject({}) do |new_ratios, (naics, ratio)|
+                IndustryProductLine.where(:naics_code => naics).each do |industry_product_line|
+                  new_ratio = ratio * industry_product_line.ratio
+                  new_ratios[industry_product_line.ps_code] = new_ratio
+                end
+                new_ratios
+              end
+            end
+          end
+
+          committee :non_trade_industry_ratios do
+            quorum 'from merchant category industries', :needs => :merchant_category_industries do |characteristics|
+              characteristics[:merchant_category_industries].inject({}) do |hash, merchant_category_industry|
+                unless Industry.trade_industry?(merchant_category_industry.naics_code)
+                  hash[merchant_category_industry.naics_code] = merchant_category_industry.ratio
+                end
+                hash
+              end
+            end
+
+            quorum 'from naics code', :needs => :naics_code do |characteristics|
+              if Industry.trade_industry?(characteristics[:naics_code])
+                {}
+              else
+                { characteristics[:naics_code].to_s => 1 }
+              end
+            end
+          end
+
+          committee :trade_industry_ratios do
+            quorum 'from merchant category industries', :needs => :merchant_category_industries do |characteristics|
+              characteristics[:merchant_category_industries].inject({}) do |hash, merchant_category_industry|
+                if Industry.trade_industry?(merchant_category_industry.naics_code)
+                  hash[merchant_category_industry.naics_code] = merchant_category_industry.ratio
+                end
+                hash
+              end
+            end
+
+            quorum 'from naics code', :needs => :naics_code do |characteristics|
+              if Industry.trade_industry?(characteristics[:naics_code])
+                { characteristics[:naics_code].to_s => 1 }
+              else
+                {}
               end
             end
           end
@@ -210,21 +282,7 @@ module BrighterPlanet
         end
       end
 
-      class IndustryShare < Struct.new(:naics_code, :ratio); end
       class IndustrySectorShare < Struct.new(:io_code, :ratio); end
-
-      class ProductLineShare
-        attr_accessor :ps_code, :ratio
-
-        def initialize(ps_code, ratio)
-          self.ps_code = ps_code
-          self.ratio = ratio
-        end
-
-        def product_line_sectors
-          ProductLineSector.find_all_by_ps_code ps_code
-        end
-      end
     end
   end
 end
