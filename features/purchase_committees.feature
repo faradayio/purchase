@@ -160,7 +160,6 @@ Feature: Purchase Committee Calculations
       | 2222 | 399200 | 0.0625 |
       | 2222 | 399900 | 0.5    |
 
-  @wip
   Scenario Outline: Industry ratios committee from naics code
     Given a purchase emitter
     And a characteristic "naics_code" of "<naics>"
@@ -178,39 +177,48 @@ Feature: Purchase Committee Calculations
       | 459000 | 399200    | 0.125 |
       | 399900 | 399900    | 1.0   |
 
-  Scenario Outline: Industry sectors committee from industry
+  Scenario Outline: Industry sector ratios committee from merchant category
+    Given a purchase emitter 
+    And a characteristic "merchant_category.mcc" of "<mcc>"
+    And a characteristic "cost" of "100"
+    And a characteristic "date" of "2010-08-01"
+    When the "merchant_category_industries" committee is calculated
+    And the "non_trade_industry_ratios" committee is calculated
+    And the "trade_industry_ratios" committee is calculated
+    And the "product_line_ratios" committee is calculated
+    And the "product_line_industry_product_ratios" committee is calculated
+    And the "industry_product_ratios" committee is calculated
+    And the "industry_ratios" committee is calculated
+    And the "industry_sector_ratios" committee is calculated
+    Then the conclusion of the committee should include a key of "<io_code>" and value "<ratio>"
+    Examples:
+      | mcc  | io_code | ratio    |
+      | 1111 | 111000  | 1.0      |
+      | 2222 | 3991A0  | 0.140625 |
+      | 2222 | 3991B0  | 0.046875 |
+      | 2222 | 399200  | 0.0625   |
+      | 2222 | 399900  | 0.5      |
+
+  Scenario Outline: Industry sector ratios committee from industry
     Given a purchase emitter
     And a characteristic "naics_code" of "<naics>"
-    When the "industry_sectors" committee is calculated
-    Then the committee should have used quorum "from industry"
-    And the conclusion of the committee should have a record identified with "io_code" of "<io_code>" and having "ratio" of "<share>"
+    When the "non_trade_industry_ratios" committee is calculated
+    And the "trade_industry_ratios" committee is calculated
+    And the "product_line_ratios" committee is calculated
+    And the "product_line_industry_product_ratios" committee is calculated
+    And the "industry_product_ratios" committee is calculated
+    And the "industry_ratios" committee is calculated
+    And the "industry_sector_ratios" committee is calculated
+    Then the conclusion of the committee should include a key of "<io_code>" and value "<ratio>"
     Examples:
-      | naics  | io_code | share |
+      | naics  | io_code | ratio |
       | 111111 | 111000  | 1.0   |
       | 399100 | 3991A0  | 0.75  |
       | 399100 | 3991B0  | 0.25  |
       | 399200 | 399200  | 1.0   |
       | 399900 | 399900  | 1.0   |
 
-  Scenario Outline: Industries sectors committee from merchant category
-    Given a purchase emitter 
-    And a characteristic "merchant_category.mcc" of "<mcc>"
-    And a characteristic "cost" of "100"
-    And a characteristic "date" of "2010-08-01"
-    When the "adjusted_cost" committee is calculated
-    And the "merchant_category_industries" committee is calculated
-    And the "industry_shares" committee is calculated
-    And the "industry_sectors" committee is calculated
-    Then the committee should have used quorum "from industry shares"
-    And the conclusion of the committee should have a record identified with "io_code" of "<io_code>" and having "ratio" of "<share>"
-    Examples:
-      | mcc  | io_code | share |
-      | 1111 | 111000  | 1.0   |
-      | 2222 | 3991A0  | 0.75  |
-      | 2222 | 3991B0  | 0.25  |
-      | 2222 | 399200  | 1.0   |
-      | 2222 | 399900  | 1.0   |
-
+  @wip
   Scenario Outline: Sector shares committee from industry and product line shares
     Given a purchase emitter
     And a characteristic "merchant_category.mcc" of "<mcc>"

@@ -90,51 +90,14 @@ module BrighterPlanet
             end
           end
 
-          committee :industry_sectors do
-            quorum 'from industry', :needs => :naics_code do |characteristics|
-              industry_sectors = IndustrySector.
-                find_all_by_naics_code characteristics[:naics_code]
-              industry_sectors.map do |industry_sector|
-                IndustrySectorShare.new industry_sector.io_code, industry_sector.ratio
-              end
-            end
-            
-            quorum 'from industry shares', :needs => :industry_shares do |characteristics|
-              characteristics[:industry_shares].inject([]) do |list, industry_share|
-                sectors = IndustrySector.
-                  find_all_by_naics_code industry_share.naics_code
-                sectors.each do |sector|
-                  ratio = industry_share.ratio * sector.ratio
-                  list << IndustrySectorShare.new(sector.io_code, ratio)
+          committee :industry_sector_ratios do
+            quorum 'from industry ratios', :needs => :industry_ratios do |characteristics|
+              characteristics[:industry_ratios].inject({}) do |new_ratios, (naics_code, ratio)|
+                IndustrySector.where(:naics_code => naics_code).each do |industry_sector|
+                  new_ratio = ratio * industry_sector.ratio
+                  new_ratios[industry_sector.io_code] = new_ratio
                 end
-                list
-              end
-            end
-          end
-
-          # only used for purchases from the wholesale and retail trade industries
-          # product lines = the product lines sold by particular types of stores
-          # ratios = the portion of the purchase amount that goes to each product line
-          committee :product_line_shares do
-            quorum 'from industry', :needs => :naics_code do |characteristics| IndustryProductLine.
-                find_all_by_naics_code(characteristics[:naics_code]).
-                map do |industry_product_line|
-                  ProductLineShare.new industry_product_line.ps_code, 
-                                       industry_product_line.ratio
-                end
-            end
-
-            quorum 'from industry shares', :needs => :industry_shares do |characteristics|
-              industry_shares = characteristics[:industry_shares]
-              industry_shares.inject([]) do |list, industry_share|
-                industry_product_lines = IndustryProductLine.
-                  find_all_by_naics_code industry_share.naics_code
-                industry_product_lines.each do |industry_product_line|
-                  ratio = industry_product_line.ratio * industry_share.ratio
-                  list << ProductLineShare.new(industry_product_line.ps_code, 
-                                               ratio)
-                end
-                list
+                new_ratios
               end
             end
           end
