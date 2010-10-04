@@ -38,14 +38,14 @@ require_or_fail('jeweler', 'Jeweler (or a dependency) not available. Install it 
       Dir.glob(File.join('lib', 'test_support', '**/*.rb'))
     gem.add_development_dependency 'activerecord', '~>3.0.0'
     gem.add_development_dependency 'bundler', '~>1.0.0'
-    gem.add_development_dependency 'cucumber', '~>0.8.3'
+    gem.add_development_dependency 'cucumber', '~>0.9.0'
     gem.add_development_dependency 'jeweler', '~>1.4.0'
     gem.add_development_dependency 'rake'
     gem.add_development_dependency 'rdoc'
     gem.add_development_dependency 'rspec', '~>2.0.0.beta.17'
     gem.add_development_dependency 'sniff', '~>0.1.16' unless ENV['LOCAL_SNIFF']
     gem.add_dependency 'emitter', '~>0.1.4' unless ENV['LOCAL_EMITTER']
-    gem.add_runtime_dependency 'earth', '~>0.2.3' unless ENV['LOCAL_EARTH']
+    gem.add_runtime_dependency 'earth', '~>0.2.4' unless ENV['LOCAL_EARTH']
   end
   Jeweler::GemcutterTasks.new
 end
