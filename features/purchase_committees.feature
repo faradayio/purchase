@@ -202,7 +202,7 @@ Feature: Purchase Committee Calculations
 
   Scenario Outline: Industry sector ratios committee from industry
     Given a purchase emitter
-    And a characteristic "naics_code" of "<naics>"
+    And a characteristic "industry.naics_code" of "<naics>"
     When the "non_trade_industry_ratios" committee is calculated
     And the "trade_industry_ratios" committee is calculated
     And the "product_line_ratios" committee is calculated
@@ -261,46 +261,54 @@ Feature: Purchase Committee Calculations
       |1111|100.00|      0|     0|     0|     0|     0|
       |2222|     0|14.0625|4.6875|  6.25|  50.0|     0|
 
-  Scenario: Sector direct requirements
+  Scenario: Sector direct requirements committee
     Given a purchase emitter
     When the "sector_direct_requirements" committee is calculated
-    Then the conclusion of the committee should be a square matrix with "35" rows and columns
+    Then the conclusion of the committee should be a square matrix with "6" rows and columns
 
   Scenario: Economic flows from merchant category
     Given a purchase emitter
-    And a characteristic "merchant_category.mcc" of "5812"
-    And a characteristic "date" of "2010-08-01"
-    And a characteristic "cost" of "100"
-    When the "adjusted_cost" committee is calculated
-    And the "merchant_category_industries" committee is calculated
-    And the "industry_shares" committee is calculated
-    And the "product_line_shares" committee is calculated
-    And the "industry_sectors" committee is calculated
+    And a characteristic "merchant_category.mcc" of "1111"
+    And a characteristic "adjusted_cost" of "100"
+    When the "merchant_category_industries" committee is calculated
+    And the "non_trade_industry_ratios" committee is calculated
+    And the "trade_industry_ratios" committee is calculated
+    And the "product_line_ratios" committee is calculated
+    And the "product_line_industry_product_ratios" committee is calculated
+    And the "industry_product_ratios" committee is calculated
+    And the "industry_ratios" committee is calculated
+    And the "industry_sector_ratios" committee is calculated
+    And the "industry_sector_shares" committee is calculated
     And the "sector_shares" committee is calculated
     And the "sector_direct_requirements" committee is calculated
     And the "economic_flows" committee is calculated
-    Then the conclusion of the committee should be a vector with "35" items
+    Then the conclusion of the committee should be a vector with "6" items
+
+  Scenario: Impact vectors committee
+    Given a purchase emitter
+    When the "impact_vectors" committee is calculated
+    Then the conclusion of the committee should be a square matrix with "6" rows and columns
 
   Scenario Outline: Impacts committee from economic flows
     Given a purchase emitter
     And a characteristic "merchant_category.mcc" of "<mcc>"
-    And a characteristic "date" of "2010-08-01"
-    And a characteristic "cost" of "100"
-    When the "adjusted_cost" committee is calculated
-    And the "merchant_category_industries" committee is calculated
-    And the "industry_shares" committee is calculated
-    And the "product_line_shares" committee is calculated
-    And the "industry_sectors" committee is calculated
+    And a characteristic "adjusted_cost" of "100"
+    When the "merchant_category_industries" committee is calculated
+    And the "non_trade_industry_ratios" committee is calculated
+    And the "trade_industry_ratios" committee is calculated
+    And the "product_line_ratios" committee is calculated
+    And the "product_line_industry_product_ratios" committee is calculated
+    And the "industry_product_ratios" committee is calculated
+    And the "industry_ratios" committee is calculated
+    And the "industry_sector_ratios" committee is calculated
+    And the "industry_sector_shares" committee is calculated
     And the "sector_shares" committee is calculated
     And the "sector_direct_requirements" committee is calculated
     And the "economic_flows" committee is calculated
     And the "impact_vectors" committee is calculated
     And the "impacts" committee is calculated
-    Then the conclusion of the committee should be a vector with values "<1>,<10>,<11>,<12>,<13>,<14>,<15>,<16>,<17>,<18>,<19>,<2>,<20>,<21>,<22>,<23>,<24>,<25>,<26>,<3>,<4>,<44100>,<44102>,<44103>,<44104>,<44105>,<5>,<6>,<7>,<8>,<9>,<A>,<B>,<C>,<D>"
+    Then the conclusion of the committee should be a vector with values "<111000>,<3991A0>,<3991B0>,<399200>,<399900>,<4A0000>"
     Examples:
-      | mcc|1|10|11|12|13|14|15|16|17|18|19|2|20|21|22|23|24|25| 26|3|4|44100|44102|44103|44104|44105|5|6|7|8|9|     A|     B|     C|     D|
-      |3504| 34.20759 | 22.83238 | 21.58704 | 71.66304 | 75.34399 | 43.05229 | 44.19605 | 24.59386 | 31.74734 | 34.23285 | 38.90812 | 50.97981 | 42.48382 | 38.68232 | 7.06766 | 14.44985 | 11.89899 | 7.95409 | 24.56535 | 75.44609 | 41.91640 | 21.38395 | 3.61236 | 20.87780 | 20.49698 | 5.33446 | 0.28203 | 2.65319 | 3.94288 | 4.60106 | 71.40280 | 24.44457 | 24.44457 | 24.56517 | 21.88041 |
-      |5111| 43.11882 | 14.80914 | 11.03291 | 36.54622 | 46.29633 | 26.17054 | 32.10542 | 13.52681 | 17.39109 | 19.28008 | 12.79735 | 29.46601 | 26.80161 | 25.34407 | 4.74774 | 9.84523 | 8.12740 | 5.76849 | 17.87935 | 55.05595 | 39.96103 | 15.46327 | 2.35871 | 13.67770 | 13.18761 | 4.14058 | 2.01647 | 4.80043 | 6.27992 | 12.36538 | 79.88824 | 27.42322 | 27.42322 | 27.48354 | 24.08718 |
-      |5172| 35.58872 | 23.75424 | 19.71380 | 65.44441 | 70.92181 | 40.52542 | 46.99530 | 26.65128 | 34.40320 | 37.53618 | 24.68486 | 55.96723 | 82.58029 | 48.39434 | 8.55823 | 16.05688 | 13.17485 | 7.93908 | 24.20801 | 72.40388 | 39.79780 | 20.18866 | 3.40454 | 19.65695 | 19.28569 | 4.97658 | 0.23634 | 2.57416 | 3.79738 | 4.40459 | 68.84678 | 23.57193 | 23.57193 | 23.68206 | 20.88125 |
-      |5732| 23.82496 | 38.07691 | 13.11535 | 67.43841 | 47.01503 | 26.86485 | 28.54448 | 16.48957 | 21.28581 | 23.75176 | 16.05288 | 36.48537 | 34.13793 | 33.78076 | 6.37445 | 13.50597 | 11.33464 | 10.34780 | 23.80141 | 71.08195 | 37.57537 | 19.56198 | 3.32479 | 19.24582 | 18.92542 | 4.96435 | 0.29751 | 2.39136 | 3.54334 | 4.20360 | 64.55618 | 22.09769 | 22.09769 | 22.17096 | 20.29572 |
-      |5812| 34.59232 | 23.08918 | 19.48251 | 64.67657 | 70.88026 | 40.50168 | 43.64568 | 25.42384 | 32.81874 | 37.49322 | 25.83877 | 58.82688 | 56.29772 | 54.71279 | 11.61328 | 25.17174 | 21.33815 | 14.31873 | 81.35713 | 123.84802 | 53.98569 | 22.37338 | 3.51343 | 20.06660 | 19.35014 | 4.96561 | 0.24528 | 2.52186 | 3.73916 | 4.34106 | 67.67328 | 23.16928 | 23.16928 | 23.27813 | 20.55662 |
+      |mcc |111000  |3991A0  |3991B0  |399200  |399900   |4A0000  |
+      |1111|90.44460| 6.83919| 5.58981| 18.5568|19.91952 |11.38220|
+      |2222|28.14742|26.31519|16.92866|58.00083|105.81262|31.07553|
