@@ -42,11 +42,6 @@ Feature: Purchase Committee Calculations
       | 1  | 1111 |
       | 2  | 2222 |
 
-  Scenario: Merchant category committee from default
-    Given a purchase emitter
-    When the "merchant_category" committee is calculated
-    Then the conclusion of the committee should have "mcc" of "5111"
-
   Scenario Outline: Merchant category industries committee from merchant category
     Given a purchase emitter
     And a characteristic "merchant_category.mcc" of "<mcc>"
@@ -69,9 +64,9 @@ Feature: Purchase Committee Calculations
       | mcc  | naics  | ratio |
       | 2222 | 459000 | 0.5   |
 
-  Scenario Outline: Trade industry ratios from naics code
+  Scenario Outline: Trade industry ratios from industry
     Given a purchase emitter
-    And a characteristic "naics_code" of "<naics>"
+    And a characteristic "industry.naics_code" of "<naics>"
     When the "trade_industry_ratios" committee is calculated
     Then the committee should have used quorum "from naics code"
     And the conclusion of the committee should include a key of "<naics>" and value "1"
@@ -91,15 +86,21 @@ Feature: Purchase Committee Calculations
       | 1111 | 111111 | 1     |
       | 2222 | 399900 | 0.5   |
 
-  Scenario Outline: Non-trade industry ratios from naics code
+  Scenario Outline: Non-trade industry ratios from industry
     Given a purchase emitter
-    And a characteristic "naics_code" of "<naics>"
+    And a characteristic "industry.naics_code" of "<naics>"
     When the "non_trade_industry_ratios" committee is calculated
     Then the conclusion of the committee should include a key of "<naics>" and value "1"
     Examples:
       | naics  |
       | 111111 |
       | 399900 |
+
+  Scenario Outline: Non-trade industry ratios from default
+    Given a purchase emitter
+    When the "non_trade_industry_ratios" committee is calculated
+    Then the committee should have used quorum "from default"
+    And the conclusion of the committee should include a key of "111111" and value "1"
 
   Scenario Outline: Product line ratios from trade industry ratios
     Given a purchase emitter
@@ -160,9 +161,9 @@ Feature: Purchase Committee Calculations
       | 2222 | 399200 | 0.0625 |
       | 2222 | 399900 | 0.5    |
 
-  Scenario Outline: Industry ratios committee from naics code
+  Scenario Outline: Industry ratios committee from industry
     Given a purchase emitter
-    And a characteristic "naics_code" of "<naics>"
+    And a characteristic "industry.naics_code" of "<naics>"
     When the "non_trade_industry_ratios" committee is calculated
     And the "trade_industry_ratios" committee is calculated
     And the "product_line_ratios" committee is calculated
@@ -240,7 +241,6 @@ Feature: Purchase Committee Calculations
       | 2222 | 399200  | 6.25    |
       | 2222 | 399900  | 50.0    |
 
-  @wip
   Scenario Outline: Sector shares committee from industry and product line shares
     Given a purchase emitter
     And a characteristic "merchant_category.mcc" of "<mcc>"

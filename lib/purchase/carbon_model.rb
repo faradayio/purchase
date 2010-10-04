@@ -122,38 +122,47 @@ module BrighterPlanet
           committee :non_trade_industry_ratios do
             quorum 'from merchant category industries', :needs => :merchant_category_industries do |characteristics|
               characteristics[:merchant_category_industries].inject({}) do |hash, merchant_category_industry|
-                unless Industry.trade_industry?(merchant_category_industry.naics_code)
+                unless merchant_category_industry.industry.trade_industry?
                   hash[merchant_category_industry.naics_code] = merchant_category_industry.ratio
                 end
                 hash
               end
             end
 
-            quorum 'from naics code', :needs => :naics_code do |characteristics|
-              if Industry.trade_industry?(characteristics[:naics_code])
+            quorum 'from industry', :needs => :industry do |characteristics|
+              if characteristics[:industry].trade_industry?
                 {}
               else
-                { characteristics[:naics_code].to_s => 1 }
+                { characteristics[:industry].naics_code.to_s => 1 }
               end
+            end
+
+            quorum 'default' do
+              mci = MerchantCategoryIndustry.where(:mcc => 5111).first
+              { mci.naics_code.to_s => mci.ratio }
             end
           end
 
           committee :trade_industry_ratios do
             quorum 'from merchant category industries', :needs => :merchant_category_industries do |characteristics|
               characteristics[:merchant_category_industries].inject({}) do |hash, merchant_category_industry|
-                if Industry.trade_industry?(merchant_category_industry.naics_code)
+                if merchant_category_industry.industry.trade_industry?
                   hash[merchant_category_industry.naics_code] = merchant_category_industry.ratio
                 end
                 hash
               end
             end
 
-            quorum 'from naics code', :needs => :naics_code do |characteristics|
-              if Industry.trade_industry?(characteristics[:naics_code])
-                { characteristics[:naics_code].to_s => 1 }
+            quorum 'from naics code', :needs => :industry do |characteristics|
+              if characteristics[:industry].trade_industry?
+                { characteristics[:industry].naics_code.to_s => 1 }
               else
                 {}
               end
+            end
+
+            quorum 'default' do
+              {}
             end
           end
 
@@ -162,19 +171,11 @@ module BrighterPlanet
             quorum 'from merchant category', :needs => :merchant_category do |characteristics|
               characteristics[:merchant_category].merchant_category_industries
             end
-            quorum 'from industry', :needs => :naics_code do |characteristics|
-              MerchantCategoryIndustry.find_all_by_naics_code characteristics[:naics_code]
-            end
           end
 
           committee :merchant_category do
             quorum 'from merchant', :needs => [:merchant] do |characteristics|
               characteristics[:merchant].merchant_category
-            end
-            
-            quorum 'default' do
-              # FIXME TODO figure out a better merchant category or fallback sectors to use
-              MerchantCategory.find_by_mcc 5111
             end
           end
           
