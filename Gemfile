@@ -8,6 +8,9 @@ gem 'data_miner', :path => ENV['LOCAL_DATA_MINER'] if ENV['LOCAL_DATA_MINER']
 gem 'earth', :path => ENV['LOCAL_EARTH'] if ENV['LOCAL_EARTH']
 gem 'emitter', :path => ENV['LOCAL_EMITTER'] if ENV['LOCAL_EMITTER']
 
+gem 'remote_table', :path => ENV['LOCAL_REMOTE_TABLE'] if ENV['LOCAL_REMOTE_TABLE']
+
 source :rubygems
 
 gemspec :path => '.'
+
