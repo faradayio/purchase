@@ -40,17 +40,24 @@ Feature: Purchase Committee Calculations
       | 831.23 | 2010-08-01 |     688.67439 |
       |  11.00 | 2005-07-14 |       9.11350 |
 
+  Scenario: Merchant category committee from default
+    Given a purchase emitter
+    When the "merchant_category" committee is calculated
+    Then the committee should have used quorum "default"
+    And the conclusion of the committee should have "mcc" of "5111"
+
   Scenario Outline: Merchant category committee from merchant
     Given a purchase emitter
     And a characteristic "merchant.id" of "<id>"
     When the "merchant_category" committee is calculated
-    Then the conclusion of the committee should have "mcc" of "<mcc>"
+    Then the committee should have used quorum "from merchant"
+    And the conclusion of the committee should have "mcc" of "<mcc>"
     Examples:
       | id | mcc  |
       | 1  | 1111 |
       | 2  | 2222 |
 
-  Scenario Outline: Merchant category industries committee from merchant category
+  Scenario Outline: Merchant category industries committee starting from merchant category
     Given a purchase emitter
     And a characteristic "merchant_category.mcc" of "<mcc>"
     When the "merchant_category_industries" committee is calculated
@@ -82,6 +89,15 @@ Feature: Purchase Committee Calculations
       | naics  |
       | 459000 |
 
+  Scenario: Trade industry ratios from merchant category industries and industry
+    Given a purchase emitter
+    And a characteristic "merchant_category.mcc" of "1111"
+    And a characteristic "industry.naics_code" of "459000"
+    When the "merchant_category_industries" committee is calculated
+    And the "trade_industry_ratios" committee is calculated
+    Then the committee should have used quorum "from industry"
+    And the conclusion of the committee should include a key of "459000" and value "1"
+
   Scenario Outline: Non-trade industry ratios from merchant category industries
     Given a purchase emitter
     And a characteristic "merchant_category.mcc" of "<mcc>"
@@ -98,16 +114,20 @@ Feature: Purchase Committee Calculations
     Given a purchase emitter
     And a characteristic "industry.naics_code" of "<naics>"
     When the "non_trade_industry_ratios" committee is calculated
-    Then the conclusion of the committee should include a key of "<naics>" and value "1"
+    Then the committee should have used quorum "from industry"
+    And the conclusion of the committee should include a key of "<naics>" and value "1"
     Examples:
       | naics  |
       | 111111 |
       | 399900 |
 
-  Scenario Outline: Non-trade industry ratios from default
+  Scenario: Non-trade industry ratios from merchant category industries and industry
     Given a purchase emitter
-    When the "non_trade_industry_ratios" committee is calculated
-    Then the committee should have used quorum "from default"
+    And a characteristic "merchant_category.mcc" of "2222"
+    And a characteristic "industry.naics_code" of "111111"
+    When the "merchant_category_industries" committee is calculated
+    And the "non_trade_industry_ratios" committee is calculated
+    Then the committee should have used quorum "from industry"
     And the conclusion of the committee should include a key of "111111" and value "1"
 
   Scenario Outline: Product line ratios from trade industry ratios
