@@ -204,7 +204,7 @@ module BrighterPlanet
               characteristics[:purchase_amount].to_f / 1.0711
             end
             
-            quorum 'from default' do
+            quorum 'default' do
               # FIXME TODO research real average purchase amount
               100
             end

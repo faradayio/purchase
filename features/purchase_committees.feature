@@ -19,6 +19,7 @@ Feature: Purchase Committee Calculations
   Scenario: Cost committee from default
     Given a purchase emitter
     When the "cost" committee is calculated
+    Then the committee should have used quorum "default"
     Then the conclusion of the committee should be "100"
 
   Scenario Outline: Adjusted cost committee from cost and date
