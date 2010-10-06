@@ -189,6 +189,22 @@ Feature: Purchase Committee Calculations
       | 2222 | 399200 | 0.125  |
       | 2222 | 399900 | 0.5    |
 
+  Scenario Outline: Industry ratios sum check starting from merchant category
+    Given a purchase emitter
+    And a characteristic "merchant_category.mcc" of "<mcc>"
+    When the "merchant_category_industries" committee is calculated
+    And the "non_trade_industry_ratios" committee is calculated
+    And the "trade_industry_ratios" committee is calculated
+    And the "product_line_ratios" committee is calculated
+    And the "product_line_industry_product_ratios" committee is calculated
+    And the "industry_product_ratios" committee is calculated
+    And the "industry_ratios" committee is calculated
+    Then the conclusion of the committee should have ratios summing to "1.0"
+    Examples:
+      | mcc  |
+      | 1111 |
+      | 2222 |
+
   Scenario Outline: Industry ratios committee starting from industry
     Given a purchase emitter
     And a characteristic "industry.naics_code" of "<naics>"
@@ -207,8 +223,24 @@ Feature: Purchase Committee Calculations
       | 459000 | 399100    | 0.75  |
       | 459000 | 399200    | 0.25  |
 
+  Scenario Outline: Industry ratios sum check starting from industry
+    Given a purchase emitter
+    And a characteristic "industry.naics_code" of "<naics>"
+    When the "non_trade_industry_ratios" committee is calculated
+    And the "trade_industry_ratios" committee is calculated
+    And the "product_line_ratios" committee is calculated
+    And the "product_line_industry_product_ratios" committee is calculated
+    And the "industry_product_ratios" committee is calculated
+    And the "industry_ratios" committee is calculated
+    Then the conclusion of the committee should have ratios summing to "1.0"
+    Examples:
+      | naics  |
+      | 111111 |
+      | 399100 |
+      | 459000 |
+
   Scenario Outline: Industry sector ratios committee starting from merchant category
-    Given a purchase emitter 
+    Given a purchase emitter
     And a characteristic "merchant_category.mcc" of "<mcc>"
     When the "merchant_category_industries" committee is calculated
     And the "non_trade_industry_ratios" committee is calculated
@@ -226,6 +258,23 @@ Feature: Purchase Committee Calculations
       | 2222 | 3991B0  | 0.09375  |
       | 2222 | 399200  | 0.125    |
       | 2222 | 399900  | 0.5      |
+
+  Scenario Outline: Industry sector ratios sum check starting from merchant category
+    Given a purchase emitter
+    And a characteristic "merchant_category.mcc" of "<mcc>"
+    When the "merchant_category_industries" committee is calculated
+    And the "non_trade_industry_ratios" committee is calculated
+    And the "trade_industry_ratios" committee is calculated
+    And the "product_line_ratios" committee is calculated
+    And the "product_line_industry_product_ratios" committee is calculated
+    And the "industry_product_ratios" committee is calculated
+    And the "industry_ratios" committee is calculated
+    And the "industry_sector_ratios" committee is calculated
+    Then the conclusion of the committee should have ratios summing to "1.0"
+    Examples:
+      | mcc  |
+      | 1111 |
+      | 2222 |
 
   Scenario Outline: Industry sector ratios committee starting from industry
     Given a purchase emitter
@@ -247,8 +296,25 @@ Feature: Purchase Committee Calculations
       | 459000 | 3991B0  | 0.1875|
       | 459000 | 399200  | 0.25  |
 
+  Scenario Outline: Industry sector ratios sum check starting from industry
+    Given a purchase emitter
+    And a characteristic "industry.naics_code" of "<naics>"
+    When the "non_trade_industry_ratios" committee is calculated
+    And the "trade_industry_ratios" committee is calculated
+    And the "product_line_ratios" committee is calculated
+    And the "product_line_industry_product_ratios" committee is calculated
+    And the "industry_product_ratios" committee is calculated
+    And the "industry_ratios" committee is calculated
+    And the "industry_sector_ratios" committee is calculated
+    Then the conclusion of the committee should have ratios summing to "1.0"
+    Examples:
+      | naics  |
+      | 111111 |
+      | 399100 |
+      | 459000 |
+
   Scenario Outline: Industry sector shares committee starting from merchant category
-    Given a purchase emitter 
+    Given a purchase emitter
     And a characteristic "merchant_category.mcc" of "<mcc>"
     And a characteristic "adjusted_cost" of "100.00"
     When the "merchant_category_industries" committee is calculated
