@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    purchase (1.0.2)
+    purchase (1.0.3)
       earth (~> 0.2.4)
       emitter (~> 0.1.4)
       fastercsv (~> 1.5.3)
@@ -189,7 +189,7 @@ PLATFORMS
 DEPENDENCIES
   activerecord (~> 3.0.0)
   bundler (~> 1.0.0)
-  cucumber (~> 0.9.0)
+  cucumber
   earth (~> 0.2.4)
   emitter (~> 0.1.4)
   fastercsv (~> 1.5.3)
