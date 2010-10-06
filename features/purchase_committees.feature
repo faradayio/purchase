@@ -168,10 +168,10 @@ Feature: Purchase Committee Calculations
     Then the conclusion of the committee should include a key of "<naics>" and value "<ratio>"
     Examples:
       | mcc  | naics  | ratio  |
-      | 2222 | 399100 | 0.1875 |
-      | 2222 | 399200 | 0.0625 |
+      | 2222 | 399100 | 0.375  |
+      | 2222 | 399200 | 0.125  |
 
-  Scenario Outline: Industry ratios committee from non trade industry and industry product ratios 
+  Scenario Outline: Industry ratios committee starting from merchant category
     Given a purchase emitter
     And a characteristic "merchant_category.mcc" of "<mcc>"
     When the "merchant_category_industries" committee is calculated
@@ -185,11 +185,11 @@ Feature: Purchase Committee Calculations
     Examples:
       | mcc  | naics  | ratio  |
       | 1111 | 111111 | 1.0    |
-      | 2222 | 399100 | 0.1875 |
-      | 2222 | 399200 | 0.0625 |
+      | 2222 | 399100 | 0.375  |
+      | 2222 | 399200 | 0.125  |
       | 2222 | 399900 | 0.5    |
 
-  Scenario Outline: Industry ratios committee from industry
+  Scenario Outline: Industry ratios committee starting from industry
     Given a purchase emitter
     And a characteristic "industry.naics_code" of "<naics>"
     When the "non_trade_industry_ratios" committee is calculated
@@ -202,11 +202,12 @@ Feature: Purchase Committee Calculations
     Examples:
       | naics  | new_naics | ratio |
       | 111111 | 111111    | 1.0   |
-      | 459000 | 399100    | 0.375 |
-      | 459000 | 399200    | 0.125 |
-      | 399900 | 399900    | 1.0   |
+      | 399100 | 399100    | 1.0   |
+      | 399200 | 399200    | 1.0   |
+      | 459000 | 399100    | 0.75  |
+      | 459000 | 399200    | 0.25  |
 
-  Scenario Outline: Industry sector ratios committee from merchant category
+  Scenario Outline: Industry sector ratios committee starting from merchant category
     Given a purchase emitter 
     And a characteristic "merchant_category.mcc" of "<mcc>"
     And a characteristic "cost" of "100"
@@ -223,12 +224,12 @@ Feature: Purchase Committee Calculations
     Examples:
       | mcc  | io_code | ratio    |
       | 1111 | 111000  | 1.0      |
-      | 2222 | 3991A0  | 0.140625 |
-      | 2222 | 3991B0  | 0.046875 |
-      | 2222 | 399200  | 0.0625   |
+      | 2222 | 3991A0  | 0.28125  |
+      | 2222 | 3991B0  | 0.09375  |
+      | 2222 | 399200  | 0.125    |
       | 2222 | 399900  | 0.5      |
 
-  Scenario Outline: Industry sector ratios committee from industry
+  Scenario Outline: Industry sector ratios committee starting from industry
     Given a purchase emitter
     And a characteristic "industry.naics_code" of "<naics>"
     When the "non_trade_industry_ratios" committee is calculated
@@ -244,10 +245,11 @@ Feature: Purchase Committee Calculations
       | 111111 | 111000  | 1.0   |
       | 399100 | 3991A0  | 0.75  |
       | 399100 | 3991B0  | 0.25  |
-      | 399200 | 399200  | 1.0   |
-      | 399900 | 399900  | 1.0   |
+      | 459000 | 3991A0  | 0.5625|
+      | 459000 | 3991B0  | 0.1875|
+      | 459000 | 399200  | 0.25  |
 
-  Scenario Outline: Industry sector shares committee from merchant category
+  Scenario Outline: Industry sector shares committee starting from merchant category
     Given a purchase emitter 
     And a characteristic "merchant_category.mcc" of "<mcc>"
     And a characteristic "adjusted_cost" of "100.00"
@@ -264,9 +266,9 @@ Feature: Purchase Committee Calculations
     Examples:
       | mcc  | io_code | share   |
       | 1111 | 111000  | 100.0   |
-      | 2222 | 3991A0  | 14.0625 |
-      | 2222 | 3991B0  | 4.6875  |
-      | 2222 | 399200  | 6.25    |
+      | 2222 | 3991A0  | 28.125  |
+      | 2222 | 3991B0  | 9.375   |
+      | 2222 | 399200  | 12.5    |
       | 2222 | 399900  | 50.0    |
 
   Scenario Outline: Sector shares committee from industry and product line shares
@@ -287,7 +289,7 @@ Feature: Purchase Committee Calculations
     Examples:
       | mcc|111000|3991A0 |3991B0|399200|399900|4A0000|
       |1111|100.00|      0|     0|     0|     0|     0|
-      |2222|     0|14.0625|4.6875|  6.25|  50.0|     0|
+      |2222|     0| 28.125| 9.375|  12.5|  50.0|     0|
 
   Scenario: Sector direct requirements committee
     Given a purchase emitter
