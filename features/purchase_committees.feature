@@ -22,6 +22,13 @@ Feature: Purchase Committee Calculations
     Then the committee should have used quorum "default"
     Then the conclusion of the committee should be "100"
 
+  Scenario: Adjusted cost committee starting from nothing
+    Given a purchase emitter
+    When the "date" committee is calculated
+    And the "cost" committee is calculated
+    And the "adjusted_cost" committee is calculated
+    Then the conclusion of the committee should be "82.85004"
+
   Scenario Outline: Adjusted cost committee from cost and date
     Given a purchase emitter
     And a characteristic "cost" of "<cost>"
