@@ -153,7 +153,7 @@ module BrighterPlanet
               end
             end
 
-            quorum 'from naics code', :needs => :industry do |characteristics|
+            quorum 'from industry', :needs => :industry do |characteristics|
               if characteristics[:industry].trade_industry?
                 { characteristics[:industry].naics_code.to_s => 1 }
               else

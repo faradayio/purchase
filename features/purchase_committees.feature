@@ -76,7 +76,7 @@ Feature: Purchase Committee Calculations
     Given a purchase emitter
     And a characteristic "industry.naics_code" of "<naics>"
     When the "trade_industry_ratios" committee is calculated
-    Then the committee should have used quorum "from naics code"
+    Then the committee should have used quorum "from industry"
     And the conclusion of the committee should include a key of "<naics>" and value "1"
     Examples:
       | naics  |
