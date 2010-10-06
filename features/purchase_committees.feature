@@ -210,8 +210,6 @@ Feature: Purchase Committee Calculations
   Scenario Outline: Industry sector ratios committee starting from merchant category
     Given a purchase emitter 
     And a characteristic "merchant_category.mcc" of "<mcc>"
-    And a characteristic "cost" of "100"
-    And a characteristic "date" of "2010-08-01"
     When the "merchant_category_industries" committee is calculated
     And the "non_trade_industry_ratios" committee is calculated
     And the "trade_industry_ratios" committee is calculated
