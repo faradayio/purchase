@@ -335,6 +335,30 @@ Feature: Purchase Committee Calculations
       | 2222 | 399200  | 12.5    |
       | 2222 | 399900  | 50.0    |
 
+  Scenario Outline: Industry sector shares committee starting from industry
+    Given a purchase emitter
+    And a characteristic "industry.naics_code" of "<naics>"
+    And a characteristic "adjusted_cost" of "100.00"
+    When the "non_trade_industry_ratios" committee is calculated
+    And the "trade_industry_ratios" committee is calculated
+    And the "product_line_ratios" committee is calculated
+    And the "product_line_industry_product_ratios" committee is calculated
+    And the "industry_product_ratios" committee is calculated
+    And the "industry_ratios" committee is calculated
+    And the "industry_sector_ratios" committee is calculated
+    And the "industry_sector_shares" committee is calculated
+    Then the conclusion of the committee should include a key of "<io_code>" and value "<share>"
+    Examples:
+      | naics  | io_code | share |
+      | 111111 | 111000  | 100.0 |
+      | 399100 | 3991A0  | 75.0  |
+      | 399100 | 3991B0  | 25.0  |
+      | 399200 | 399200  | 100.0 |
+      | 399900 | 399900  | 100.0 |
+      | 459000 | 3991A0  | 56.25 |
+      | 459000 | 3991B0  | 18.75 |
+      | 459000 | 399200  | 25.0  |
+
   Scenario Outline: Sector shares committee from industry and product line shares
     Given a purchase emitter
     And a characteristic "merchant_category.mcc" of "<mcc>"
