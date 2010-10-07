@@ -24,7 +24,7 @@ In order to run tests, you must:
 end
 
 require_or_fail('jeweler', 'Jeweler (or a dependency) not available. Install it with: gem install jeweler') do
-  Jeweler::Tasks.new('purchase') do |gem|
+  Jeweler::Tasks.new do |gem|
     gem.name = %q{purchase}
     gem.summary = %q{A carbon model}
     gem.description = %q{A software model in Ruby for the greenhouse gas emissions of a purchase}
