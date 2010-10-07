@@ -57,7 +57,8 @@ module BrighterPlanet
           committee :industry_sector_shares do
             quorum 'from industry sector ratios', :needs => [:industry_sector_ratios, :adjusted_cost] do |characteristics|
               characteristics[:industry_sector_ratios].inject({}) do |new_ratios, (io_code, ratio)|
-                new_ratios[io_code] = ratio * characteristics[:adjusted_cost]
+                new_ratios[io_code] ||= 0
+                new_ratios[io_code] += ratio * characteristics[:adjusted_cost]
                 new_ratios
               end
             end
@@ -67,8 +68,9 @@ module BrighterPlanet
             quorum 'from industry ratios', :needs => :industry_ratios do |characteristics|
               characteristics[:industry_ratios].inject({}) do |new_ratios, (naics_code, ratio)|
                 IndustrySector.where(:naics_code => naics_code).each do |industry_sector|
+                  new_ratios[industry_sector.io_code] ||= 0
                   new_ratio = ratio * industry_sector.ratio
-                  new_ratios[industry_sector.io_code] = new_ratio
+                  new_ratios[industry_sector.io_code] += new_ratio
                 end
                 new_ratios
               end
@@ -80,7 +82,9 @@ module BrighterPlanet
           committee :industry_ratios do
             quorum 'from non trade industry and industry product ratios', :needs => [:non_trade_industry_ratios, :industry_product_ratios] do |characteristics|
               combined_ratios = characteristics[:non_trade_industry_ratios].
-                merge characteristics[:industry_product_ratios]
+                update(characteristics[:industry_product_ratios]) do |key, non_trade, ip_ratio|
+                  non_trade + ip_ratio
+                end
             end
           end
 
@@ -88,7 +92,8 @@ module BrighterPlanet
             quorum 'from product line industry product ratios', :needs => :product_line_industry_product_ratios do |characteristics|
               characteristics[:product_line_industry_product_ratios].inject({}) do |new_ratios, (naics_product_code, ratio)|
                 IndustryProduct.where(:naics_product_code => naics_product_code).each do |industry_product|
-                  new_ratios[industry_product.naics_code] = ratio
+                  new_ratios[industry_product.naics_code] ||= 0
+                  new_ratios[industry_product.naics_code] += ratio
                 end
                 new_ratios
               end
@@ -99,8 +104,9 @@ module BrighterPlanet
             quorum 'from product line ratios', :needs => :product_line_ratios do |characteristics|
               characteristics[:product_line_ratios].inject({}) do |new_ratios, (ps_code, ratio)|
                 ProductLineIndustryProduct.where(:ps_code => ps_code).each do |plip|
+                  new_ratios[plip.naics_product_code] ||= 0
                   new_ratio = ratio * plip.ratio
-                  new_ratios[plip.naics_product_code] = new_ratio
+                  new_ratios[plip.naics_product_code] += new_ratio
                 end
                 new_ratios
               end
@@ -111,8 +117,9 @@ module BrighterPlanet
             quorum 'from trade industry ratios', :needs => :trade_industry_ratios do |characteristics|
               characteristics[:trade_industry_ratios].inject({}) do |new_ratios, (naics, ratio)|
                 IndustryProductLine.where(:naics_code => naics).each do |industry_product_line|
+                  new_ratios[industry_product_line.ps_code] ||= 0
                   new_ratio = ratio * industry_product_line.ratio
-                  new_ratios[industry_product_line.ps_code] = new_ratio
+                  new_ratios[industry_product_line.ps_code] += new_ratio
                 end
                 new_ratios
               end
@@ -131,7 +138,8 @@ module BrighterPlanet
             quorum 'from merchant category industries', :needs => :merchant_category_industries do |characteristics|
               characteristics[:merchant_category_industries].inject({}) do |hash, merchant_category_industry|
                 unless merchant_category_industry.industry.trade_industry?
-                  hash[merchant_category_industry.naics_code] = merchant_category_industry.ratio
+                  hash[merchant_category_industry.naics_code] ||= 0
+                  hash[merchant_category_industry.naics_code] += merchant_category_industry.ratio
                 end
                 hash
               end
@@ -150,7 +158,8 @@ module BrighterPlanet
             quorum 'from merchant category industries', :needs => :merchant_category_industries do |characteristics|
               characteristics[:merchant_category_industries].inject({}) do |hash, merchant_category_industry|
                 if merchant_category_industry.industry.trade_industry?
-                  hash[merchant_category_industry.naics_code] = merchant_category_industry.ratio
+                  hash[merchant_category_industry.naics_code] ||= 0
+                  hash[merchant_category_industry.naics_code] += merchant_category_industry.ratio
                 end
                 hash
               end

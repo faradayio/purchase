@@ -23,7 +23,7 @@ Feature: Purchase Emissions Calculations
     Examples:
       | id  | emission |
       | 1   |  126.538 |
-      | 2   |  220.613 |
+      | 2   |  274.131 |
 
   Scenario Outline: Calculations starting from a merchant with purchase amount
     Given a purchase has "merchant.id" of "<id>"
@@ -33,7 +33,7 @@ Feature: Purchase Emissions Calculations
     Examples:
       | id  | amount | emission |
       | 1   | 107.11 |  126.538 |
-      | 2   | 107.11 |  220.613 |
+      | 2   | 107.11 |  274.131 |
   
   Scenario Outline: Calculations starting from a merchant with purchase amount and date
     Given a purchase has "merchant.id" of "<id>"
@@ -44,7 +44,7 @@ Feature: Purchase Emissions Calculations
     Examples:
       | id  | amount | date       | emission |
       | 1   | 107.11 | 2010-07-28 |  126.538 |
-      | 2   | 107.11 | 2010-07-28 |  220.613 |
+      | 2   | 107.11 | 2010-07-28 |  274.131 |
 
   Scenario Outline: Calculations starting from a merchant with purchase amount, date, and tax
     Given a purchase has "merchant.id" of "<id>"
@@ -56,7 +56,7 @@ Feature: Purchase Emissions Calculations
     Examples:
       | id  | amount | tax  | date       | emission |
       | 1   | 108.00 | 8.00 | 2010-07-28 |  126.538 |
-      | 2   | 108.00 | 8.00 | 2010-07-28 |  220.613 |
+      | 2   | 108.00 | 8.00 | 2010-07-28 |  274.131 |
   
   Scenario Outline: Calculations starting from a merchant category
     Given a purchase has "merchant_category.mcc" of "<mcc>"
@@ -67,7 +67,7 @@ Feature: Purchase Emissions Calculations
     Examples:
       | mcc  | cost   | date       | emission |
       | 1111 | 100.00 | 2010-07-28 |  126.538 |
-      | 2222 | 100.00 | 2010-07-28 |  220.613 |
+      | 2222 | 100.00 | 2010-07-28 |  274.131 |
       | 5111 | 100.00 | 2010-07-28 |  126.538 |
 
   Scenario Outline: Calculations starting from industry
@@ -80,4 +80,4 @@ Feature: Purchase Emissions Calculations
       | naics  | cost   | date       | emission |
       | 111111 | 100.00 | 2010-07-28 |  126.538 |
       | 399900 | 100.00 | 2010-07-28 |  334.190 |
-      | 459000 | 100.00 | 2010-07-28 |  107.036 |
+      | 459000 | 100.00 | 2010-07-28 |  214.072 |
