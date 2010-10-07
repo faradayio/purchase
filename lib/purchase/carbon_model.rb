@@ -136,12 +136,11 @@ module BrighterPlanet
             end
 
             quorum 'from merchant category industries', :needs => :merchant_category_industries do |characteristics|
-              characteristics[:merchant_category_industries].inject({}) do |hash, merchant_category_industry|
-                unless merchant_category_industry.industry.trade_industry?
-                  hash[merchant_category_industry.naics_code] ||= 0
-                  hash[merchant_category_industry.naics_code] += merchant_category_industry.ratio
-                end
-                hash
+              characteristics[:merchant_category_industries].
+                reject { |mci| mci.industry.trade_industry? }.inject({}) do |ntir, merchant_category_industry|
+                  ntir[merchant_category_industry.naics_code] ||= 0
+                  ntir[merchant_category_industry.naics_code] += merchant_category_industry.ratio
+                  ntir
               end
             end
           end
@@ -156,12 +155,11 @@ module BrighterPlanet
             end
 
             quorum 'from merchant category industries', :needs => :merchant_category_industries do |characteristics|
-              characteristics[:merchant_category_industries].inject({}) do |hash, merchant_category_industry|
-                if merchant_category_industry.industry.trade_industry?
-                  hash[merchant_category_industry.naics_code] ||= 0
-                  hash[merchant_category_industry.naics_code] += merchant_category_industry.ratio
-                end
-                hash
+              characteristics[:merchant_category_industries].
+                select { |mci| mci.industry.trade_industry? }.inject({}) do |tir, merchant_category_industry|
+                  tir[merchant_category_industry.naics_code] ||= 0
+                  tir[merchant_category_industry.naics_code] += merchant_category_industry.ratio
+                  tir
               end
             end
           end
