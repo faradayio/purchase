@@ -76,6 +76,8 @@ Feature: Purchase Emissions Calculations
     And it has "date" of "<date>"
     When emissions are calculated
     Then the emission value should be within "0.001" kgs of "<emission>"
+    And the "trade_industry_ratios" committee should have used quorum "from industry"
+    And the "non_trade_industry_ratios" committee should have used quorum "from industry"
     Examples:
       | naics  | cost   | date       | emission |
       | 111111 | 100.00 | 2010-07-28 |  126.538 |
