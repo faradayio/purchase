@@ -82,7 +82,7 @@ module BrighterPlanet
           committee :industry_ratios do
             quorum 'from non trade industry and industry product ratios', :needs => [:non_trade_industry_ratios, :industry_product_ratios] do |characteristics|
               combined_ratios = characteristics[:non_trade_industry_ratios].
-                update(characteristics[:industry_product_ratios]) do |key, non_trade, ip_ratio|
+                merge(characteristics[:industry_product_ratios]) do |key, non_trade, ip_ratio|
                   non_trade + ip_ratio
                 end
             end
