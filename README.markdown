@@ -79,4 +79,4 @@ Brighter Planet vigorously encourages collaborative improvement of its emitter l
 
 ## Copyright
 
-Copyright (c) 2010 Brighter Planet. See LICENSE for details.
+Copyright © 2010 Brighter Planet. See LICENSE for details. Contact Brighter Planet for dual-license arrangements.
