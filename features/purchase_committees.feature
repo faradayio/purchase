@@ -352,9 +352,9 @@ Feature: Purchase Committee Calculations
     When the "sector_direct_requirements" committee is calculated
     Then the conclusion of the committee should be a square matrix with "6" rows and columns
 
-  Scenario: Economic flows from merchant category
+  Scenario Outline: Economic flows from merchant category
     Given a purchase emitter
-    And a characteristic "merchant_category.mcc" of "1111"
+    And a characteristic "merchant_category.mcc" of "<mcc>"
     And a characteristic "adjusted_cost" of "100"
     When the "merchant_category_industries" committee is calculated
     And the "non_trade_industry_ratios" committee is calculated
@@ -368,7 +368,11 @@ Feature: Purchase Committee Calculations
     And the "sector_shares" committee is calculated
     And the "sector_direct_requirements" committee is calculated
     And the "economic_flows" committee is calculated
-    Then the conclusion of the committee should be a vector with "6" items
+    Then the conclusion of the committee should be a vector with values "<111000>,<3991A0>,<3991B0>,<399200>,<399900>,<4A0000>"
+    Examples:
+      | mcc|111000    |3991A0     |3991B0    |399200    |399900     |4A0000    |
+      |1111|111.66    |12.526     |15.614    |15.464    |18.444     |18.27     |
+      |2222|43.1583125|70.30915625|62.2195625|64.6255625|110.2403125|62.0304375|
 
   Scenario: Impact vectors committee
     Given a purchase emitter
