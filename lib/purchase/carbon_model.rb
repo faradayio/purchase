@@ -129,8 +129,12 @@ module BrighterPlanet
 
           committee :product_line_ratios do
             quorum 'from trade industry ratios', :needs => :trade_industry_ratios do |characteristics|
+              naics_codes = characteristics[:trade_industry_ratios].keys
+              industry_product_lines = IndustryProductLine.where(:naics_code => naics_codes)
               characteristics[:trade_industry_ratios].inject({}) do |new_ratios, (naics, ratio)|
-                IndustryProductLine.where(:naics_code => naics).each do |industry_product_line|
+                industry_product_lines.
+                  find_all { |i| i.naics_code == naics}.
+                  each do |industry_product_line|
                   new_ratios[industry_product_line.ps_code] ||= 0
                   new_ratio = ratio * industry_product_line.ratio
                   new_ratios[industry_product_line.ps_code] += new_ratio
@@ -191,7 +195,10 @@ module BrighterPlanet
             end
             
             quorum 'default' do
-              MerchantCategory.find_by_mcc 5111, :include => :merchant_category_industries
+              MerchantCategory.
+                joins(:merchant_category_industries).
+                where(:mcc => 5111).
+                first
             end
           end
           
