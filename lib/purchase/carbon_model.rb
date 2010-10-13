@@ -70,8 +70,12 @@ module BrighterPlanet
 
           committee :industry_sector_ratios do
             quorum 'from industry ratios', :needs => :industry_ratios do |characteristics|
+              naics_codes = characteristics[:industry_ratios].keys
+              industry_sectors = IndustrySector.where(:naics_code => naics_codes)
               characteristics[:industry_ratios].inject({}) do |new_ratios, (naics_code, ratio)|
-                IndustrySector.where(:naics_code => naics_code).each do |industry_sector|
+                industry_sectors.
+                  find_all { |i| i.naics_code == naics_code }.
+                  each do |industry_sector|
                   new_ratios[industry_sector.io_code] ||= 0
                   new_ratio = ratio * industry_sector.ratio
                   new_ratios[industry_sector.io_code] += new_ratio
@@ -94,8 +98,12 @@ module BrighterPlanet
 
           committee :industry_product_ratios do
             quorum 'from product line industry product ratios', :needs => :product_line_industry_product_ratios do |characteristics|
+              naics_product_codes = characteristics[:product_line_industry_product_ratios].keys
+              industry_products = IndustryProduct.where(:naics_product_code => naics_product_codes)
               characteristics[:product_line_industry_product_ratios].inject({}) do |new_ratios, (naics_product_code, ratio)|
-                IndustryProduct.where(:naics_product_code => naics_product_code).each do |industry_product|
+                industry_products.
+                  find_all { |i| i.naics_product_code == naics_product_code }.
+                  each do |industry_product|
                   new_ratios[industry_product.naics_code] ||= 0
                   new_ratios[industry_product.naics_code] += ratio
                 end
@@ -106,8 +114,10 @@ module BrighterPlanet
 
           committee :product_line_industry_product_ratios do
             quorum 'from product line ratios', :needs => :product_line_ratios do |characteristics|
+              ps_codes = characteristics[:product_line_ratios].keys
+              plips = ProductLineIndustryProduct.where(:ps_code => ps_codes)
               characteristics[:product_line_ratios].inject({}) do |new_ratios, (ps_code, ratio)|
-                ProductLineIndustryProduct.where(:ps_code => ps_code).each do |plip|
+                plips.find_all { |p| p.ps_code == ps_code }.each do |plip|
                   new_ratios[plip.naics_product_code] ||= 0
                   new_ratio = ratio * plip.ratio
                   new_ratios[plip.naics_product_code] += new_ratio
@@ -181,7 +191,7 @@ module BrighterPlanet
             end
             
             quorum 'default' do
-              MerchantCategory.find_by_mcc 5111
+              MerchantCategory.find_by_mcc 5111, :include => :merchant_category_industries
             end
           end
           
