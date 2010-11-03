@@ -44,6 +44,7 @@ require_or_fail('jeweler', 'Jeweler (or a dependency) not available. Install it 
     gem.add_development_dependency 'rdoc'
     gem.add_development_dependency 'rspec', '~>2.0.0.beta.17'
     gem.add_development_dependency 'sniff', '~>0.2.3' unless ENV['LOCAL_SNIFF']
+    gem.add_runtime_dependency 'actionpack', '~> 3.0.1'
     gem.add_runtime_dependency 'earth', '~>0.2.4' unless ENV['LOCAL_EARTH']
     gem.add_runtime_dependency 'emitter', '~>0.1.9' unless ENV['LOCAL_EMITTER']
     gem.add_runtime_dependency 'fastercsv', '~>1.5.3' unless ENV['LOCAL_EMITTER']

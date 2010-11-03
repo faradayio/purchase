@@ -2,6 +2,7 @@ PATH
   remote: .
   specs:
     purchase (1.0.8)
+      actionpack (~> 3.0.1)
       earth (~> 0.2.4)
       emitter (~> 0.1.9)
       fastercsv (~> 1.5.3)
@@ -14,6 +15,17 @@ GEM
       builder (>= 2.1.2)
       hoe (>= 1.2.1)
     aaronh-chronic (0.3.9)
+    abstract (1.0.0)
+    actionpack (3.0.1)
+      activemodel (= 3.0.1)
+      activesupport (= 3.0.1)
+      builder (~> 2.1.2)
+      erubis (~> 2.6.6)
+      i18n (~> 0.4.1)
+      rack (~> 1.2.1)
+      rack-mount (~> 0.6.12)
+      rack-test (~> 0.5.4)
+      tzinfo (~> 0.3.23)
     activemodel (3.0.1)
       activesupport (= 3.0.1)
       builder (~> 2.1.2)
@@ -82,6 +94,8 @@ GEM
     errata (0.2.4)
       activesupport (>= 2.3.4)
       remote_table (>= 0.2.31)
+    erubis (2.6.6)
+      abstract (>= 1.0.0)
     escape (0.0.4)
     falls_back_on (0.0.3)
       activerecord
@@ -117,6 +131,10 @@ GEM
     mime-types (1.16)
     nokogiri (1.4.3.1)
     rack (1.2.1)
+    rack-mount (0.6.13)
+      rack (>= 1.0.0)
+    rack-test (0.5.6)
+      rack (>= 1.0)
     rake (0.8.7)
     rdoc (2.5.11)
     remote_table (0.2.32)
@@ -188,6 +206,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  actionpack (~> 3.0.1)
   activerecord (~> 3.0.0)
   bundler (~> 1.0.0)
   cucumber
