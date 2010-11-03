@@ -11,7 +11,12 @@ module BrighterPlanet
           has :tax             # tax portion of purchase
           has :date
           has :merchant
-          has :merchant_category
+          has :merchant_category do
+            displays { |mc| mc.name }
+          end
+          has :merchant_category_industries do
+            displays { |mci| "#{mci.count} merchant categories" }
+          end
           has :industry
         end
         base.add_implicit_characteristics
