@@ -161,6 +161,13 @@ module BrighterPlanet
                   ntir
               end
             end
+            
+            # FIXME TODO 11/15/2010
+            # NAICS 339991 chosen because it's emissions intensity is close to the average of the entire U.S. economy
+            # (calculated by multiplying each sector's emissions intensity by it's share of total 2002 value)
+            quorum 'default' do
+              { '339991' => 1 }
+            end
           end
 
           committee :trade_industry_ratios do
@@ -180,6 +187,10 @@ module BrighterPlanet
                   tir
               end
             end
+            
+            quorum 'default' do
+              {}
+            end
           end
 
           # a dictionary to go from merchant categories to industries
@@ -193,18 +204,11 @@ module BrighterPlanet
             quorum 'from merchant', :needs => [:merchant] do |characteristics|
               characteristics[:merchant].merchant_category
             end
-            
-            quorum 'default' do
-              MerchantCategory.
-                joins(:merchant_category_industries).
-                where(:mcc => 5111).
-                first
-            end
           end
           
           committee :adjusted_cost do
             quorum 'from cost and date', :needs => [:cost, :date] do |characteristics|
-              # TODO: Come up with a way to fetch real CPI conversions
+              # FIXME TODO: Import CPI conversions
               @cpi_lookup ||= { 
                 2009 => 1.189, 2010 => 1.207, 2011 => 1.225, 2012 => 1.245, 
                 2013 => 1.265 }
@@ -222,14 +226,16 @@ module BrighterPlanet
               characteristics[:purchase_amount].to_f - characteristics[:tax].to_f
             end
             
+            # Based on http://www.thestc.com/STrates.stm weighted by US Census 2010 projected state population (exclude samoa, guam, pr)
             quorum 'from purchase amount', :needs => :purchase_amount do |characteristics|
-              # tax based on http://www.thestc.com/STrates.stm weighted by US Census 2010 projected state population (exclude samoa, guam, pr)
               characteristics[:purchase_amount].to_f / 1.0711
             end
             
+            # FIXME TODO 11/15/2010
+            # This is the average federal government purchase card transaction in 2003, converted to 2010 dollars, with tax taken out
+            # See http://www.sba.gov/advo/research/rs226tot.pdf
             quorum 'default' do
-              # FIXME TODO research real average purchase amount
-              100
+              624
             end
           end
 

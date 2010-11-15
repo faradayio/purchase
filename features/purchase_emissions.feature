@@ -4,7 +4,7 @@ Feature: Purchase Emissions Calculations
   Scenario: Calculations starting from nothing
     Given a purchase has nothing
     When emissions are calculated
-    Then the emission value should be within "0.001" kgs of "126.538"
+    Then the emission value should be within "0.001" kgs of "789.601"
 
   Scenario: Calculations starting from purchase amount
     Given a purchase has "purchase_amount" of "107.11"
@@ -14,7 +14,7 @@ Feature: Purchase Emissions Calculations
   Scenario: Calculations starting from date
     Given a purchase has "date" of "2010-07-28"
     When emissions are calculated
-    Then the emission value should be within "0.001" kgs of "126.538"
+    Then the emission value should be within "0.001" kgs of "789.601"
 
   Scenario Outline: Calculations starting from a merchant
     Given a purchase has "merchant.id" of "<id>"
@@ -22,8 +22,8 @@ Feature: Purchase Emissions Calculations
     Then the emission value should be within "0.001" kgs of "<emission>"
     Examples:
       | id  | emission |
-      | 1   |  126.538 |
-      | 2   |  274.131 |
+      | 1   |  789.601 |
+      | 2   | 1710.581 |
 
   Scenario Outline: Calculations starting from a merchant with purchase amount
     Given a purchase has "merchant.id" of "<id>"
@@ -68,7 +68,6 @@ Feature: Purchase Emissions Calculations
       | mcc  | cost   | date       | emission |
       | 1111 | 100.00 | 2010-07-28 |  126.538 |
       | 2222 | 100.00 | 2010-07-28 |  274.131 |
-      | 5111 | 100.00 | 2010-07-28 |  126.538 |
 
   Scenario Outline: Calculations starting from industry
     Given a purchase has "industry.naics_code" of "<naics>"
