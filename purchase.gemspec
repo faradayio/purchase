@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{purchase}
-  s.version = "1.0.9"
+  s.version = "1.0.10"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Andy Rossmeissl", "Seamus Abshere", "Ian Hough", "Matt Kling", "Derek Kastner"]
-  s.date = %q{2010-11-03}
+  s.date = %q{2010-11-16}
   s.description = %q{A software model in Ruby for the greenhouse gas emissions of a purchase}
   s.email = %q{seamus@brighterplanet.com}
   s.extra_rdoc_files = [
@@ -36,18 +36,18 @@ Gem::Specification.new do |s|
   s.rubygems_version = %q{1.3.7}
   s.summary = %q{A carbon model}
   s.test_files = [
-    "features/support/matrix_ext.rb",
-     "features/support/env.rb",
+    "features/step_definitions/characteristic_steps.rb",
      "features/step_definitions/matrix_steps.rb",
      "features/step_definitions/purchase_steps.rb",
-     "features/step_definitions/characteristic_steps.rb",
+     "features/support/env.rb",
+     "features/support/matrix_ext.rb",
      "features/purchase_characterization.feature",
      "features/purchase_committees.feature",
      "features/purchase_emissions.feature",
-     "lib/test_support/test_sector_direct_requirements_adapter.rb",
      "lib/test_support/db/schema.rb",
      "lib/test_support/purchase_record.rb",
-     "lib/test_support/test_impact_vectors_adapter.rb"
+     "lib/test_support/test_impact_vectors_adapter.rb",
+     "lib/test_support/test_sector_direct_requirements_adapter.rb"
   ]
 
   if s.respond_to? :specification_version then
