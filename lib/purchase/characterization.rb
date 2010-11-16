@@ -13,14 +13,17 @@ module BrighterPlanet
           has :purchase_amount # full purchase amount, including tax
           has :tax             # tax portion of purchase
           has :date
-          has :merchant
-          has :industry
-
+          has :merchant do
+            displays { |m| m.name }
+          end
           has :merchant_category do
-            displays { |mc| mc.name }
+            displays { |mc| mc.description }
           end
           has :merchant_category_industries do
             displays { |mci| pluralize(mci.count, 'merchant category') }
+          end
+          has :industry do
+            displays { |ind| ind.description }
           end
           has :trade_industry_ratios do
             displays { |tir| pluralize(tir.count, 'trade industry ratio') }
