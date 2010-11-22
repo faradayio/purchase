@@ -162,7 +162,6 @@ module BrighterPlanet
               end
             end
             
-            # FIXME TODO 11/15/2010
             # NAICS 339991 chosen because it's emissions intensity is close to the average of the entire U.S. economy
             # (calculated by multiplying each sector's emissions intensity by it's share of total 2002 value)
             quorum 'default' do
@@ -219,6 +218,12 @@ module BrighterPlanet
 
               characteristics[:cost].to_f / conversion_factor
             end
+            
+            # This is the average federal government purchase card transaction in 2003, converted to 2002 dollars, with tax taken out
+            # See http://www.sba.gov/advo/research/rs226tot.pdf
+            quorum 'default' do
+              517
+            end
           end
             
           committee :cost do
@@ -229,13 +234,6 @@ module BrighterPlanet
             # Based on http://www.thestc.com/STrates.stm weighted by US Census 2010 projected state population (exclude samoa, guam, pr)
             quorum 'from purchase amount', :needs => :purchase_amount do |characteristics|
               characteristics[:purchase_amount].to_f / 1.0711
-            end
-            
-            # FIXME TODO 11/15/2010
-            # This is the average federal government purchase card transaction in 2003, converted to 2010 dollars, with tax taken out
-            # See http://www.sba.gov/advo/research/rs226tot.pdf
-            quorum 'default' do
-              624
             end
           end
 

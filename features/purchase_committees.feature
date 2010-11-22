@@ -16,25 +16,19 @@ Feature: Purchase Committee Calculations
     Then the committee should have used quorum "from purchase amount and tax"
     And the conclusion of the committee should be "9.00"
 
-  Scenario: Cost committee from default
+  Scenario: Adjusted cost committee from default
     Given a purchase emitter
-    When the "cost" committee is calculated
+    When the "adjusted_cost" committee is calculated
     Then the committee should have used quorum "default"
-    Then the conclusion of the committee should be "624.00"
-
-  Scenario: Adjusted cost committee starting from nothing
-    Given a purchase emitter
-    When the "date" committee is calculated
-    And the "cost" committee is calculated
-    And the "adjusted_cost" committee is calculated
-    Then the conclusion of the committee should be "516.98426"
+    And the conclusion of the committee should be "517.00"
 
   Scenario Outline: Adjusted cost committee from cost and date
     Given a purchase emitter
     And a characteristic "cost" of "<cost>"
     And characteristic "date" of "<date>"
     When the "adjusted_cost" committee is calculated
-    Then the conclusion of the committee should be "<adjusted_cost>"
+    Then the committee should have used quorum "from cost and date"
+    And the conclusion of the committee should be "<adjusted_cost>"
     Examples:
       | cost   | date       | adjusted_cost |
       | 831.23 | 2010-08-01 |     688.67439 |
