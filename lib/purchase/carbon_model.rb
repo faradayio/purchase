@@ -12,7 +12,6 @@ module BrighterPlanet
     module CarbonModel
       def self.included(base)
         base.extend ::Leap::Subject
-        base.extend FastTimestamp
 
         base.decide :emission, :with => :characteristics do
           committee :emission do
