@@ -65,7 +65,6 @@ module BrighterPlanet
             displays { |i| "#{i.size}-element impacts vector" }
           end
         end
-        base.add_implicit_characteristics
       end
     end
   end
