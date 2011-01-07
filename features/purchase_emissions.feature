@@ -8,6 +8,7 @@ Feature: Purchase Emissions Calculations
 
   Scenario: Calculations starting from purchase amount
     Given a purchase has "purchase_amount" of "107.11"
+    And it is the year "2010"
     When emissions are calculated
     Then the emission value should be within "0.001" kgs of "126.538"
 
@@ -18,6 +19,7 @@ Feature: Purchase Emissions Calculations
 
   Scenario Outline: Calculations starting from a merchant
     Given a purchase has "merchant.id" of "<id>"
+    And it is the year "2010"
     When emissions are calculated
     Then the emission value should be within "0.001" kgs of "<emission>"
     Examples:
