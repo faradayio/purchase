@@ -18,6 +18,7 @@ Feature: Purchase Committee Calculations
 
   Scenario: Adjusted cost committee from default
     Given a purchase emitter
+    And it is the year "2010"
     When the "adjusted_cost" committee is calculated
     Then the committee should have used quorum "default"
     And the conclusion of the committee should be "517.00"

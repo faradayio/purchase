@@ -6,6 +6,7 @@ require 'leap'
 require 'timeframe'
 require 'date'
 require 'matrix'
+require 'fast_timestamp'
 
 module BrighterPlanet
   module Purchase
