@@ -1,4 +1,3 @@
-require 'characterizable'
 require 'action_view'
 
 module BrighterPlanet
@@ -7,7 +6,6 @@ module BrighterPlanet
       extend ActionView::Helpers::TextHelper
 
       def self.included(base)
-        base.send :include, Characterizable
         base.characterize do
           has :cost            # cost before tax
           has :purchase_amount # full purchase amount, including tax
