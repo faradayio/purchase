@@ -1,16 +1,8 @@
-gem 'characterizable', :path => ENV['LOCAL_CHARACTERIZABLE'] if ENV['LOCAL_CHARACTERIZABLE']
-gem 'sniff', :path => ENV['LOCAL_SNIFF'] if ENV['LOCAL_SNIFF']
-gem 'falls_back_on', :path => ENV['LOCAL_FALLS_BACK_ON'] if ENV['LOCAL_FALLS_BACK_ON']
-gem 'loose_tight_dictionary', :path => ENV['LOCAL_LOOSE_TIGHT_DICTIONARY'] if ENV['LOCAL_LOOSE_TIGHT_DICTIONARY']
-gem 'cohort_scope', :path => ENV['LOCAL_COHORT_SCOPE'] if ENV['LOCAL_COHORT_SCOPE']
-gem 'leap', :path => ENV['LOCAL_LEAP'] if ENV['LOCAL_LEAP']
-gem 'data_miner', :path => ENV['LOCAL_DATA_MINER'] if ENV['LOCAL_DATA_MINER']
-gem 'earth', :path => ENV['LOCAL_EARTH'] if ENV['LOCAL_EARTH']
 gem 'emitter', :path => ENV['LOCAL_EMITTER'] if ENV['LOCAL_EMITTER']
-
-gem 'remote_table', :path => ENV['LOCAL_REMOTE_TABLE'] if ENV['LOCAL_REMOTE_TABLE']
-
+gem 'sniff', :path => ENV['LOCAL_SNIFF'] if ENV['LOCAL_SNIFF']
+gem 'earth', :path => ENV['LOCAL_EARTH'] if ENV['LOCAL_EARTH']
+gem 'data_miner', :path => ENV['LOCAL_DATA_MINER'] if ENV['LOCAL_DATA_MINER']
+gem 'create_table', :path => ENV['LOCAL_CREATE_TABLE'] if ENV['LOCAL_CREATE_TABLE']
 source :rubygems
 
 gemspec :path => '.'
-

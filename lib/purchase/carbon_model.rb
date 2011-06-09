@@ -6,7 +6,6 @@ require 'leap'
 require 'timeframe'
 require 'date'
 require 'matrix'
-require 'fast_timestamp'
 
 module BrighterPlanet
   module Purchase
@@ -23,7 +22,11 @@ module BrighterPlanet
 
           committee :impacts do
             quorum 'from economic flows and impact vectors', :needs => [:economic_flows, :impact_vectors] do |characteristics|
-              characteristics[:impact_vectors] * characteristics[:economic_flows]
+              x = characteristics[:impact_vectors]
+              y = characteristics[:economic_flows]
+              x = x.respond_to?(:value) ? x.value : x
+              y = y.respond_to?(:value) ? y.value : y
+              x * y
             end
           end
 
@@ -38,6 +41,8 @@ module BrighterPlanet
             quorum 'from sector shares, a', :needs => [:sector_shares, :sector_direct_requirements] do |characteristics|
               y = characteristics[:sector_shares]
               leonteif_inverse = characteristics[:sector_direct_requirements]
+              y = y.respond_to?(:value) ? y.value : y
+              leonteif_inverse = leonteif_inverse.respond_to?(:value) ? leonteif_inverse.value : leonteif_inverse
               leonteif_inverse * y
             end
           end

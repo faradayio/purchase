@@ -6,20 +6,14 @@ module BrighterPlanet
 
     class << self
       def sector_direct_requirements_adapter
-        return @sector_direct_requirements_adapter if @sector_direct_requirements_adapter
-
-        require 'test_support/test_sector_direct_requirements_adapter'
-        @sector_direct_requirements_adapter = TestSectorDirectRequirementsAdapter
+        @sector_direct_requirements_adapter
       end
       def sector_direct_requirements_adapter=(val)
         @sector_direct_requirements_adapter = val
       end
 
       def impact_vectors_adapter
-        return @impact_vectors_adapter if @impact_vectors_adapter
-
-        require 'test_support/test_impact_vectors_adapter'
-        @impact_vectors_adapter = TestImpactVectorsAdapter
+        @impact_vectors_adapter
       end
       def impact_vectors_adapter=(val)
         @impact_vectors_adapter = val
