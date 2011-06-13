@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <title>carbon_model.rb</title>
+  <link rel="stylesheet" href="http://jashkenas.github.com/docco/resources/docco.css">
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-1667526-20']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+</head>
+
+<body>
+<div id='container'>
+  <div id="background"></div>
+  <table cellspacing=0 cellpadding=0>
+  <thead>
+    <tr>
+      <th class=docs><h1>carbon_model.rb</h1></th>
+      <th class=code></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr id='section-1'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-1">&#182;</a>
+        </div>
+        <p>Copyright © 2010 Brighter Planet.
+See LICENSE for details.
+Contact Brighter Planet for dual-license arrangements.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="nb">require</span> <span class="s1">&#39;leap&#39;</span>
+<span class="nb">require</span> <span class="s1">&#39;timeframe&#39;</span>
+<span class="nb">require</span> <span class="s1">&#39;date&#39;</span>
+<span class="nb">require</span> <span class="s1">&#39;matrix&#39;</span>
+
+<span class="k">module</span> <span class="nn">BrighterPlanet</span>
+  <span class="k">module</span> <span class="nn">Purchase</span>
+    <span class="k">module</span> <span class="nn">CarbonModel</span>
+      <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">included</span><span class="p">(</span><span class="n">base</span><span class="p">)</span>
+        <span class="n">base</span><span class="o">.</span><span class="n">extend</span> <span class="o">::</span><span class="no">Leap</span><span class="o">::</span><span class="no">Subject</span>
+
+        <span class="n">base</span><span class="o">.</span><span class="n">decide</span> <span class="ss">:emission</span><span class="p">,</span> <span class="ss">:with</span> <span class="o">=&gt;</span> <span class="ss">:characteristics</span> <span class="k">do</span>
+          <span class="n">committee</span> <span class="ss">:emission</span> <span class="k">do</span>
+            <span class="n">quorum</span> <span class="s1">&#39;from impacts&#39;</span><span class="p">,</span> <span class="ss">:needs</span> <span class="o">=&gt;</span> <span class="ss">:impacts</span> <span class="k">do</span> <span class="o">|</span><span class="n">characteristics</span><span class="o">|</span>
+              <span class="n">characteristics</span><span class="o">[</span><span class="ss">:impacts</span><span class="o">].</span><span class="n">to_a</span><span class="o">.</span><span class="n">sum</span>
+            <span class="k">end</span>
+          <span class="k">end</span>
+
+          <span class="n">committee</span> <span class="ss">:impacts</span> <span class="k">do</span>
+            <span class="n">quorum</span> <span class="s1">&#39;from economic flows and impact vectors&#39;</span><span class="p">,</span> <span class="ss">:needs</span> <span class="o">=&gt;</span> <span class="o">[</span><span class="ss">:economic_flows</span><span class="p">,</span> <span class="ss">:impact_vectors</span><span class="o">]</span> <span class="k">do</span> <span class="o">|</span><span class="n">characteristics</span><span class="o">|</span>
+              <span class="n">x</span> <span class="o">=</span> <span class="n">characteristics</span><span class="o">[</span><span class="ss">:impact_vectors</span><span class="o">]</span>
+              <span class="n">y</span> <span class="o">=</span> <span class="n">characteristics</span><span class="o">[</span><span class="ss">:economic_flows</span><span class="o">]</span>
+              <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">respond_to?</span><span class="p">(</span><span class="ss">:value</span><span class="p">)</span> <span class="p">?</span> <span class="n">x</span><span class="o">.</span><span class="n">value</span> <span class="p">:</span> <span class="n">x</span>
+              <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">respond_to?</span><span class="p">(</span><span class="ss">:value</span><span class="p">)</span> <span class="p">?</span> <span class="n">y</span><span class="o">.</span><span class="n">value</span> <span class="p">:</span> <span class="n">y</span>
+              <span class="n">x</span> <span class="o">*</span> <span class="n">y</span>
+            <span class="k">end</span>
+          <span class="k">end</span>
+
+          <span class="n">committee</span> <span class="ss">:impact_vectors</span> <span class="k">do</span>
+            <span class="n">quorum</span> <span class="s1">&#39;from database&#39;</span> <span class="k">do</span>
+              <span class="n">adapter</span> <span class="o">=</span> <span class="no">BrighterPlanet</span><span class="o">::</span><span class="no">Purchase</span><span class="o">.</span><span class="n">impact_vectors_adapter</span>
+              <span class="n">adapter</span><span class="o">.</span><span class="n">matrix</span>
+            <span class="k">end</span>
+          <span class="k">end</span>
+
+          <span class="n">committee</span> <span class="ss">:economic_flows</span> <span class="k">do</span>
+            <span class="n">quorum</span> <span class="s1">&#39;from sector shares, a&#39;</span><span class="p">,</span> <span class="ss">:needs</span> <span class="o">=&gt;</span> <span class="o">[</span><span class="ss">:sector_shares</span><span class="p">,</span> <span class="ss">:sector_direct_requirements</span><span class="o">]</span> <span class="k">do</span> <span class="o">|</span><span class="n">characteristics</span><span class="o">|</span>
+              <span class="n">y</span> <span class="o">=</span> <span class="n">characteristics</span><span class="o">[</span><span class="ss">:sector_shares</span><span class="o">]</span>
+              <span class="n">leonteif_inverse</span> <span class="o">=</span> <span class="n">characteristics</span><span class="o">[</span><span class="ss">:sector_direct_requirements</span><span class="o">]</span>
+              <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">respond_to?</span><span class="p">(</span><span class="ss">:value</span><span class="p">)</span> <span class="p">?</span> <span class="n">y</span><span class="o">.</span><span class="n">value</span> <span class="p">:</span> <span class="n">y</span>
+              <span class="n">leonteif_inverse</span> <span class="o">=</span> <span class="n">leonteif_inverse</span><span class="o">.</span><span class="n">respond_to?</span><span class="p">(</span><span class="ss">:value</span><span class="p">)</span> <span class="p">?</span> <span class="n">leonteif_inverse</span><span class="o">.</span><span class="n">value</span> <span class="p">:</span> <span class="n">leonteif_inverse</span>
+              <span class="n">leonteif_inverse</span> <span class="o">*</span> <span class="n">y</span>
+            <span class="k">end</span>
+          <span class="k">end</span>
+
+          <span class="n">committee</span> <span class="ss">:sector_direct_requirements</span> <span class="k">do</span>
+            <span class="n">quorum</span> <span class="s1">&#39;from database&#39;</span> <span class="k">do</span>
+              <span class="n">adapter</span> <span class="o">=</span> <span class="no">BrighterPlanet</span><span class="o">::</span><span class="no">Purchase</span><span class="o">.</span><span class="n">sector_direct_requirements_adapter</span>
+              <span class="n">adapter</span><span class="o">.</span><span class="n">matrix</span>
+            <span class="k">end</span>
+          <span class="k">end</span>
+          
+          <span class="n">committee</span> <span class="ss">:sector_shares</span> <span class="k">do</span>
+            <span class="n">quorum</span> <span class="s1">&#39;from industry sector shares&#39;</span><span class="p">,</span> <span class="ss">:needs</span> <span class="o">=&gt;</span> <span class="ss">:industry_sector_shares</span> <span class="k">do</span> <span class="o">|</span><span class="n">characteristics</span><span class="o">|</span>
+              <span class="n">shares</span> <span class="o">=</span> <span class="no">BrighterPlanet</span><span class="o">::</span><span class="no">Purchase</span><span class="o">.</span><span class="n">key_map</span><span class="o">.</span><span class="n">map</span> <span class="k">do</span> <span class="o">|</span><span class="n">key</span><span class="o">|</span>
+                <span class="n">characteristics</span><span class="o">[</span><span class="ss">:industry_sector_shares</span><span class="o">][</span><span class="n">key</span><span class="o">]</span> <span class="o">||</span> <span class="mi">0</span>
+              <span class="k">end</span>
+              <span class="no">Vector</span><span class="o">[*</span><span class="n">shares</span><span class="o">]</span>
+            <span class="k">end</span>
+          <span class="k">end</span>
+
+          <span class="n">committee</span> <span class="ss">:industry_sector_shares</span> <span class="k">do</span>
+            <span class="n">quorum</span> <span class="s1">&#39;from industry sector ratios&#39;</span><span class="p">,</span> <span class="ss">:needs</span> <span class="o">=&gt;</span> <span class="o">[</span><span class="ss">:industry_sector_ratios</span><span class="p">,</span> <span class="ss">:adjusted_cost</span><span class="o">]</span> <span class="k">do</span> <span class="o">|</span><span class="n">characteristics</span><span class="o">|</span>
+              <span class="n">characteristics</span><span class="o">[</span><span class="ss">:industry_sector_ratios</span><span class="o">].</span><span class="n">inject</span><span class="p">({})</span> <span class="k">do</span> <span class="o">|</span><span class="n">new_ratios</span><span class="p">,</span> <span class="p">(</span><span class="n">io_code</span><span class="p">,</span> <span class="n">ratio</span><span class="p">)</span><span class="o">|</span>
+                <span class="n">new_ratios</span><span class="o">[</span><span class="n">io_code</span><span class="o">]</span> <span class="o">||=</span> <span class="mi">0</span>
+                <span class="n">new_ratios</span><span class="o">[</span><span class="n">io_code</span><span class="o">]</span> <span class="o">+=</span> <span class="n">ratio</span> <span class="o">*</span> <span class="n">characteristics</span><span class="o">[</span><span class="ss">:adjusted_cost</span><span class="o">]</span>
+                <span class="n">new_ratios</span>
+              <span class="k">end</span>
+            <span class="k">end</span>
+          <span class="k">end</span>
+
+          <span class="n">committee</span> <span class="ss">:industry_sector_ratios</span> <span class="k">do</span>
+            <span class="n">quorum</span> <span class="s1">&#39;from industry ratios&#39;</span><span class="p">,</span> <span class="ss">:needs</span> <span class="o">=&gt;</span> <span class="ss">:industry_ratios</span> <span class="k">do</span> <span class="o">|</span><span class="n">characteristics</span><span class="o">|</span>
+              <span class="n">naics_codes</span> <span class="o">=</span> <span class="n">characteristics</span><span class="o">[</span><span class="ss">:industry_ratios</span><span class="o">].</span><span class="n">keys</span>
+              <span class="n">industry_sectors</span> <span class="o">=</span> <span class="no">IndustrySector</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="ss">:naics_code</span> <span class="o">=&gt;</span> <span class="n">naics_codes</span><span class="p">)</span>
+              <span class="n">characteristics</span><span class="o">[</span><span class="ss">:industry_ratios</span><span class="o">].</span><span class="n">inject</span><span class="p">({})</span> <span class="k">do</span> <span class="o">|</span><span class="n">new_ratios</span><span class="p">,</span> <span class="p">(</span><span class="n">naics_code</span><span class="p">,</span> <span class="n">ratio</span><span class="p">)</span><span class="o">|</span>
+                <span class="n">industry_sectors</span><span class="o">.</span>
+                  <span class="n">find_all</span> <span class="p">{</span> <span class="o">|</span><span class="n">i</span><span class="o">|</span> <span class="n">i</span><span class="o">.</span><span class="n">naics_code</span> <span class="o">==</span> <span class="n">naics_code</span> <span class="p">}</span><span class="o">.</span>
+                  <span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">industry_sector</span><span class="o">|</span>
+                  <span class="n">new_ratios</span><span class="o">[</span><span class="n">industry_sector</span><span class="o">.</span><span class="n">io_code</span><span class="o">]</span> <span class="o">||=</span> <span class="mi">0</span>
+                  <span class="n">new_ratio</span> <span class="o">=</span> <span class="n">ratio</span> <span class="o">*</span> <span class="n">industry_sector</span><span class="o">.</span><span class="n">ratio</span>
+                  <span class="n">new_ratios</span><span class="o">[</span><span class="n">industry_sector</span><span class="o">.</span><span class="n">io_code</span><span class="o">]</span> <span class="o">+=</span> <span class="n">new_ratio</span>
+                <span class="k">end</span>
+                <span class="n">new_ratios</span>
+              <span class="k">end</span>
+            <span class="k">end</span>
+          <span class="k">end</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-2'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-2">&#182;</a>
+        </div>
+        <p>industries = the industries needed to produce the purchased item
+ratios = the portion of the purchase amount that goes to each industry</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>          <span class="n">committee</span> <span class="ss">:industry_ratios</span> <span class="k">do</span>
+            <span class="n">quorum</span> <span class="s1">&#39;from non trade industry and industry product ratios&#39;</span><span class="p">,</span> <span class="ss">:needs</span> <span class="o">=&gt;</span> <span class="o">[</span><span class="ss">:non_trade_industry_ratios</span><span class="p">,</span> <span class="ss">:industry_product_ratios</span><span class="o">]</span> <span class="k">do</span> <span class="o">|</span><span class="n">characteristics</span><span class="o">|</span>
+              <span class="n">combined_ratios</span> <span class="o">=</span> <span class="n">characteristics</span><span class="o">[</span><span class="ss">:non_trade_industry_ratios</span><span class="o">].</span>
+                <span class="n">merge</span><span class="p">(</span><span class="n">characteristics</span><span class="o">[</span><span class="ss">:industry_product_ratios</span><span class="o">]</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">key</span><span class="p">,</span> <span class="n">non_trade</span><span class="p">,</span> <span class="n">ip_ratio</span><span class="o">|</span>
+                  <span class="n">non_trade</span> <span class="o">+</span> <span class="n">ip_ratio</span>
+                <span class="k">end</span>
+            <span class="k">end</span>
+          <span class="k">end</span>
+
+          <span class="n">committee</span> <span class="ss">:industry_product_ratios</span> <span class="k">do</span>
+            <span class="n">quorum</span> <span class="s1">&#39;from product line industry product ratios&#39;</span><span class="p">,</span> <span class="ss">:needs</span> <span class="o">=&gt;</span> <span class="ss">:product_line_industry_product_ratios</span> <span class="k">do</span> <span class="o">|</span><span class="n">characteristics</span><span class="o">|</span>
+              <span class="n">naics_product_codes</span> <span class="o">=</span> <span class="n">characteristics</span><span class="o">[</span><span class="ss">:product_line_industry_product_ratios</span><span class="o">].</span><span class="n">keys</span>
+              <span class="n">industry_products</span> <span class="o">=</span> <span class="no">IndustryProduct</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="ss">:naics_product_code</span> <span class="o">=&gt;</span> <span class="n">naics_product_codes</span><span class="p">)</span>
+              <span class="n">characteristics</span><span class="o">[</span><span class="ss">:product_line_industry_product_ratios</span><span class="o">].</span><span class="n">inject</span><span class="p">({})</span> <span class="k">do</span> <span class="o">|</span><span class="n">new_ratios</span><span class="p">,</span> <span class="p">(</span><span class="n">naics_product_code</span><span class="p">,</span> <span class="n">ratio</span><span class="p">)</span><span class="o">|</span>
+                <span class="n">industry_products</span><span class="o">.</span>
+                  <span class="n">find_all</span> <span class="p">{</span> <span class="o">|</span><span class="n">i</span><span class="o">|</span> <span class="n">i</span><span class="o">.</span><span class="n">naics_product_code</span> <span class="o">==</span> <span class="n">naics_product_code</span> <span class="p">}</span><span class="o">.</span>
+                  <span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">industry_product</span><span class="o">|</span>
+                  <span class="n">new_ratios</span><span class="o">[</span><span class="n">industry_product</span><span class="o">.</span><span class="n">naics_code</span><span class="o">]</span> <span class="o">||=</span> <span class="mi">0</span>
+                  <span class="n">new_ratios</span><span class="o">[</span><span class="n">industry_product</span><span class="o">.</span><span class="n">naics_code</span><span class="o">]</span> <span class="o">+=</span> <span class="n">ratio</span>
+                <span class="k">end</span>
+                <span class="n">new_ratios</span>
+              <span class="k">end</span>
+            <span class="k">end</span>
+          <span class="k">end</span>
+
+          <span class="n">committee</span> <span class="ss">:product_line_industry_product_ratios</span> <span class="k">do</span>
+            <span class="n">quorum</span> <span class="s1">&#39;from product line ratios&#39;</span><span class="p">,</span> <span class="ss">:needs</span> <span class="o">=&gt;</span> <span class="ss">:product_line_ratios</span> <span class="k">do</span> <span class="o">|</span><span class="n">characteristics</span><span class="o">|</span>
+              <span class="n">ps_codes</span> <span class="o">=</span> <span class="n">characteristics</span><span class="o">[</span><span class="ss">:product_line_ratios</span><span class="o">].</span><span class="n">keys</span>
+              <span class="n">plips</span> <span class="o">=</span> <span class="no">ProductLineIndustryProduct</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="ss">:ps_code</span> <span class="o">=&gt;</span> <span class="n">ps_codes</span><span class="p">)</span>
+              <span class="n">characteristics</span><span class="o">[</span><span class="ss">:product_line_ratios</span><span class="o">].</span><span class="n">inject</span><span class="p">({})</span> <span class="k">do</span> <span class="o">|</span><span class="n">new_ratios</span><span class="p">,</span> <span class="p">(</span><span class="n">ps_code</span><span class="p">,</span> <span class="n">ratio</span><span class="p">)</span><span class="o">|</span>
+                <span class="n">plips</span><span class="o">.</span><span class="n">find_all</span> <span class="p">{</span> <span class="o">|</span><span class="nb">p</span><span class="o">|</span> <span class="nb">p</span><span class="o">.</span><span class="n">ps_code</span> <span class="o">==</span> <span class="n">ps_code</span> <span class="p">}</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">plip</span><span class="o">|</span>
+                  <span class="n">new_ratios</span><span class="o">[</span><span class="n">plip</span><span class="o">.</span><span class="n">naics_product_code</span><span class="o">]</span> <span class="o">||=</span> <span class="mi">0</span>
+                  <span class="n">new_ratio</span> <span class="o">=</span> <span class="n">ratio</span> <span class="o">*</span> <span class="n">plip</span><span class="o">.</span><span class="n">ratio</span>
+                  <span class="n">new_ratios</span><span class="o">[</span><span class="n">plip</span><span class="o">.</span><span class="n">naics_product_code</span><span class="o">]</span> <span class="o">+=</span> <span class="n">new_ratio</span>
+                <span class="k">end</span>
+                <span class="n">new_ratios</span>
+              <span class="k">end</span>
+            <span class="k">end</span>
+          <span class="k">end</span>
+
+          <span class="n">committee</span> <span class="ss">:product_line_ratios</span> <span class="k">do</span>
+            <span class="n">quorum</span> <span class="s1">&#39;from trade industry ratios&#39;</span><span class="p">,</span> <span class="ss">:needs</span> <span class="o">=&gt;</span> <span class="ss">:trade_industry_ratios</span> <span class="k">do</span> <span class="o">|</span><span class="n">characteristics</span><span class="o">|</span>
+              <span class="n">naics_codes</span> <span class="o">=</span> <span class="n">characteristics</span><span class="o">[</span><span class="ss">:trade_industry_ratios</span><span class="o">].</span><span class="n">keys</span>
+              <span class="n">industry_product_lines</span> <span class="o">=</span> <span class="no">IndustryProductLine</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="ss">:naics_code</span> <span class="o">=&gt;</span> <span class="n">naics_codes</span><span class="p">)</span>
+              <span class="n">characteristics</span><span class="o">[</span><span class="ss">:trade_industry_ratios</span><span class="o">].</span><span class="n">inject</span><span class="p">({})</span> <span class="k">do</span> <span class="o">|</span><span class="n">new_ratios</span><span class="p">,</span> <span class="p">(</span><span class="n">naics</span><span class="p">,</span> <span class="n">ratio</span><span class="p">)</span><span class="o">|</span>
+                <span class="n">industry_product_lines</span><span class="o">.</span>
+                  <span class="n">find_all</span> <span class="p">{</span> <span class="o">|</span><span class="n">i</span><span class="o">|</span> <span class="n">i</span><span class="o">.</span><span class="n">naics_code</span> <span class="o">==</span> <span class="n">naics</span><span class="p">}</span><span class="o">.</span>
+                  <span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">industry_product_line</span><span class="o">|</span>
+                  <span class="n">new_ratios</span><span class="o">[</span><span class="n">industry_product_line</span><span class="o">.</span><span class="n">ps_code</span><span class="o">]</span> <span class="o">||=</span> <span class="mi">0</span>
+                  <span class="n">new_ratio</span> <span class="o">=</span> <span class="n">ratio</span> <span class="o">*</span> <span class="n">industry_product_line</span><span class="o">.</span><span class="n">ratio</span>
+                  <span class="n">new_ratios</span><span class="o">[</span><span class="n">industry_product_line</span><span class="o">.</span><span class="n">ps_code</span><span class="o">]</span> <span class="o">+=</span> <span class="n">new_ratio</span>
+                <span class="k">end</span>
+                <span class="n">new_ratios</span>
+              <span class="k">end</span>
+            <span class="k">end</span>
+          <span class="k">end</span>
+
+          <span class="n">committee</span> <span class="ss">:non_trade_industry_ratios</span> <span class="k">do</span>
+            <span class="n">quorum</span> <span class="s1">&#39;from industry&#39;</span><span class="p">,</span> <span class="ss">:needs</span> <span class="o">=&gt;</span> <span class="ss">:industry</span> <span class="k">do</span> <span class="o">|</span><span class="n">characteristics</span><span class="o">|</span>
+              <span class="k">if</span> <span class="n">characteristics</span><span class="o">[</span><span class="ss">:industry</span><span class="o">].</span><span class="n">trade_industry?</span>
+                <span class="p">{}</span>
+              <span class="k">else</span>
+                <span class="p">{</span> <span class="n">characteristics</span><span class="o">[</span><span class="ss">:industry</span><span class="o">].</span><span class="n">naics_code</span><span class="o">.</span><span class="n">to_s</span> <span class="o">=&gt;</span> <span class="mi">1</span> <span class="p">}</span>
+              <span class="k">end</span>
+            <span class="k">end</span>
+
+            <span class="n">quorum</span> <span class="s1">&#39;from merchant category industries&#39;</span><span class="p">,</span> <span class="ss">:needs</span> <span class="o">=&gt;</span> <span class="ss">:merchant_category_industries</span> <span class="k">do</span> <span class="o">|</span><span class="n">characteristics</span><span class="o">|</span>
+              <span class="n">characteristics</span><span class="o">[</span><span class="ss">:merchant_category_industries</span><span class="o">].</span>
+                <span class="n">reject</span> <span class="p">{</span> <span class="o">|</span><span class="n">mci</span><span class="o">|</span> <span class="n">mci</span><span class="o">.</span><span class="n">industry</span><span class="o">.</span><span class="n">trade_industry?</span> <span class="p">}</span><span class="o">.</span><span class="n">inject</span><span class="p">({})</span> <span class="k">do</span> <span class="o">|</span><span class="n">ntir</span><span class="p">,</span> <span class="n">merchant_category_industry</span><span class="o">|</span>
+                  <span class="n">ntir</span><span class="o">[</span><span class="n">merchant_category_industry</span><span class="o">.</span><span class="n">naics_code</span><span class="o">]</span> <span class="o">||=</span> <span class="mi">0</span>
+                  <span class="n">ntir</span><span class="o">[</span><span class="n">merchant_category_industry</span><span class="o">.</span><span class="n">naics_code</span><span class="o">]</span> <span class="o">+=</span> <span class="n">merchant_category_industry</span><span class="o">.</span><span class="n">ratio</span>
+                  <span class="n">ntir</span>
+              <span class="k">end</span>
+            <span class="k">end</span>
+            </pre></div>
+      </td>
+    </tr>
+    <tr id='section-3'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-3">&#182;</a>
+        </div>
+        <p>NAICS 339991 chosen because it&rsquo;s emissions intensity is close to the average of the entire U.S. economy
+(calculated by multiplying each sector&rsquo;s emissions intensity by it&rsquo;s share of total 2002 value)</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>            <span class="n">quorum</span> <span class="s1">&#39;default&#39;</span> <span class="k">do</span>
+              <span class="p">{</span> <span class="s1">&#39;339991&#39;</span> <span class="o">=&gt;</span> <span class="mi">1</span> <span class="p">}</span>
+            <span class="k">end</span>
+          <span class="k">end</span>
+
+          <span class="n">committee</span> <span class="ss">:trade_industry_ratios</span> <span class="k">do</span>
+            <span class="n">quorum</span> <span class="s1">&#39;from industry&#39;</span><span class="p">,</span> <span class="ss">:needs</span> <span class="o">=&gt;</span> <span class="ss">:industry</span> <span class="k">do</span> <span class="o">|</span><span class="n">characteristics</span><span class="o">|</span>
+              <span class="k">if</span> <span class="n">characteristics</span><span class="o">[</span><span class="ss">:industry</span><span class="o">].</span><span class="n">trade_industry?</span>
+                <span class="p">{</span> <span class="n">characteristics</span><span class="o">[</span><span class="ss">:industry</span><span class="o">].</span><span class="n">naics_code</span><span class="o">.</span><span class="n">to_s</span> <span class="o">=&gt;</span> <span class="mi">1</span> <span class="p">}</span>
+              <span class="k">else</span>
+                <span class="p">{}</span>
+              <span class="k">end</span>
+            <span class="k">end</span>
+
+            <span class="n">quorum</span> <span class="s1">&#39;from merchant category industries&#39;</span><span class="p">,</span> <span class="ss">:needs</span> <span class="o">=&gt;</span> <span class="ss">:merchant_category_industries</span> <span class="k">do</span> <span class="o">|</span><span class="n">characteristics</span><span class="o">|</span>
+              <span class="n">characteristics</span><span class="o">[</span><span class="ss">:merchant_category_industries</span><span class="o">].</span>
+                <span class="nb">select</span> <span class="p">{</span> <span class="o">|</span><span class="n">mci</span><span class="o">|</span> <span class="n">mci</span><span class="o">.</span><span class="n">industry</span><span class="o">.</span><span class="n">trade_industry?</span> <span class="p">}</span><span class="o">.</span><span class="n">inject</span><span class="p">({})</span> <span class="k">do</span> <span class="o">|</span><span class="n">tir</span><span class="p">,</span> <span class="n">merchant_category_industry</span><span class="o">|</span>
+                  <span class="n">tir</span><span class="o">[</span><span class="n">merchant_category_industry</span><span class="o">.</span><span class="n">naics_code</span><span class="o">]</span> <span class="o">||=</span> <span class="mi">0</span>
+                  <span class="n">tir</span><span class="o">[</span><span class="n">merchant_category_industry</span><span class="o">.</span><span class="n">naics_code</span><span class="o">]</span> <span class="o">+=</span> <span class="n">merchant_category_industry</span><span class="o">.</span><span class="n">ratio</span>
+                  <span class="n">tir</span>
+              <span class="k">end</span>
+            <span class="k">end</span>
+            
+            <span class="n">quorum</span> <span class="s1">&#39;default&#39;</span> <span class="k">do</span>
+              <span class="p">{}</span>
+            <span class="k">end</span>
+          <span class="k">end</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-4'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-4">&#182;</a>
+        </div>
+        <p>a dictionary to go from merchant categories to industries</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>          <span class="n">committee</span> <span class="ss">:merchant_category_industries</span> <span class="k">do</span>
+            <span class="n">quorum</span> <span class="s1">&#39;from merchant category&#39;</span><span class="p">,</span> <span class="ss">:needs</span> <span class="o">=&gt;</span> <span class="ss">:merchant_category</span> <span class="k">do</span> <span class="o">|</span><span class="n">characteristics</span><span class="o">|</span>
+              <span class="n">characteristics</span><span class="o">[</span><span class="ss">:merchant_category</span><span class="o">].</span><span class="n">merchant_category_industries</span>
+            <span class="k">end</span>
+          <span class="k">end</span>
+
+          <span class="n">committee</span> <span class="ss">:merchant_category</span> <span class="k">do</span>
+            <span class="n">quorum</span> <span class="s1">&#39;from merchant&#39;</span><span class="p">,</span> <span class="ss">:needs</span> <span class="o">=&gt;</span> <span class="o">[</span><span class="ss">:merchant</span><span class="o">]</span> <span class="k">do</span> <span class="o">|</span><span class="n">characteristics</span><span class="o">|</span>
+              <span class="n">characteristics</span><span class="o">[</span><span class="ss">:merchant</span><span class="o">].</span><span class="n">merchant_category</span>
+            <span class="k">end</span>
+          <span class="k">end</span>
+          
+          <span class="n">committee</span> <span class="ss">:adjusted_cost</span> <span class="k">do</span>
+            <span class="n">quorum</span> <span class="s1">&#39;from cost and date&#39;</span><span class="p">,</span> <span class="ss">:needs</span> <span class="o">=&gt;</span> <span class="o">[</span><span class="ss">:cost</span><span class="p">,</span> <span class="ss">:date</span><span class="o">]</span> <span class="k">do</span> <span class="o">|</span><span class="n">characteristics</span><span class="o">|</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-5'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-5">&#182;</a>
+        </div>
+        <p>FIXME TODO: Import CPI conversions</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>              <span class="vi">@cpi_lookup</span> <span class="o">||=</span> <span class="p">{</span> 
+                <span class="mi">2009</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="o">.</span><span class="mi">189</span><span class="p">,</span> <span class="mi">2010</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="o">.</span><span class="mi">207</span><span class="p">,</span> <span class="mi">2011</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="o">.</span><span class="mi">225</span><span class="p">,</span> <span class="mi">2012</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="o">.</span><span class="mi">245</span><span class="p">,</span> 
+                <span class="mi">2013</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="o">.</span><span class="mi">265</span> <span class="p">}</span>
+
+              <span class="n">date</span> <span class="o">=</span> <span class="n">characteristics</span><span class="o">[</span><span class="ss">:date</span><span class="o">]</span>
+              <span class="n">date</span> <span class="o">=</span> <span class="n">date</span><span class="o">.</span><span class="n">is_a?</span><span class="p">(</span><span class="nb">String</span><span class="p">)</span> <span class="p">?</span> <span class="no">Date</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">date</span><span class="p">)</span> <span class="p">:</span> <span class="n">date</span>
+              <span class="n">conversion_factor</span> <span class="o">=</span> <span class="vi">@cpi_lookup</span><span class="o">[</span><span class="n">date</span><span class="o">.</span><span class="n">year</span><span class="o">]</span> <span class="o">||</span> <span class="mi">1</span><span class="o">.</span><span class="mi">207</span>
+
+              <span class="n">characteristics</span><span class="o">[</span><span class="ss">:cost</span><span class="o">].</span><span class="n">to_f</span> <span class="o">/</span> <span class="n">conversion_factor</span>
+            <span class="k">end</span>
+            </pre></div>
+      </td>
+    </tr>
+    <tr id='section-6'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-6">&#182;</a>
+        </div>
+        <p>This is the average federal government purchase card transaction in 2003, converted to 2002 dollars, with tax taken out
+See http://www.sba.gov/advo/research/rs226tot.pdf</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>            <span class="n">quorum</span> <span class="s1">&#39;default&#39;</span> <span class="k">do</span>
+              <span class="mi">517</span>
+            <span class="k">end</span>
+          <span class="k">end</span>
+            
+          <span class="n">committee</span> <span class="ss">:cost</span> <span class="k">do</span>
+            <span class="n">quorum</span> <span class="s1">&#39;from purchase amount and tax&#39;</span><span class="p">,</span> <span class="ss">:needs</span> <span class="o">=&gt;</span> <span class="o">[</span><span class="ss">:purchase_amount</span><span class="p">,</span> <span class="ss">:tax</span><span class="o">]</span> <span class="k">do</span> <span class="o">|</span><span class="n">characteristics</span><span class="o">|</span>
+              <span class="n">characteristics</span><span class="o">[</span><span class="ss">:purchase_amount</span><span class="o">].</span><span class="n">to_f</span> <span class="o">-</span> <span class="n">characteristics</span><span class="o">[</span><span class="ss">:tax</span><span class="o">].</span><span class="n">to_f</span>
+            <span class="k">end</span>
+            </pre></div>
+      </td>
+    </tr>
+    <tr id='section-7'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-7">&#182;</a>
+        </div>
+        <p>Based on http://www.thestc.com/STrates.stm weighted by US Census 2010 projected state population (exclude samoa, guam, pr)</p>
+
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>            <span class="n">quorum</span> <span class="s1">&#39;from purchase amount&#39;</span><span class="p">,</span> <span class="ss">:needs</span> <span class="o">=&gt;</span> <span class="ss">:purchase_amount</span> <span class="k">do</span> <span class="o">|</span><span class="n">characteristics</span><span class="o">|</span>
+              <span class="n">characteristics</span><span class="o">[</span><span class="ss">:purchase_amount</span><span class="o">].</span><span class="n">to_f</span> <span class="o">/</span> <span class="mi">1</span><span class="o">.</span><span class="mo">0711</span>
+            <span class="k">end</span>
+          <span class="k">end</span>
+
+          <span class="n">committee</span> <span class="ss">:date</span> <span class="k">do</span>
+            <span class="n">quorum</span> <span class="s1">&#39;default&#39;</span> <span class="k">do</span>
+              <span class="no">Date</span><span class="o">.</span><span class="n">today</span>
+            <span class="k">end</span>
+          <span class="k">end</span>
+        <span class="k">end</span>
+      <span class="k">end</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span></pre></div>
+      </td>
+    </tr>
+  </table>
+</div>
+</body>
