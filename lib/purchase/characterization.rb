@@ -12,55 +12,55 @@ module BrighterPlanet
           has :tax             # tax portion of purchase
           has :date
           has :merchant do |m|
-             m.name
+            m.displays { |m| m.name }
           end
           has :merchant_category do |mc|
-             mc.description
+            mc.displays { |mc| mc.description }
           end
           has :merchant_category_industries do |mci|
-             pluralize(mci.count, 'merchant category')
+            mci.displays { |mc| pluralize(mci.count, 'merchant category') }
           end
           has :industry do |ind|
-             ind.description
+            ind.displays { |mc| ind.description }
           end
           has :trade_industry_ratios do |tir|
-             pluralize(tir.count, 'trade industry ratio')
+             tir.displays { || pluralize(tir.count, 'trade industry ratio') }
           end
           has :non_trade_industry_ratios do |ntir|
-             pluralize(ntir.count, 'non-trade industry ratio')
+             ntir.displays { || pluralize(ntir.count, 'non-trade industry ratio') }
           end
           has :product_line_ratios do |plr|
-             pluralize(plr.count, 'product line ratio')
+             plr.displays { || pluralize(plr.count, 'product line ratio') }
           end
           has :product_line_industry_product_ratios do |plipr|
-             pluralize(plipr.count, 'product line industry product ratio')
+             plipr.displays { |plipr| pluralize(plipr.count, 'product line industry product ratio') }
           end
           has :industry_product_ratios do |ipr|
-             pluralize(ipr.count, 'industry product ratio')
+             ipr.displays { |ipr| pluralize(ipr.count, 'industry product ratio') }
           end
           has :industry_ratios do |ir|
-             pluralize(ir.count, 'industry ratio')
+             ir.displays { |ir| pluralize(ir.count, 'industry ratio') }
           end
           has :industry_sector_ratios do |isr|
-             pluralize(isr.count, 'industry sector ratio')
+             isr.displays { |isr| pluralize(isr.count, 'industry sector ratio') }
           end
           has :industry_sector_shares do |isr|
-             pluralize(isr.count, 'industry sector share')
+             isr.displays { |isr| pluralize(isr.count, 'industry sector share') }
           end
           has :sector_shares do |isr|
-            "#{isr.size}-element sector shares vector"
+            isr.displays { |isr| "#{isr.size}-element sector shares vector" }
           end
           has :sector_direct_requirements do |sdr|
-            "#{sdr.row_size}x#{sdr.column_size} sector direct requirements matrix"
+            sdr.displays { |sdr| "#{sdr.row_size}x#{sdr.column_size} sector direct requirements matrix" }
           end
           has :economic_flows do |ef|
-            "#{ef.size}-element economic flows vector"
+            ef.displays { |ef| "#{ef.size}-element economic flows vector" }
           end
           has :impact_vectors do |iv|
-            "#{iv.row_size}x#{iv.column_size} impact vector"
+            iv.displays { |iv| "#{iv.row_size}x#{iv.column_size} impact vector" }
           end
           has :impacts do |i|
-            "#{i.size}-element impacts vector"
+            i.displays { |i| "#{i.size}-element impacts vector" }
           end
         end
       end
