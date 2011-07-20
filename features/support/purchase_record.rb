@@ -7,7 +7,7 @@ class PurchaseRecord < ActiveRecord::Base
   include Sniff::Emitter
   include BrighterPlanet::Purchase
   
-  create_table do
+  force_schema do
     integer 'merchant_id'
     string  'mcc'
     string  'ps_code'

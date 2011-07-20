@@ -2,7 +2,7 @@ module BrighterPlanet
   module Purchase
     module Data
       def self.included(base)
-        base.create_table do
+        base.force_schema do
           float   'cost'
           string  'cost_units'
           float   'purchase_amount'
