@@ -8,7 +8,7 @@ require 'data_miner'
 DataMiner.logger = Logger.new nil
 
 require 'sniff'
-Sniff.init File.join(File.dirname(__FILE__), '..', '..'), :earth => :industry, :cucumber => true
+Sniff.init File.join(File.dirname(__FILE__), '..', '..'), :earth => :industry, :cucumber => true, :logger => 'log/test_log.txt'
 
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 require 'test_impact_vectors_adapter'
