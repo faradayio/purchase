@@ -9,12 +9,12 @@ require 'matrix'
 
 module BrighterPlanet
   module Purchase
-    module CarbonModel
+    module ImpactModel
       def self.included(base)
         base.extend ::Leap::Subject
 
-        base.decide :emission, :with => :characteristics do
-          committee :emission do
+        base.decide :impact, :with => :characteristics do
+          committee :carbon do
             quorum 'from impacts', :needs => :impacts do |characteristics|
               characteristics[:impacts].to_a.sum
             end
