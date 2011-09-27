@@ -24,8 +24,5 @@ Gem::Specification.new do |s|
 
   s.add_runtime_dependency 'emitter' unless ENV['LOCAL_EMITTER']
   s.add_development_dependency 'sniff' unless ENV['LOCAL_SNIFF']
-  
-  # weird
-  s.add_development_dependency 'actionpack'
 end
 

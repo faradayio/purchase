@@ -1,10 +1,6 @@
-require 'action_view'
-
 module BrighterPlanet
   module Purchase
     module Characterization
-      extend ::ActionView::Helpers::TextHelper
-
       def self.included(base)
         base.characterize do
           has :cost            # cost before tax
@@ -18,34 +14,34 @@ module BrighterPlanet
              mc.description
           end
           has :merchant_category_industries do |mci|
-             pluralize(mci.count, 'merchant category')
+             "#{mci.count} merchant category(s)"
           end
           has :industry do |ind|
              ind.description
           end
           has :trade_industry_ratios do |tir|
-             pluralize(tir.count, 'trade industry ratio')
+             "#{tir.count} trade industry ratio(s)"
           end
           has :non_trade_industry_ratios do |ntir|
-             pluralize(ntir.count, 'non-trade industry ratio')
+             "#{ntir.count} non-trade industry ratio(s)"
           end
           has :product_line_ratios do |plr|
-             pluralize(plr.count, 'product line ratio')
+             "#{plr.count} product line ratio(s)"
           end
           has :product_line_industry_product_ratios do |plipr|
-             pluralize(plipr.count, 'product line industry product ratio')
+             "#{plipr.count} product line industry product ratio(s)"
           end
           has :industry_product_ratios do |ipr|
-             pluralize(ipr.count, 'industry product ratio')
+             "#{ipr.count} industry product ratio(s)"
           end
           has :industry_ratios do |ir|
-             pluralize(ir.count, 'industry ratio')
+             "#{ir.count} industry ratio(s)"
           end
           has :industry_sector_ratios do |isr|
-             pluralize(isr.count, 'industry sector ratio')
+             "#{isr.count} industry sector ratio(s)"
           end
           has :industry_sector_shares do |isr|
-             pluralize(isr.count, 'industry sector share')
+             "#{isr.count} industry sector share(s)"
           end
           has :sector_shares do |isr|
             "#{isr.size}-element sector shares vector"
