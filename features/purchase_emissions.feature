@@ -2,11 +2,10 @@ Feature: Purchase Emissions Calculations
   The purchase model should generate correct emission calculations
 
   Background:
-    Given a Purchase
+    Given a purchase
 
   Scenario: Calculations starting from nothing
-    Given a purchase has nothing
-    And it is the year "2010"
+    Given it is the year "2010"
     When impacts are calculated
     Then the amount of "carbon" should be within "0.001" kgs of "789.625"
 

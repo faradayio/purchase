@@ -2,7 +2,7 @@ Feature: Purchase Committee Calculations
   The purchase model should generate correct committee calculations
 
   Background:
-    Given a Purchase
+    Given a purchase
 
   Scenario: Cost committee from purchase amount
     Given a characteristic "purchase_amount" of "107.11"
@@ -319,7 +319,7 @@ Feature: Purchase Committee Calculations
       |1111|100.00|      0|     0|     0|     0|     0|
       |2222|     0| 28.125| 9.375|  12.5|  50.0|     0|
 
-  Scenario: Sector direct requirements committee
+  Scenario Outline: Sector direct requirements committee
     Given a characteristic "merchant_category.mcc" of "<mcc>"
     And a characteristic "adjusted_cost" of "100"
     When the "merchant_category_industries" committee reports
@@ -340,7 +340,7 @@ Feature: Purchase Committee Calculations
       |1111|111.66    |12.526     |15.614    |15.464    |18.444     |18.27     |
       |2222|43.1583125|70.30915625|62.2195625|64.6255625|110.2403125|62.0304375|
 
-  Scenario: Impact vectors committee
+  Scenario Outline: Impact vectors committee
     Given a characteristic "merchant_category.mcc" of "<mcc>"
     And a characteristic "adjusted_cost" of "100"
     When the "merchant_category_industries" committee reports
