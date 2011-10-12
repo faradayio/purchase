@@ -4,7 +4,7 @@ require 'purchase'
 require 'sniff'
 
 class PurchaseRecord < ActiveRecord::Base
-  include Sniff::Emitter
+  include BrighterPlanet::Emitter
   include BrighterPlanet::Purchase
   
   force_schema do

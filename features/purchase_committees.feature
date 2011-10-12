@@ -1,33 +1,32 @@
 Feature: Purchase Committee Calculations
   The purchase model should generate correct committee calculations
 
+  Background:
+    Given a Purchase
+
   Scenario: Cost committee from purchase amount
-    Given a purchase emitter
-    And a characteristic "purchase_amount" of "107.11"
-    When the "cost" committee is calculated
+    Given a characteristic "purchase_amount" of "107.11"
+    When the "cost" committee reports
     Then the committee should have used quorum "from purchase amount"
     And the conclusion of the committee should be "100.00"
 
   Scenario: Cost committee from purchase amount and tax
-    Given a purchase emitter
-    And a characteristic "purchase_amount" of "10.00"
+    Given a characteristic "purchase_amount" of "10.00"
     And a characteristic "tax" of "1.00"
-    When the "cost" committee is calculated
+    When the "cost" committee reports
     Then the committee should have used quorum "from purchase amount and tax"
     And the conclusion of the committee should be "9.00"
 
   Scenario: Adjusted cost committee from default
-    Given a purchase emitter
-    And it is the year "2010"
-    When the "adjusted_cost" committee is calculated
+    Given it is the year "2010"
+    When the "adjusted_cost" committee reports
     Then the committee should have used quorum "default"
     And the conclusion of the committee should be "517.00"
 
   Scenario Outline: Adjusted cost committee from cost and date
-    Given a purchase emitter
-    And a characteristic "cost" of "<cost>"
+    Given a characteristic "cost" of "<cost>"
     And characteristic "date" of "<date>"
-    When the "adjusted_cost" committee is calculated
+    When the "adjusted_cost" committee reports
     Then the committee should have used quorum "from cost and date"
     And the conclusion of the committee should be "<adjusted_cost>"
     Examples:
@@ -36,9 +35,8 @@ Feature: Purchase Committee Calculations
       |  11.00 | 2005-07-14 |       9.11350 |
 
   Scenario Outline: Merchant category committee from merchant
-    Given a purchase emitter
-    And a characteristic "merchant.id" of "<id>"
-    When the "merchant_category" committee is calculated
+    Given a characteristic "merchant.id" of "<id>"
+    When the "merchant_category" committee reports
     Then the committee should have used quorum "from merchant"
     And the conclusion of the committee should have "mcc" of "<mcc>"
     Examples:
@@ -47,9 +45,8 @@ Feature: Purchase Committee Calculations
       | 2  | 2222 |
 
   Scenario Outline: Merchant category industries committee starting from merchant category
-    Given a purchase emitter
-    And a characteristic "merchant_category.mcc" of "<mcc>"
-    When the "merchant_category_industries" committee is calculated
+    Given a characteristic "merchant_category.mcc" of "<mcc>"
+    When the "merchant_category_industries" committee reports
     Then the conclusion of the committee should have a record identified with "naics_code" of "<naics>" and having "ratio" of "<ratio>"
     Examples:
       | mcc  | naics  | ratio |
@@ -58,46 +55,36 @@ Feature: Purchase Committee Calculations
       | 2222 | 459000 | 0.5   |
 
   Scenario: Trade industry ratios from default
-    Given a purchase emitter
-    When the "trade_industry_ratios" committee is calculated
-    Then the committee should have used quorum "default"
-    And the conclusion of the committee should include a key of "" and value ""
+    Given the conclusion of the committee should include a key of "" and value ""
 
   Scenario: Trade industry ratios from merchant category industries
-    Given a purchase emitter
-    And a characteristic "merchant_category.mcc" of "2222"
-    When the "merchant_category_industries" committee is calculated
-    And the "trade_industry_ratios" committee is calculated
+    Given a characteristic "merchant_category.mcc" of "2222"
+    When the "merchant_category_industries" committee reports
+    And the "trade_industry_ratios" committee reports
     Then the committee should have used quorum "from merchant category industries"
     And the conclusion of the committee should include a key of "459000" and value "0.5"
 
   Scenario: Trade industry ratios from industry
-    Given a purchase emitter
-    And a characteristic "industry.naics_code" of "459000"
-    When the "trade_industry_ratios" committee is calculated
+    Given a characteristic "industry.naics_code" of "459000"
+    When the "trade_industry_ratios" committee reports
     Then the committee should have used quorum "from industry"
     And the conclusion of the committee should include a key of "459000" and value "1"
 
   Scenario: Trade industry ratios from merchant category industries and industry
-    Given a purchase emitter
-    And a characteristic "merchant_category.mcc" of "1111"
+    Given a characteristic "merchant_category.mcc" of "1111"
     And a characteristic "industry.naics_code" of "459000"
-    When the "merchant_category_industries" committee is calculated
-    And the "trade_industry_ratios" committee is calculated
+    When the "merchant_category_industries" committee reports
+    And the "trade_industry_ratios" committee reports
     Then the committee should have used quorum "from industry"
     And the conclusion of the committee should include a key of "459000" and value "1"
 
   Scenario: Non-trade industry ratios from default
-    Given a purchase emitter
-    When the "non_trade_industry_ratios" committee is calculated
-    Then the committee should have used quorum "default"
-    And the conclusion of the committee should include a key of "339991" and value "1"
+    Given the conclusion of the committee should include a key of "339991" and value "1"
 
   Scenario Outline: Non-trade industry ratios from merchant category industries
-    Given a purchase emitter
-    And a characteristic "merchant_category.mcc" of "<mcc>"
-    When the "merchant_category_industries" committee is calculated
-    And the "non_trade_industry_ratios" committee is calculated
+    Given a characteristic "merchant_category.mcc" of "<mcc>"
+    When the "merchant_category_industries" committee reports
+    And the "non_trade_industry_ratios" committee reports
     Then the committee should have used quorum "from merchant category industries"
     And the conclusion of the committee should include a key of "<naics>" and value "<ratio>"
     Examples:
@@ -106,9 +93,8 @@ Feature: Purchase Committee Calculations
       | 2222 | 399900 | 0.5   |
 
   Scenario Outline: Non-trade industry ratios from industry
-    Given a purchase emitter
-    And a characteristic "industry.naics_code" of "<naics>"
-    When the "non_trade_industry_ratios" committee is calculated
+    Given a characteristic "industry.naics_code" of "<naics>"
+    When the "non_trade_industry_ratios" committee reports
     Then the committee should have used quorum "from industry"
     And the conclusion of the committee should include a key of "<naics>" and value "1"
     Examples:
@@ -117,20 +103,18 @@ Feature: Purchase Committee Calculations
       | 399900 |
 
   Scenario: Non-trade industry ratios from merchant category industries and industry
-    Given a purchase emitter
-    And a characteristic "merchant_category.mcc" of "2222"
+    Given a characteristic "merchant_category.mcc" of "2222"
     And a characteristic "industry.naics_code" of "111111"
-    When the "merchant_category_industries" committee is calculated
-    And the "non_trade_industry_ratios" committee is calculated
+    When the "merchant_category_industries" committee reports
+    And the "non_trade_industry_ratios" committee reports
     Then the committee should have used quorum "from industry"
     And the conclusion of the committee should include a key of "111111" and value "1"
 
   Scenario Outline: Product line ratios from trade industry ratios
-    Given a purchase emitter
-    And a characteristic "merchant_category.mcc" of "<mcc>"
-    When the "merchant_category_industries" committee is calculated
-    And the "trade_industry_ratios" committee is calculated
-    And the "product_line_ratios" committee is calculated
+    Given a characteristic "merchant_category.mcc" of "<mcc>"
+    When the "merchant_category_industries" committee reports
+    And the "trade_industry_ratios" committee reports
+    And the "product_line_ratios" committee reports
     Then the conclusion of the committee should include a key of "<ps_code>" and value "<ratio>"
     Examples:
       | mcc  | ps_code | ratio |
@@ -138,12 +122,11 @@ Feature: Purchase Committee Calculations
       | 2222 | 45912   | 0.125 |
 
   Scenario Outline: Product line industry product ratios from product line ratios
-    Given a purchase emitter
-    And a characteristic "merchant_category.mcc" of "<mcc>"
-    When the "merchant_category_industries" committee is calculated
-    And the "trade_industry_ratios" committee is calculated
-    And the "product_line_ratios" committee is calculated
-    And the "product_line_industry_product_ratios" committee is calculated
+    Given a characteristic "merchant_category.mcc" of "<mcc>"
+    When the "merchant_category_industries" committee reports
+    And the "trade_industry_ratios" committee reports
+    And the "product_line_ratios" committee reports
+    And the "product_line_industry_product_ratios" committee reports
     Then the conclusion of the committee should include a key of "<naics_product_code>" and value "<ratio>"
     Examples:
       | mcc  | naics_product_code  | ratio  |
@@ -153,13 +136,12 @@ Feature: Purchase Committee Calculations
       | 2222 | 399200B             | 0.0625 |
 
   Scenario Outline: Industry product ratios from product line industry product ratios
-    Given a purchase emitter
-    And a characteristic "merchant_category.mcc" of "<mcc>"
-    When the "merchant_category_industries" committee is calculated
-    And the "trade_industry_ratios" committee is calculated
-    And the "product_line_ratios" committee is calculated
-    And the "product_line_industry_product_ratios" committee is calculated
-    And the "industry_product_ratios" committee is calculated
+    Given a characteristic "merchant_category.mcc" of "<mcc>"
+    When the "merchant_category_industries" committee reports
+    And the "trade_industry_ratios" committee reports
+    And the "product_line_ratios" committee reports
+    And the "product_line_industry_product_ratios" committee reports
+    And the "industry_product_ratios" committee reports
     Then the conclusion of the committee should include a key of "<naics>" and value "<ratio>"
     Examples:
       | mcc  | naics  | ratio  |
@@ -167,15 +149,14 @@ Feature: Purchase Committee Calculations
       | 2222 | 399200 | 0.125  |
 
   Scenario Outline: Industry ratios committee starting from merchant category
-    Given a purchase emitter
-    And a characteristic "merchant_category.mcc" of "<mcc>"
-    When the "merchant_category_industries" committee is calculated
-    And the "non_trade_industry_ratios" committee is calculated
-    And the "trade_industry_ratios" committee is calculated
-    And the "product_line_ratios" committee is calculated
-    And the "product_line_industry_product_ratios" committee is calculated
-    And the "industry_product_ratios" committee is calculated
-    And the "industry_ratios" committee is calculated
+    Given a characteristic "merchant_category.mcc" of "<mcc>"
+    When the "merchant_category_industries" committee reports
+    And the "non_trade_industry_ratios" committee reports
+    And the "trade_industry_ratios" committee reports
+    And the "product_line_ratios" committee reports
+    And the "product_line_industry_product_ratios" committee reports
+    And the "industry_product_ratios" committee reports
+    And the "industry_ratios" committee reports
     Then the conclusion of the committee should include a key of "<naics>" and value "<ratio>"
     Examples:
       | mcc  | naics  | ratio  |
@@ -185,14 +166,13 @@ Feature: Purchase Committee Calculations
       | 2222 | 399900 | 0.5    |
 
   Scenario Outline: Industry ratios committee starting from industry
-    Given a purchase emitter
-    And a characteristic "industry.naics_code" of "<naics>"
-    When the "non_trade_industry_ratios" committee is calculated
-    And the "trade_industry_ratios" committee is calculated
-    And the "product_line_ratios" committee is calculated
-    And the "product_line_industry_product_ratios" committee is calculated
-    And the "industry_product_ratios" committee is calculated
-    And the "industry_ratios" committee is calculated
+    Given a characteristic "industry.naics_code" of "<naics>"
+    When the "non_trade_industry_ratios" committee reports
+    And the "trade_industry_ratios" committee reports
+    And the "product_line_ratios" committee reports
+    And the "product_line_industry_product_ratios" committee reports
+    And the "industry_product_ratios" committee reports
+    And the "industry_ratios" committee reports
     Then the conclusion of the committee should include a key of "<new_naics>" and value "<ratio>"
     Examples:
       | naics  | new_naics | ratio |
@@ -204,16 +184,15 @@ Feature: Purchase Committee Calculations
       | 459000 | 399200    | 0.25  |
 
   Scenario Outline: Industry sector ratios committee starting from merchant category
-    Given a purchase emitter
-    And a characteristic "merchant_category.mcc" of "<mcc>"
-    When the "merchant_category_industries" committee is calculated
-    And the "non_trade_industry_ratios" committee is calculated
-    And the "trade_industry_ratios" committee is calculated
-    And the "product_line_ratios" committee is calculated
-    And the "product_line_industry_product_ratios" committee is calculated
-    And the "industry_product_ratios" committee is calculated
-    And the "industry_ratios" committee is calculated
-    And the "industry_sector_ratios" committee is calculated
+    Given a characteristic "merchant_category.mcc" of "<mcc>"
+    When the "merchant_category_industries" committee reports
+    And the "non_trade_industry_ratios" committee reports
+    And the "trade_industry_ratios" committee reports
+    And the "product_line_ratios" committee reports
+    And the "product_line_industry_product_ratios" committee reports
+    And the "industry_product_ratios" committee reports
+    And the "industry_ratios" committee reports
+    And the "industry_sector_ratios" committee reports
     Then the conclusion of the committee should include a key of "<io_code>" and value "<ratio>"
     Examples:
       | mcc  | io_code | ratio    |
@@ -224,16 +203,15 @@ Feature: Purchase Committee Calculations
       | 2222 | 399900  | 0.5      |
 
   Scenario Outline: Industry sector ratios sum check starting from merchant category
-    Given a purchase emitter
-    And a characteristic "merchant_category.mcc" of "<mcc>"
-    When the "merchant_category_industries" committee is calculated
-    And the "non_trade_industry_ratios" committee is calculated
-    And the "trade_industry_ratios" committee is calculated
-    And the "product_line_ratios" committee is calculated
-    And the "product_line_industry_product_ratios" committee is calculated
-    And the "industry_product_ratios" committee is calculated
-    And the "industry_ratios" committee is calculated
-    And the "industry_sector_ratios" committee is calculated
+    Given a characteristic "merchant_category.mcc" of "<mcc>"
+    When the "merchant_category_industries" committee reports
+    And the "non_trade_industry_ratios" committee reports
+    And the "trade_industry_ratios" committee reports
+    And the "product_line_ratios" committee reports
+    And the "product_line_industry_product_ratios" committee reports
+    And the "industry_product_ratios" committee reports
+    And the "industry_ratios" committee reports
+    And the "industry_sector_ratios" committee reports
     Then the conclusion of the committee should have ratios summing to "1.0"
     Examples:
       | mcc  |
@@ -241,15 +219,14 @@ Feature: Purchase Committee Calculations
       | 2222 |
 
   Scenario Outline: Industry sector ratios committee starting from industry
-    Given a purchase emitter
-    And a characteristic "industry.naics_code" of "<naics>"
-    When the "non_trade_industry_ratios" committee is calculated
-    And the "trade_industry_ratios" committee is calculated
-    And the "product_line_ratios" committee is calculated
-    And the "product_line_industry_product_ratios" committee is calculated
-    And the "industry_product_ratios" committee is calculated
-    And the "industry_ratios" committee is calculated
-    And the "industry_sector_ratios" committee is calculated
+    Given a characteristic "industry.naics_code" of "<naics>"
+    When the "non_trade_industry_ratios" committee reports
+    And the "trade_industry_ratios" committee reports
+    And the "product_line_ratios" committee reports
+    And the "product_line_industry_product_ratios" committee reports
+    And the "industry_product_ratios" committee reports
+    And the "industry_ratios" committee reports
+    And the "industry_sector_ratios" committee reports
     Then the conclusion of the committee should include a key of "<io_code>" and value "<ratio>"
     Examples:
       | naics  | io_code | ratio |
@@ -262,15 +239,14 @@ Feature: Purchase Committee Calculations
       | 459000 | 399200  | 0.25  |
 
   Scenario Outline: Industry sector ratios sum check starting from industry
-    Given a purchase emitter
-    And a characteristic "industry.naics_code" of "<naics>"
-    When the "non_trade_industry_ratios" committee is calculated
-    And the "trade_industry_ratios" committee is calculated
-    And the "product_line_ratios" committee is calculated
-    And the "product_line_industry_product_ratios" committee is calculated
-    And the "industry_product_ratios" committee is calculated
-    And the "industry_ratios" committee is calculated
-    And the "industry_sector_ratios" committee is calculated
+    Given a characteristic "industry.naics_code" of "<naics>"
+    When the "non_trade_industry_ratios" committee reports
+    And the "trade_industry_ratios" committee reports
+    And the "product_line_ratios" committee reports
+    And the "product_line_industry_product_ratios" committee reports
+    And the "industry_product_ratios" committee reports
+    And the "industry_ratios" committee reports
+    And the "industry_sector_ratios" committee reports
     Then the conclusion of the committee should have ratios summing to "1.0"
     Examples:
       | naics  |
@@ -280,18 +256,17 @@ Feature: Purchase Committee Calculations
       | 459000 |
 
   Scenario Outline: Industry sector shares committee starting from merchant category
-    Given a purchase emitter
-    And a characteristic "merchant_category.mcc" of "<mcc>"
+    Given a characteristic "merchant_category.mcc" of "<mcc>"
     And a characteristic "adjusted_cost" of "100.00"
-    When the "merchant_category_industries" committee is calculated
-    And the "non_trade_industry_ratios" committee is calculated
-    And the "trade_industry_ratios" committee is calculated
-    And the "product_line_ratios" committee is calculated
-    And the "product_line_industry_product_ratios" committee is calculated
-    And the "industry_product_ratios" committee is calculated
-    And the "industry_ratios" committee is calculated
-    And the "industry_sector_ratios" committee is calculated
-    And the "industry_sector_shares" committee is calculated
+    When the "merchant_category_industries" committee reports
+    And the "non_trade_industry_ratios" committee reports
+    And the "trade_industry_ratios" committee reports
+    And the "product_line_ratios" committee reports
+    And the "product_line_industry_product_ratios" committee reports
+    And the "industry_product_ratios" committee reports
+    And the "industry_ratios" committee reports
+    And the "industry_sector_ratios" committee reports
+    And the "industry_sector_shares" committee reports
     Then the conclusion of the committee should include a key of "<io_code>" and value "<share>"
     Examples:
       | mcc  | io_code | share   |
@@ -302,17 +277,16 @@ Feature: Purchase Committee Calculations
       | 2222 | 399900  | 50.0    |
 
   Scenario Outline: Industry sector shares committee starting from industry
-    Given a purchase emitter
-    And a characteristic "industry.naics_code" of "<naics>"
+    Given a characteristic "industry.naics_code" of "<naics>"
     And a characteristic "adjusted_cost" of "100.00"
-    When the "non_trade_industry_ratios" committee is calculated
-    And the "trade_industry_ratios" committee is calculated
-    And the "product_line_ratios" committee is calculated
-    And the "product_line_industry_product_ratios" committee is calculated
-    And the "industry_product_ratios" committee is calculated
-    And the "industry_ratios" committee is calculated
-    And the "industry_sector_ratios" committee is calculated
-    And the "industry_sector_shares" committee is calculated
+    When the "non_trade_industry_ratios" committee reports
+    And the "trade_industry_ratios" committee reports
+    And the "product_line_ratios" committee reports
+    And the "product_line_industry_product_ratios" committee reports
+    And the "industry_product_ratios" committee reports
+    And the "industry_ratios" committee reports
+    And the "industry_sector_ratios" committee reports
+    And the "industry_sector_shares" committee reports
     Then the conclusion of the committee should include a key of "<io_code>" and value "<share>"
     Examples:
       | naics  | io_code | share |
@@ -327,19 +301,18 @@ Feature: Purchase Committee Calculations
       | 459000 | 399200  | 25.0  |
 
   Scenario Outline: Sector shares committee from industry and product line shares
-    Given a purchase emitter
-    And a characteristic "merchant_category.mcc" of "<mcc>"
+    Given a characteristic "merchant_category.mcc" of "<mcc>"
     And a characteristic "adjusted_cost" of "100.00"
-    When the "merchant_category_industries" committee is calculated
-    And the "non_trade_industry_ratios" committee is calculated
-    And the "trade_industry_ratios" committee is calculated
-    And the "product_line_ratios" committee is calculated
-    And the "product_line_industry_product_ratios" committee is calculated
-    And the "industry_product_ratios" committee is calculated
-    And the "industry_ratios" committee is calculated
-    And the "industry_sector_ratios" committee is calculated
-    And the "industry_sector_shares" committee is calculated
-    And the "sector_shares" committee is calculated
+    When the "merchant_category_industries" committee reports
+    And the "non_trade_industry_ratios" committee reports
+    And the "trade_industry_ratios" committee reports
+    And the "product_line_ratios" committee reports
+    And the "product_line_industry_product_ratios" committee reports
+    And the "industry_product_ratios" committee reports
+    And the "industry_ratios" committee reports
+    And the "industry_sector_ratios" committee reports
+    And the "industry_sector_shares" committee reports
+    And the "sector_shares" committee reports
     Then the conclusion of the committee should be a vector with values "<111000>,<3991A0>,<3991B0>,<399200>,<399900>,<4A0000>"
     Examples:
       | mcc|111000|3991A0 |3991B0|399200|399900|4A0000|
@@ -347,26 +320,20 @@ Feature: Purchase Committee Calculations
       |2222|     0| 28.125| 9.375|  12.5|  50.0|     0|
 
   Scenario: Sector direct requirements committee
-    Given a purchase emitter
-    When the "sector_direct_requirements" committee is calculated
-    Then the conclusion of the committee should be a square matrix with "6" rows and columns
-
-  Scenario Outline: Economic flows from merchant category
-    Given a purchase emitter
-    And a characteristic "merchant_category.mcc" of "<mcc>"
+    Given a characteristic "merchant_category.mcc" of "<mcc>"
     And a characteristic "adjusted_cost" of "100"
-    When the "merchant_category_industries" committee is calculated
-    And the "non_trade_industry_ratios" committee is calculated
-    And the "trade_industry_ratios" committee is calculated
-    And the "product_line_ratios" committee is calculated
-    And the "product_line_industry_product_ratios" committee is calculated
-    And the "industry_product_ratios" committee is calculated
-    And the "industry_ratios" committee is calculated
-    And the "industry_sector_ratios" committee is calculated
-    And the "industry_sector_shares" committee is calculated
-    And the "sector_shares" committee is calculated
-    And the "sector_direct_requirements" committee is calculated
-    And the "economic_flows" committee is calculated
+    When the "merchant_category_industries" committee reports
+    And the "non_trade_industry_ratios" committee reports
+    And the "trade_industry_ratios" committee reports
+    And the "product_line_ratios" committee reports
+    And the "product_line_industry_product_ratios" committee reports
+    And the "industry_product_ratios" committee reports
+    And the "industry_ratios" committee reports
+    And the "industry_sector_ratios" committee reports
+    And the "industry_sector_shares" committee reports
+    And the "sector_shares" committee reports
+    And the "sector_direct_requirements" committee reports
+    And the "economic_flows" committee reports
     Then the conclusion of the committee should be a vector with values "<111000>,<3991A0>,<3991B0>,<399200>,<399900>,<4A0000>"
     Examples:
       | mcc|111000    |3991A0     |3991B0    |399200    |399900     |4A0000    |
@@ -374,28 +341,22 @@ Feature: Purchase Committee Calculations
       |2222|43.1583125|70.30915625|62.2195625|64.6255625|110.2403125|62.0304375|
 
   Scenario: Impact vectors committee
-    Given a purchase emitter
-    When the "impact_vectors" committee is calculated
-    Then the conclusion of the committee should be a square matrix with "6" rows and columns
-
-  Scenario Outline: Impacts committee from economic flows
-    Given a purchase emitter
-    And a characteristic "merchant_category.mcc" of "<mcc>"
+    Given a characteristic "merchant_category.mcc" of "<mcc>"
     And a characteristic "adjusted_cost" of "100"
-    When the "merchant_category_industries" committee is calculated
-    And the "non_trade_industry_ratios" committee is calculated
-    And the "trade_industry_ratios" committee is calculated
-    And the "product_line_ratios" committee is calculated
-    And the "product_line_industry_product_ratios" committee is calculated
-    And the "industry_product_ratios" committee is calculated
-    And the "industry_ratios" committee is calculated
-    And the "industry_sector_ratios" committee is calculated
-    And the "industry_sector_shares" committee is calculated
-    And the "sector_shares" committee is calculated
-    And the "sector_direct_requirements" committee is calculated
-    And the "economic_flows" committee is calculated
-    And the "impact_vectors" committee is calculated
-    And the "impacts" committee is calculated
+    When the "merchant_category_industries" committee reports
+    And the "non_trade_industry_ratios" committee reports
+    And the "trade_industry_ratios" committee reports
+    And the "product_line_ratios" committee reports
+    And the "product_line_industry_product_ratios" committee reports
+    And the "industry_product_ratios" committee reports
+    And the "industry_ratios" committee reports
+    And the "industry_sector_ratios" committee reports
+    And the "industry_sector_shares" committee reports
+    And the "sector_shares" committee reports
+    And the "sector_direct_requirements" committee reports
+    And the "economic_flows" committee reports
+    And the "impact_vectors" committee reports
+    And the "impacts" committee reports
     Then the conclusion of the committee should be a vector with values "<111000>,<3991A0>,<3991B0>,<399200>,<399900>,<4A0000>"
     Examples:
       |mcc |111000  |3991A0  |3991B0  |399200  |399900   |4A0000  |
