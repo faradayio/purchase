@@ -55,7 +55,9 @@ Feature: Purchase Committee Calculations
       | 2222 | 459000 | 0.5   |
 
   Scenario: Trade industry ratios from default
-    Given the conclusion of the committee should include a key of "" and value ""
+    When the "trade_industry_ratios" committee reports
+    Then the committee should have used quorum "default"
+    And the conclusion of the committee should include a key of "" and value ""
 
   Scenario: Trade industry ratios from merchant category industries
     Given a characteristic "merchant_category.mcc" of "2222"
@@ -79,7 +81,9 @@ Feature: Purchase Committee Calculations
     And the conclusion of the committee should include a key of "459000" and value "1"
 
   Scenario: Non-trade industry ratios from default
-    Given the conclusion of the committee should include a key of "339991" and value "1"
+    When the "non_trade_industry_ratios" committee reports
+    Then the committee should have used quorum "default"
+    And the conclusion of the committee should include a key of "339991" and value "1"
 
   Scenario Outline: Non-trade industry ratios from merchant category industries
     Given a characteristic "merchant_category.mcc" of "<mcc>"
@@ -320,6 +324,11 @@ Feature: Purchase Committee Calculations
       |2222|     0| 28.125| 9.375|  12.5|  50.0|     0|
 
   Scenario Outline: Sector direct requirements committee
+    Given a purchase emitter
+    When the "sector_direct_requirements" committee reports
+    Then the conclusion of the committee should be a square matrix with "6" rows and columns
+
+  Scenario Outline: Economic flows from merchant category
     Given a characteristic "merchant_category.mcc" of "<mcc>"
     And a characteristic "adjusted_cost" of "100"
     When the "merchant_category_industries" committee reports
@@ -341,6 +350,11 @@ Feature: Purchase Committee Calculations
       |2222|43.1583125|70.30915625|62.2195625|64.6255625|110.2403125|62.0304375|
 
   Scenario Outline: Impact vectors committee
+    Given a purchase emitter
+    When the "impact_vectors" committee reports
+    Then the conclusion of the committee should be a square matrix with "6" rows and columns
+
+  Scenario Outline: Impacts committee from economic flows
     Given a characteristic "merchant_category.mcc" of "<mcc>"
     And a characteristic "adjusted_cost" of "100"
     When the "merchant_category_industries" committee reports
