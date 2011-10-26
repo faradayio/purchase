@@ -22,35 +22,27 @@ module BrighterPlanet
 
           committee :impacts do
             quorum 'from economic flows and impact vectors', :needs => [:economic_flows, :impact_vectors] do |characteristics|
-              x = characteristics[:impact_vectors]
-              y = characteristics[:economic_flows]
-              x = x.respond_to?(:value) ? x.value : x
-              y = y.respond_to?(:value) ? y.value : y
-              x * y
+              # subverting charisma
+              characteristics[:impact_vectors].value * characteristics[:economic_flows].value
             end
           end
 
           committee :impact_vectors do
             quorum 'from database' do
-              adapter = BrighterPlanet::Purchase.impact_vectors_adapter
-              adapter.matrix
+              ::BrighterPlanet::Purchase.impact_vectors_adapter.matrix
             end
           end
 
           committee :economic_flows do
             quorum 'from sector shares, a', :needs => [:sector_shares, :sector_direct_requirements] do |characteristics|
-              y = characteristics[:sector_shares]
-              leonteif_inverse = characteristics[:sector_direct_requirements]
-              y = y.respond_to?(:value) ? y.value : y
-              leonteif_inverse = leonteif_inverse.respond_to?(:value) ? leonteif_inverse.value : leonteif_inverse
-              leonteif_inverse * y
+              # subverting charisma
+              characteristics[:sector_direct_requirements].value * characteristics[:sector_shares].value
             end
           end
 
           committee :sector_direct_requirements do
             quorum 'from database' do
-              adapter = BrighterPlanet::Purchase.sector_direct_requirements_adapter
-              adapter.matrix
+              BrighterPlanet::Purchase.sector_direct_requirements_adapter.matrix
             end
           end
           
@@ -59,7 +51,7 @@ module BrighterPlanet
               shares = BrighterPlanet::Purchase.key_map.map do |key|
                 characteristics[:industry_sector_shares][key] || 0
               end
-              Vector[*shares]
+              ::Vector[*shares]
             end
           end
 
