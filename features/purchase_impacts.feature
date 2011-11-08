@@ -7,24 +7,24 @@ Feature: Purchase Emissions Calculations
   Scenario: Calculations starting from nothing
     Given it is the year "2010"
     When impacts are calculated
-    Then the amount of "carbon" should be within "0.001" kgs of "789.625"
+    Then the amount of "carbon" should be within "0.001" of "789.625"
 
   Scenario: Calculations starting from purchase amount
     Given it has "purchase_amount" of "107.11"
     And it is the year "2010"
     When impacts are calculated
-    Then the amount of "carbon" should be within "0.001" kgs of "126.538"
+    Then the amount of "carbon" should be within "0.001" of "126.538"
 
   Scenario: Calculations starting from date
     Given it has "date" of "2010-07-28"
     When impacts are calculated
-    Then the amount of "carbon" should be within "0.001" kgs of "789.625"
+    Then the amount of "carbon" should be within "0.001" of "789.625"
 
   Scenario Outline: Calculations starting from a merchant
     Given it has "merchant.id" of "<id>"
     And it is the year "2010"
     When impacts are calculated
-    Then the amount of "carbon" should be within "0.001" kgs of "<emission>"
+    Then the amount of "carbon" should be within "0.001" of "<emission>"
     Examples:
       | id  | emission |
       | 1   |  789.625 |
@@ -35,7 +35,7 @@ Feature: Purchase Emissions Calculations
     And it has "purchase_amount" of "<amount>"
     And it is the year "2010"
     When impacts are calculated
-    Then the amount of "carbon" should be within "0.001" kgs of "<emission>"
+    Then the amount of "carbon" should be within "0.001" of "<emission>"
     Examples:
       | id  | amount | emission |
       | 1   | 107.11 |  126.538 |
@@ -46,7 +46,7 @@ Feature: Purchase Emissions Calculations
     And it has "purchase_amount" of "<amount>"
     And it has "date" of "<date>"
     When impacts are calculated
-    Then the amount of "carbon" should be within "0.001" kgs of "<emission>"
+    Then the amount of "carbon" should be within "0.001" of "<emission>"
     Examples:
       | id  | amount | date       | emission |
       | 1   | 107.11 | 2010-07-28 |  126.538 |
@@ -58,7 +58,7 @@ Feature: Purchase Emissions Calculations
     And it has "tax" of "<tax>"
     And it has "date" of "<date>"
     When impacts are calculated
-    Then the amount of "carbon" should be within "0.001" kgs of "<emission>"
+    Then the amount of "carbon" should be within "0.001" of "<emission>"
     Examples:
       | id  | amount | tax  | date       | emission |
       | 1   | 108.00 | 8.00 | 2010-07-28 |  126.538 |
@@ -69,7 +69,7 @@ Feature: Purchase Emissions Calculations
     And it has "cost" of "<cost>"
     And it has "date" of "<date>"
     When impacts are calculated
-    Then the amount of "carbon" should be within "0.001" kgs of "<emission>"
+    Then the amount of "carbon" should be within "0.001" of "<emission>"
     Examples:
       | mcc  | cost   | date       | emission |
       | 1111 | 100.00 | 2010-07-28 |  126.538 |
@@ -80,7 +80,7 @@ Feature: Purchase Emissions Calculations
     And it has "cost" of "<cost>"
     And it has "date" of "<date>"
     When impacts are calculated
-    Then the amount of "carbon" should be within "0.001" kgs of "<emission>"
+    Then the amount of "carbon" should be within "0.001" of "<emission>"
     And the "trade_industry_ratios" committee should have used quorum "from industry"
     And the "non_trade_industry_ratios" committee should have used quorum "from industry"
     Examples:
