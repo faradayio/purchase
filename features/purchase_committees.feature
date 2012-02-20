@@ -59,6 +59,16 @@ Feature: Purchase Committee Calculations
     Then the committee should have used quorum "default"
     And the conclusion of the committee should include a key of "" and value ""
 
+  Scenario Outline: Trade industry ratios from sic industry
+    Given a characteristic "sic_industry.code" of "<sic>"
+    When the "trade_industry_ratios" committee reports
+    Then the committee should have used quorum "from sic industry"
+    And the conclusion of the committee should include a key of "<key>" and value "<value>"
+    Examples:
+      | sic  | key    | value |
+      | 5411 | 459000 | 1.0   |
+      | 5419 | 459000 | 0.5   |
+
   Scenario: Trade industry ratios from merchant category industries
     Given a characteristic "merchant_category.mcc" of "2222"
     When the "merchant_category_industries" committee reports
@@ -84,6 +94,18 @@ Feature: Purchase Committee Calculations
     When the "non_trade_industry_ratios" committee reports
     Then the committee should have used quorum "default"
     And the conclusion of the committee should include a key of "339991" and value "1"
+
+  Scenario Outline: Non-trade industry from ratios sic industry
+    Given a characteristic "sic_industry.code" of "<sic>"
+    When the "non_trade_industry_ratios" committee reports
+    Then the committee should have used quorum "from sic industry"
+    And the conclusion of the committee should include a key of "<key>" and value "<value>"
+    Examples:
+      | sic  | key    | value |
+      | 1111 | 111111 | 1.0   |
+      | 2111 | 399100 | 0.5   |
+      | 2111 | 399200 | 0.5   |
+      | 5419 | 399900 | 0.5   |
 
   Scenario Outline: Non-trade industry ratios from merchant category industries
     Given a characteristic "merchant_category.mcc" of "<mcc>"

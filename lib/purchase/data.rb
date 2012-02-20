@@ -11,6 +11,7 @@ module BrighterPlanet
         base.col :date, :type => :date
         base.col :merchant_id
         base.col :mcc
+        base.col :sic_1987_code
         base.col :naics_code
       end
     end

@@ -30,6 +30,16 @@ Feature: Purchase Emissions Calculations
       | 1   |  789.625 |
       | 2   | 1710.633 |
 
+  Scenario Outline: Calculations starting from a sic industry
+    Given it has "sic_industry.code" of "<code>"
+    And it is the year "2010"
+    When impacts are calculated
+    Then the amount of "carbon" should be within "0.001" of "<emission>"
+    Examples:
+      | code | emission |
+      | 1111 |  789.625 |
+      | 5419 | 1710.633 |
+
   Scenario Outline: Calculations starting from a merchant with purchase amount
     Given it has "merchant.id" of "<id>"
     And it has "purchase_amount" of "<amount>"

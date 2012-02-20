@@ -12,34 +12,34 @@ module BrighterPlanet
     module ImpactModel
       def self.included(base)
         base.extend ::Leap::Subject
-
+        
         base.decide :impact, :with => :characteristics do
           committee :carbon do
             quorum 'from impacts', :needs => :impacts do |characteristics|
               characteristics[:impacts].to_a.sum
             end
           end
-
+          
           committee :impacts do
             quorum 'from economic flows and impact vectors', :needs => [:economic_flows, :impact_vectors] do |characteristics|
               # subverting charisma
               characteristics[:impact_vectors].value * characteristics[:economic_flows].value
             end
           end
-
+          
           committee :impact_vectors do
             quorum 'from database' do
               ::BrighterPlanet::Purchase.impact_vectors_adapter.matrix
             end
           end
-
+          
           committee :economic_flows do
             quorum 'from sector shares, a', :needs => [:sector_shares, :sector_direct_requirements] do |characteristics|
               # subverting charisma
               characteristics[:sector_direct_requirements].value * characteristics[:sector_shares].value
             end
           end
-
+          
           committee :sector_direct_requirements do
             quorum 'from database' do
               BrighterPlanet::Purchase.sector_direct_requirements_adapter.matrix
@@ -54,7 +54,7 @@ module BrighterPlanet
               ::Vector[*shares]
             end
           end
-
+          
           committee :industry_sector_shares do
             quorum 'from industry sector ratios', :needs => [:industry_sector_ratios, :adjusted_cost] do |characteristics|
               characteristics[:industry_sector_ratios].inject({}) do |new_ratios, (io_code, ratio)|
@@ -64,7 +64,7 @@ module BrighterPlanet
               end
             end
           end
-
+          
           committee :industry_sector_ratios do
             quorum 'from industry ratios', :needs => :industry_ratios do |characteristics|
               naics_codes = characteristics[:industry_ratios].keys
@@ -81,7 +81,7 @@ module BrighterPlanet
               end
             end
           end
-
+          
           # industries = the industries needed to produce the purchased item
           # ratios = the portion of the purchase amount that goes to each industry
           committee :industry_ratios do
@@ -92,7 +92,7 @@ module BrighterPlanet
                 end
             end
           end
-
+          
           committee :industry_product_ratios do
             quorum 'from product line industry product ratios', :needs => :product_line_industry_product_ratios do |characteristics|
               naics_product_codes = characteristics[:product_line_industry_product_ratios].keys
@@ -108,7 +108,7 @@ module BrighterPlanet
               end
             end
           end
-
+          
           committee :product_line_industry_product_ratios do
             quorum 'from product line ratios', :needs => :product_line_ratios do |characteristics|
               ps_codes = characteristics[:product_line_ratios].keys
@@ -123,7 +123,7 @@ module BrighterPlanet
               end
             end
           end
-
+          
           committee :product_line_ratios do
             quorum 'from trade industry ratios', :needs => :trade_industry_ratios do |characteristics|
               naics_codes = characteristics[:trade_industry_ratios].keys
@@ -140,7 +140,7 @@ module BrighterPlanet
               end
             end
           end
-
+          
           committee :non_trade_industry_ratios do
             quorum 'from industry', :needs => :industry do |characteristics|
               if characteristics[:industry].trade_industry?
@@ -149,7 +149,7 @@ module BrighterPlanet
                 { characteristics[:industry].naics_code.to_s => 1 }
               end
             end
-
+            
             quorum 'from merchant category industries', :needs => :merchant_category_industries do |characteristics|
               characteristics[:merchant_category_industries].
                 reject { |mci| mci.industry.trade_industry? }.inject({}) do |ntir, merchant_category_industry|
@@ -159,13 +159,25 @@ module BrighterPlanet
               end
             end
             
+            quorum 'from sic industry', :needs => :sic_industry do |characteristics|
+              if (count = characteristics[:sic_industry].industries.count) > 0
+                characteristics[:sic_industry].industries.reject{ |i| i.trade_industry? }.inject({}) do |ntir, industry|
+                  ntir[industry.naics_code] ||= 0
+                  ntir[industry.naics_code] += 1.0 / count
+                  ntir
+                end
+              else
+                nil # return nil if we can't map the SIC industry to any Industries so that we use the default quorum
+              end
+            end
+            
             # NAICS 339991 chosen because it's emissions intensity is close to the average of the entire U.S. economy
             # (calculated by multiplying each sector's emissions intensity by it's share of total 2002 value)
             quorum 'default' do
               { '339991' => 1 }
             end
           end
-
+          
           committee :trade_industry_ratios do
             quorum 'from industry', :needs => :industry do |characteristics|
               if characteristics[:industry].trade_industry?
@@ -174,7 +186,7 @@ module BrighterPlanet
                 {}
               end
             end
-
+            
             quorum 'from merchant category industries', :needs => :merchant_category_industries do |characteristics|
               characteristics[:merchant_category_industries].
                 select { |mci| mci.industry.trade_industry? }.inject({}) do |tir, merchant_category_industry|
@@ -184,18 +196,29 @@ module BrighterPlanet
               end
             end
             
+            quorum 'from sic industry', :needs => :sic_industry do |characteristics|
+              # This will return {} if there are no trade industry ratios but that's ok b/c it's the same as the default
+              if (count = characteristics[:sic_industry].industries.count) > 0
+                characteristics[:sic_industry].industries.select{ |i| i.trade_industry? }.inject({}) do |tir, industry|
+                  tir[industry.naics_code] ||= 0
+                  tir[industry.naics_code] += 1.0 / count
+                  tir
+                end
+              end
+            end
+            
             quorum 'default' do
               {}
             end
           end
-
+          
           # a dictionary to go from merchant categories to industries
           committee :merchant_category_industries do
             quorum 'from merchant category', :needs => :merchant_category do |characteristics|
               characteristics[:merchant_category].merchant_category_industries
             end
           end
-
+          
           committee :merchant_category do
             quorum 'from merchant', :needs => [:merchant] do |characteristics|
               characteristics[:merchant].merchant_category
@@ -208,11 +231,11 @@ module BrighterPlanet
               @cpi_lookup ||= { 
                 2009 => 1.189, 2010 => 1.207, 2011 => 1.225, 2012 => 1.245, 
                 2013 => 1.265 }
-
+                
               date = characteristics[:date]
               date = date.is_a?(String) ? Date.parse(date) : date
               conversion_factor = @cpi_lookup[date.year] || 1.207
-
+              
               characteristics[:cost].to_f / conversion_factor
             end
             
@@ -222,7 +245,7 @@ module BrighterPlanet
               517
             end
           end
-            
+          
           committee :cost do
             quorum 'from purchase amount and tax', :needs => [:purchase_amount, :tax] do |characteristics|
               characteristics[:purchase_amount].to_f - characteristics[:tax].to_f
@@ -233,7 +256,7 @@ module BrighterPlanet
               characteristics[:purchase_amount].to_f / 1.0711
             end
           end
-
+          
           committee :date do
             quorum 'default' do
               Date.today
