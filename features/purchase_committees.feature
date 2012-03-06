@@ -95,7 +95,7 @@ Feature: Purchase Committee Calculations
     Then the committee should have used quorum "default"
     And the conclusion of the committee should include a key of "339991" and value "1"
 
-  Scenario Outline: Non-trade industry from ratios sic industry
+  Scenario Outline: Non-trade industry ratios from sic industry
     Given a characteristic "sic_industry.code" of "<sic>"
     When the "non_trade_industry_ratios" committee reports
     Then the committee should have used quorum "from sic industry"

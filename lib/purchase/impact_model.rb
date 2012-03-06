@@ -160,10 +160,11 @@ module BrighterPlanet
             end
             
             quorum 'from sic industry', :needs => :sic_industry do |characteristics|
-              if (count = characteristics[:sic_industry].industries.count) > 0
-                characteristics[:sic_industry].industries.reject{ |i| i.trade_industry? }.inject({}) do |ntir, industry|
+              if (naics_2002s = characteristics[:sic_industry].naics_2002).any?
+                industries = naics_2002s.map(&:industry)
+                industries.reject{ |i| i.trade_industry? }.inject({}) do |ntir, industry|
                   ntir[industry.naics_code] ||= 0
-                  ntir[industry.naics_code] += 1.0 / count
+                  ntir[industry.naics_code] += 1.0 / industries.count
                   ntir
                 end
               else
@@ -198,10 +199,11 @@ module BrighterPlanet
             
             quorum 'from sic industry', :needs => :sic_industry do |characteristics|
               # This will return {} if there are no trade industry ratios but that's ok b/c it's the same as the default
-              if (count = characteristics[:sic_industry].industries.count) > 0
-                characteristics[:sic_industry].industries.select{ |i| i.trade_industry? }.inject({}) do |tir, industry|
+              if (naics_2002s = characteristics[:sic_industry].naics_2002).any?
+                industries = naics_2002s.map(&:industry)
+                industries.select{ |i| i.trade_industry? }.inject({}) do |tir, industry|
                   tir[industry.naics_code] ||= 0
-                  tir[industry.naics_code] += 1.0 / count
+                  tir[industry.naics_code] += 1.0 / industries.count
                   tir
                 end
               end
