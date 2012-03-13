@@ -27,6 +27,12 @@ module BrighterPlanet
             end
           end
           
+          committee :direct_emissions do
+            quorum 'from sector shares and impact vectors', :needs => [:sector_shares, :impact_vectors] do |characteristics|
+              (characteristics[:impact_vectors].value * characteristics[:sector_shares].value).to_a.sum
+            end
+          end
+          
           committee :impact_vectors do
             quorum 'from database' do
               ::BrighterPlanet::Purchase.impact_vectors_adapter.matrix

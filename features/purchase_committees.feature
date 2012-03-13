@@ -374,6 +374,28 @@ Feature: Purchase Committee Calculations
     When the "impact_vectors" committee reports
     Then the conclusion of the committee should be a square matrix with "6" rows and columns
 
+  Scenario Outline: Direct emissions committee
+    Given a characteristic "merchant_category.mcc" of "<mcc>"
+    And a characteristic "adjusted_cost" of "100"
+    When the "merchant_category_industries" committee reports
+    And the "non_trade_industry_ratios" committee reports
+    And the "trade_industry_ratios" committee reports
+    And the "product_line_ratios" committee reports
+    And the "product_line_industry_product_ratios" committee reports
+    And the "industry_product_ratios" committee reports
+    And the "industry_ratios" committee reports
+    And the "industry_sector_ratios" committee reports
+    And the "industry_sector_shares" committee reports
+    And the "sector_shares" committee reports
+    And the "sector_direct_requirements" committee reports
+    And the "impact_vectors" committee reports
+    And the "direct_emissions" committee reports
+    Then the conclusion of the committee should be "<direct_emissions>"
+    Examples:
+      | mcc  | direct_emissions |
+      | 1111 | 81.0             |
+      | 2222 | 87.7125          |
+
   Scenario Outline: Impacts committee from economic flows
     Given a characteristic "merchant_category.mcc" of "<mcc>"
     And a characteristic "adjusted_cost" of "100"
