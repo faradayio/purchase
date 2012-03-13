@@ -34,7 +34,7 @@ module BrighterPlanet
           end
           
           committee :economic_flows do
-            quorum 'from sector shares, a', :needs => [:sector_shares, :sector_direct_requirements] do |characteristics|
+            quorum 'from sector shares', :needs => [:sector_shares, :sector_direct_requirements] do |characteristics|
               # subverting charisma
               characteristics[:sector_direct_requirements].value * characteristics[:sector_shares].value
             end
@@ -65,6 +65,7 @@ module BrighterPlanet
             end
           end
           
+          # Convert spend in industries to spend in input-output sectors
           committee :industry_sector_ratios do
             quorum 'from industry ratios', :needs => :industry_ratios do |characteristics|
               naics_codes = characteristics[:industry_ratios].keys
@@ -93,6 +94,7 @@ module BrighterPlanet
             end
           end
           
+          # Convert any spend on products produced by product/service industries to spend in the relevant product/service industries
           committee :industry_product_ratios do
             quorum 'from product line industry product ratios', :needs => :product_line_industry_product_ratios do |characteristics|
               naics_product_codes = characteristics[:product_line_industry_product_ratios].keys
@@ -109,6 +111,7 @@ module BrighterPlanet
             end
           end
           
+          # Convert any spend on products sold by trade industries to spend on products produced by product/service industries
           committee :product_line_industry_product_ratios do
             quorum 'from product line ratios', :needs => :product_line_ratios do |characteristics|
               ps_codes = characteristics[:product_line_ratios].keys
@@ -124,6 +127,7 @@ module BrighterPlanet
             end
           end
           
+          # Convert any spend in trade industries to spend on the products sold by those industries
           committee :product_line_ratios do
             quorum 'from trade industry ratios', :needs => :trade_industry_ratios do |characteristics|
               naics_codes = characteristics[:trade_industry_ratios].keys
@@ -141,6 +145,7 @@ module BrighterPlanet
             end
           end
           
+          # The percent of cost spent in industries that produce goods or services
           committee :non_trade_industry_ratios do
             quorum 'from industry', :needs => :industry do |characteristics|
               if characteristics[:industry].trade_industry?
@@ -179,6 +184,7 @@ module BrighterPlanet
             end
           end
           
+          # The percent of cost spent in trade industries (which therefore needs to get converted to products)
           committee :trade_industry_ratios do
             quorum 'from industry', :needs => :industry do |characteristics|
               if characteristics[:industry].trade_industry?
@@ -227,6 +233,7 @@ module BrighterPlanet
             end
           end
           
+          # The purchase amount in 2002 dollars
           committee :adjusted_cost do
             quorum 'from cost and date', :needs => [:cost, :date] do |characteristics|
               # FIXME TODO: Import CPI conversions
@@ -248,6 +255,7 @@ module BrighterPlanet
             end
           end
           
+          # The purchase amount, less taxes
           committee :cost do
             quorum 'from purchase amount and tax', :needs => [:purchase_amount, :tax] do |characteristics|
               characteristics[:purchase_amount].to_f - characteristics[:tax].to_f

@@ -345,8 +345,7 @@ Feature: Purchase Committee Calculations
       |1111|100.00|      0|     0|     0|     0|     0|
       |2222|     0| 28.125| 9.375|  12.5|  50.0|     0|
 
-  Scenario Outline: Sector direct requirements committee
-    Given a purchase emitter
+  Scenario: Sector direct requirements committee
     When the "sector_direct_requirements" committee reports
     Then the conclusion of the committee should be a square matrix with "6" rows and columns
 
@@ -371,8 +370,7 @@ Feature: Purchase Committee Calculations
       |1111|111.66    |12.526     |15.614    |15.464    |18.444     |18.27     |
       |2222|43.1583125|70.30915625|62.2195625|64.6255625|110.2403125|62.0304375|
 
-  Scenario Outline: Impact vectors committee
-    Given a purchase emitter
+  Scenario: Impact vectors committee
     When the "impact_vectors" committee reports
     Then the conclusion of the committee should be a square matrix with "6" rows and columns
 
