@@ -19,6 +19,11 @@ Feature: Purchase Characterizations
     When impacts are calculated
     Then the "merchant_category_industries" characteristic should be displayed as "2 merchant category(s)"
 
+  Scenario: Sic industry characteristic
+    Given it has "sic_industry.code" of "1111"
+    When impacts are calculated
+    Then the "sic_industry" characteristic should be displayed as "A simple industry"
+
   Scenario: Industry characteristic
     Given it has "industry.naics_code" of "111111"
     When impacts are calculated
