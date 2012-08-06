@@ -1,5 +1,11 @@
 require 'emitter'
 
+require 'purchase/impact_model'
+require 'purchase/characterization'
+require 'purchase/data'
+require 'purchase/relationships'
+require 'purchase/summarization'
+
 module BrighterPlanet
   module Purchase
     extend BrighterPlanet::Emitter
