@@ -7,6 +7,11 @@ require 'timeframe'
 require 'date'
 require 'matrix'
 
+require 'earth/industry/industry_product'
+require 'earth/industry/industry_product_line'
+require 'earth/industry/industry_sector'
+require 'earth/industry/product_line_industry_product'
+
 module BrighterPlanet
   module Purchase
     module ImpactModel

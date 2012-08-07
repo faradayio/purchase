@@ -1,3 +1,7 @@
+require 'earth/industry/industry'
+require 'earth/industry/merchant_category'
+require 'earth/industry/sic_1987'
+
 module BrighterPlanet
   module Purchase
     module Relationships
