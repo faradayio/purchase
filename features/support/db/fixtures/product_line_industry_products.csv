@@ -1,5 +1,5 @@
-ps_code,ratio,naics_product_code
-45911,0.5,399100A
-45911,0.5,399100B
-45912,0.5,399200A
-45912,0.5,399200B
+row_hash,ps_code,ratio,naics_product_code
+test1,45911,0.5,399100A
+test2,45911,0.5,399100B
+test3,45912,0.5,399200A
+test4,45912,0.5,399200B

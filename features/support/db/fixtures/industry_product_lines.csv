@@ -1,3 +1,3 @@
-naics_code,ratio,ps_code
-459000,0.75,45911
-459000,0.25,45912
+row_hash,naics_code,ratio,ps_code
+test1,459000,0.75,45911
+test2,459000,0.25,45912
